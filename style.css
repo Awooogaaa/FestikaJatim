@@ -37,6 +37,9 @@ header {
     border-radius: 50%;
     transform: translate(-50%, -50%);
     animation: rotate 20s linear infinite;
+    
+    /* 1. INI MEMBUAT ORBIT (LINGKARAN) JADI TEMBUS KLIK */
+    pointer-events: none; 
 }
 
 .planet {
@@ -47,6 +50,9 @@ header {
     border-radius: 50%;
     cursor: pointer;
     transition: transform 0.3s ease;
+
+    /* 2. INI "MENGHIDUPKAN" KEMBALI KLIK UNTUK PLANET */
+    pointer-events: auto; 
 }
 
 .planet:hover {
