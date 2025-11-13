@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Datang di Galaksi</title>
+    <link rel="stylesheet" href="../css/landing_page.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            background: #000;
+            color: #fff;
+        }
+
+        .galaxy-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            z-index: -2;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(138, 43, 226, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(138, 43, 226, 0.8), 0 0 60px rgba(75, 0, 130, 0.6); }
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .planet {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #667eea 0%, #764ba2 50%, #4a148c 100%);
+            box-shadow: 0 0 60px rgba(138, 43, 226, 0.6),
+                        inset 0 0 60px rgba(0, 0, 0, 0.5);
+            animation: float 6s ease-in-out infinite, glow 3s ease-in-out infinite;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .planet::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .planet::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shine 4s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        h1 {
+            font-size: 4rem;
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-align: center;
+            animation: float 4s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #b8b8d1;
+            margin-bottom: 40px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .cta-button {
+            padding: 18px 50px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.4);
+            font-weight: bold;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(138, 43, 226, 0.6);
+        }
+
+        .features {
+            display: flex;
+            gap: 30px;
+            margin-top: 60px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            width: 250px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #f093fb;
+        }
+
+        .feature-desc {
+            color: #b8b8d1;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .planet {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="galaxy-bg"></div>
+    <div class="stars" id="stars"></div>
+    
+    <!-- Floating elements that move on scroll -->
+    <div class="rocket">🚀</div>
+    <div class="floating-planet planet-1"></div>
+    <div class="floating-planet planet-2"></div>
+    <div class="floating-planet planet-3"></div>
+    <div class="asteroid">☄️</div>
+    
+    <!-- Section 1: Hero -->
+    <div class="section">
+        <div class="planet"></div>
+        <h1>Selamat Datang</h1>
+        <p class="subtitle">Jelajahi Galaksi Tanpa Batas</p>
+        <button class="cta-button" onclick="scrollToSection()">Mulai Petualangan</button>
+        <div class="scroll-indicator">⬇️</div>
+    </div>
+
+    <!-- Section 2: About -->
+    <div class="section">
+        <h2>Tentang Kami</h2>
+        <p class="description">
+            Kami menghadirkan pengalaman luar angkasa yang menakjubkan. 
+            Bergabunglah dengan jutaan penjelajah yang telah memulai perjalanan mereka 
+            menuju bintang-bintang dan menemukan keajaiban alam semesta.
+        </p>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🌟</div>
+                <h3 class="feature-title">Eksplorasi</h3>
+                <p class="feature-desc">Temukan dunia baru yang menakjubkan</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3 class="feature-title">Inovasi</h3>
+                <p class="feature-desc">Teknologi masa depan di ujung jari Anda</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">✨</div>
+                <h3 class="feature-title">Pengalaman</h3>
+                <p class="feature-desc">Perjalanan yang tak terlupakan</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 3: Journey -->
+    <div class="section">
+        <h2>Perjalanan Anda</h2>
+        <p class="description">
+            Setiap petualangan dimulai dengan satu langkah kecil. 
+            Biarkan kami memandu Anda melalui galaksi penuh kemungkinan, 
+            di mana imajinasi Anda adalah satu-satunya batas.
+        </p>
+        <button class="cta-button" onclick="exploreGalaxy()">Bergabung Sekarang</button>
+    </div>
+
+    <script src="../js/landing_page.js"></script>
+</body>
+</html>
