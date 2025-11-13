@@ -56,4 +56,32 @@ const planets = {
     }
 };
 
-// ... sisa kode script.js Anda (currentChart, planetModal, $(document).ready, dll) ...
+// ======================================================
+// --- BAGIAN YANG HILANG ADA DI BAWAH INI ---
+// ======================================================
+
+/**
+ * Fungsi untuk menampilkan info box planet
+ */
+function showInfo(planetKey) {
+    // 1. Ambil data planet dari objek 'planets'
+    const info = planets[planetKey];
+    
+    // 2. Masukkan data ke elemen HTML
+    document.getElementById("planet-name").innerText = info.name;
+    document.getElementById("planet-desc").innerText = info.desc;
+    
+    // 3. Gunakan .innerHTML karena teks fakta Anda berisi tag HTML (<b> dan <br>)
+    document.getElementById("planet-fact").innerHTML = "💡 " + info.fact;
+    
+    // 4. Tampilkan info box dengan menghapus kelas 'hidden'
+    document.getElementById("info-box").classList.remove("hidden");
+}
+
+/**
+ * Fungsi untuk menyembunyikan info box
+ */
+function hideInfo() {
+    // Sembunyikan info box dengan menambahkan kembali kelas 'hidden'
+    document.getElementById("info-box").classList.add("hidden");
+}
