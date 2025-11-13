@@ -1,4 +1,7 @@
-// Anda bisa ganti seluruh objek 'planets' Anda dengan ini
+// TAMBAHAN: Ambil elemen tata surya
+const solarSystem = document.querySelector('.solar-system');
+
+// Ini adalah data planet Anda yang sudah ada
 const planets = {
     mercury: {
         name: "Merkurius",
@@ -56,32 +59,22 @@ const planets = {
     }
 };
 
-// ======================================================
-// --- BAGIAN YANG HILANG ADA DI BAWAH INI ---
-// ======================================================
-
-/**
- * Fungsi untuk menampilkan info box planet
- */
 function showInfo(planetKey) {
-    // 1. Ambil data planet dari objek 'planets'
     const info = planets[planetKey];
     
-    // 2. Masukkan data ke elemen HTML
     document.getElementById("planet-name").innerText = info.name;
     document.getElementById("planet-desc").innerText = info.desc;
-    
-    // 3. Gunakan .innerHTML karena teks fakta Anda berisi tag HTML (<b> dan <br>)
     document.getElementById("planet-fact").innerHTML = "💡 " + info.fact;
     
-    // 4. Tampilkan info box dengan menghapus kelas 'hidden'
+    // TAMBAHAN: Memicu animasi zoom-out pada tata surya
+    solarSystem.classList.add('zoomed-out');
+    
     document.getElementById("info-box").classList.remove("hidden");
 }
 
-/**
- * Fungsi untuk menyembunyikan info box
- */
 function hideInfo() {
-    // Sembunyikan info box dengan menambahkan kembali kelas 'hidden'
+    // TAMBAHAN: Mengembalikan tata surya seperti semula
+    solarSystem.classList.remove('zoomed-out');
+
     document.getElementById("info-box").classList.add("hidden");
 }
