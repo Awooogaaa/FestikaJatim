@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jelajah Angkasa Jatim</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>🌞 Jelajah Angkasa Jatim</h1>
+        <p>Klik planet untuk mengetahui fakta menariknya!</p>
+    </header>
+
+    <main class="solar-system">
+        <div class="sun"></div>
+
+        <!-- Planet -->
+        <div class="orbit orbit-mercury">
+            <div class="planet mercury" onclick="showInfo('mercury')"></div>
+        </div>
+        <div class="orbit orbit-venus">
+            <div class="planet venus" onclick="showInfo('venus')"></div>
+        </div>
+        <div class="orbit orbit-earth">
+            <div class="planet earth" onclick="showInfo('earth')"></div>
+        </div>
+        <div class="orbit orbit-mars">
+            <div class="planet mars" onclick="showInfo('mars')"></div>
+        </div>
+        <div class="orbit orbit-jupiter">
+            <div class="planet jupiter" onclick="showInfo('jupiter')"></div>
+        </div>
+        <div class="orbit orbit-saturn">
+            <div class="planet saturn" onclick="showInfo('saturn')"></div>
+        </div>
+    </main>
+
+    <!-- Info Box -->
+    <div id="info-box" class="info-box hidden">
+        <span class="close-btn" onclick="hideInfo()">✖</span>
+        <h2 id="planet-name"></h2>
+        <p id="planet-desc"></p>
+        <p id="planet-fact"></p>
+    </div>
+
+    <footer>
+        <p>© 2025 STIKA JATIM | Festival Teknologi Informasi dan Komunikasi Pendidikan</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
