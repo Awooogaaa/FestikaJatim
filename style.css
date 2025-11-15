@@ -15,7 +15,17 @@ header {
     margin: 50px auto;
     width: 600px;
     height: 600px;
+    /* TAMBAHKAN INI: Transisi untuk animasi zoom */
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
+
+/* KELAS BARU: Untuk state "zoom-out" */
+.solar-system.zoomed-out {
+    transform: scale(0.8); /* Buat jadi lebih kecil (bukan 2.5) */
+    opacity: 0.3;          /* Buat jadi redup (bukan 0) */
+    pointer-events: none;
+}
+
 
 .sun {
     position: absolute;
@@ -37,6 +47,7 @@ header {
     border-radius: 50%;
     transform: translate(-50%, -50%);
     animation: rotate 20s linear infinite;
+    pointer-events: none; 
 }
 
 .planet {
@@ -47,6 +58,7 @@ header {
     border-radius: 50%;
     cursor: pointer;
     transition: transform 0.3s ease;
+    pointer-events: auto; 
 }
 
 .planet:hover {
@@ -72,21 +84,32 @@ header {
     to   { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-/* Info Box */
+/* Info Box (MODIFIKASI BESAR) */
 .info-box {
     position: fixed;
     bottom: 20px;
     left: 50%;
-    transform: translateX(-50%);
     background: rgba(0,0,0,0.85);
     padding: 20px;
     border-radius: 10px;
     width: 300px;
     box-shadow: 0 0 10px #fff;
+
+    /* Properti Transisi Baru untuk "zoom-in" */
+    opacity: 1;
+    /* Pindahkan transform -50% ke sini */
+    transform: translateX(-50%) scale(1); 
+    /* Info box akan muncul 0.3 detik SETELAH zoom-out dimulai */
+    transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s;
+    pointer-events: auto;
 }
 
 .hidden {
-    display: none;
+    /* GANTI 'display: none' dengan ini agar bisa dianimasikan */
+    opacity: 0;
+    transform: translateX(-50%) scale(0.5); /* Mulai dari kecil */
+    pointer-events: none;
+    transition-delay: 0s; /* Saat disembunyikan, langsung saja */
 }
 
 .close-btn {
