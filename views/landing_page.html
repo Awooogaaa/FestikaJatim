@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selamat Datang di Galaksi</title>
-    <link rel="stylesheet" href="../css/landing_page.css">
+    <title>Xpace - Mars Journey</title>
     <style>
         * {
             margin: 0;
@@ -12,282 +11,396 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            height: 100%;
+            overflow: hidden; /* Hilangkan scroll */
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background: #000;
             color: #fff;
         }
 
-        .galaxy-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
-            z-index: -2;
+        .container {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Hilangkan scroll */
         }
 
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 28px 60px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #6b6b6b;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #fff;
+        }
+
+        .sign-up {
+            background: #fff;
+            color: #000;
+            padding: 11px 32px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: transform 0.3s ease;
+        }
+
+        .sign-up:hover {
+            transform: scale(1.05);
+        }
+
+        /* Hero Section */
+        .hero {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            padding: 60px 20px 0;
+        }
+
+        .hero-title {
+            font-size: 64px;
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: 80px;
+            max-width: 900px;
+            letter-spacing: -1.5px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-title .highlight {
+            font-weight: 500;
+            transition: color 0.5s ease, text-shadow 0.5s ease;
+            text-shadow: 
+                0 0 20px currentColor,
+                0 0 40px currentColor,
+                0 0 60px currentColor,
+                0 0 80px currentColor;
+        }
+
+        /* Mars Container - Half visible from bottom */
+        .mars-container {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2300px;
+            height: 70vh;
+            overflow: visible;
+            z-index: 5;
+            pointer-events: none; /* Agar tidak menghalangi interaksi */
+        }
+
+        .mars-image {
+            position: absolute;
+            bottom: -97%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+            filter: drop-shadow(0 -50px 70px rgba(62, 65, 255, 0.4));
+            transition: filter 0.5s ease;
+        }
+
+        /* Planet Selector */
+        .planet-selector {
+            display: flex;
+            gap: 0;
+            background: rgba(40, 40, 40, 0.8);
+            padding: 6px;
+            border-radius: 50px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            z-index: 20;
+            margin-top: auto;
+            margin-bottom: 60px;
+        }
+
+        .planet-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            border: none;
+            background: transparent;
+            color: #8b8b8b;
+            font-size: 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-weight: 400;
+        }
+
+        .planet-btn.active {
+            background: rgba(70, 70, 70, 0.9);
+            color: #fff;
+        }
+
+        .planet-btn:hover:not(.active) {
+            color: #fff;
+        }
+
+        .planet-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c61 100%);
+            box-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
+        }
+
+        .planet-btn.earth .planet-icon {
+            background: linear-gradient(135deg, #4a90e2 0%, #63b8ff 100%);
+            box-shadow: 0 0 10px rgba(74, 144, 226, 0.3);
+        }
+
+        .planet-btn.jupiter .planet-icon {
+            background: linear-gradient(135deg, #d4a574 0%, #e8c9a0 100%);
+            box-shadow: 0 0 10px rgba(212, 165, 116, 0.3);
+        }
+
+        /* Background Stars */
         .stars {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            pointer-events: none;
+            z-index: 1;
         }
 
         .star {
             position: absolute;
+            width: 2px;
+            height: 2px;
             background: #fff;
             border-radius: 50%;
             animation: twinkle 3s infinite;
         }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.8; }
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 48px;
+                margin-bottom: 60px;
+            }
 
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(138, 43, 226, 0.5); }
-            50% { box-shadow: 0 0 40px rgba(138, 43, 226, 0.8), 0 0 60px rgba(75, 0, 130, 0.6); }
-        }
-
-        .container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            position: relative;
-        }
-
-        .planet {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #667eea 0%, #764ba2 50%, #4a148c 100%);
-            box-shadow: 0 0 60px rgba(138, 43, 226, 0.6),
-                        inset 0 0 60px rgba(0, 0, 0, 0.5);
-            animation: float 6s ease-in-out infinite, glow 3s ease-in-out infinite;
-            margin-bottom: 50px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .planet::before {
-            content: '';
-            position: absolute;
-            top: 10%;
-            left: 10%;
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
-        .planet::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            animation: shine 4s infinite;
-        }
-
-        @keyframes shine {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        h1 {
-            font-size: 4rem;
-            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 20px;
-            text-align: center;
-            animation: float 4s ease-in-out infinite;
-            text-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
-        }
-
-        .subtitle {
-            font-size: 1.5rem;
-            color: #b8b8d1;
-            margin-bottom: 40px;
-            text-align: center;
-            letter-spacing: 2px;
-        }
-
-        .cta-button {
-            padding: 18px 50px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 50px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.4);
-            font-weight: bold;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .cta-button:hover::before {
-            left: 100%;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(138, 43, 226, 0.6);
-        }
-
-        .features {
-            display: flex;
-            gap: 30px;
-            margin-top: 60px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 30px;
-            width: 250px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.3);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        .feature-title {
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            color: #f093fb;
-        }
-
-        .feature-desc {
-            color: #b8b8d1;
-            line-height: 1.6;
+            .mars-container {
+                width: 160%;
+                height: 60vh;
+            }
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
+            nav {
+                padding: 20px 24px;
             }
-            
-            .subtitle {
-                font-size: 1.2rem;
+
+            .nav-links {
+                display: none;
             }
-            
-            .planet {
-                width: 200px;
-                height: 200px;
+
+            .hero-title {
+                font-size: 36px;
+                margin-bottom: 40px;
             }
-            
-            .features {
-                flex-direction: column;
-                align-items: center;
+
+            .planet-selector {
+                flex-direction: row;
+                width: 90%;
+            }
+
+            .planet-btn {
+                padding: 12px 20px;
+                font-size: 13px;
+            }
+
+            .mars-container {
+                width: 200%;
+                height: 50vh;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .planet-selector {
+                width: 95%;
+            }
+
+            .planet-btn {
+                padding: 10px 16px;
+                font-size: 12px;
+                gap: 6px;
+            }
+
+            .planet-icon {
+                width: 18px;
+                height: 18px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="galaxy-bg"></div>
     <div class="stars" id="stars"></div>
     
-    <!-- Floating elements that move on scroll -->
-    <div class="rocket">🚀</div>
-    <div class="floating-planet planet-1"></div>
-    <div class="floating-planet planet-2"></div>
-    <div class="floating-planet planet-3"></div>
-    <div class="asteroid">☄️</div>
-    
-    <!-- Section 1: Hero -->
-    <div class="section">
-        <div class="planet"></div>
-        <h1>Selamat Datang</h1>
-        <p class="subtitle">Jelajahi Galaksi Tanpa Batas</p>
-        <button class="cta-button" onclick="scrollToSection()">Mulai Petualangan</button>
-        <div class="scroll-indicator">⬇️</div>
-    </div>
+    <div class="container">
+        <nav>
+            <div class="logo">✕pace</div>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Explore</a></li>
+                <li><a href="#">Journal</a></li>
+                <li><a href="#">Events</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Support</a></li>
+            </ul>
+            <a href="#" class="sign-up">Sign up</a>
+        </nav>
 
-    <!-- Section 2: About -->
-    <div class="section">
-        <h2>Tentang Kami</h2>
-        <p class="description">
-            Kami menghadirkan pengalaman luar angkasa yang menakjubkan. 
-            Bergabunglah dengan jutaan penjelajah yang telah memulai perjalanan mereka 
-            menuju bintang-bintang dan menemukan keajaiban alam semesta.
-        </p>
-        <div class="features">
-            <div class="feature-card">
-                <div class="feature-icon">🌟</div>
-                <h3 class="feature-title">Eksplorasi</h3>
-                <p class="feature-desc">Temukan dunia baru yang menakjubkan</p>
+        <div class="hero">
+            <h1 class="hero-title">
+                This is the beginning of a story<br>
+                between you and <span class="highlight" id="planetName">Earth</span>.
+            </h1>
+
+            <div class="planet-selector">
+                <button class="planet-btn earth">
+                    <span class="planet-icon"></span>
+                    Earth
+                </button>
+                <button class="planet-btn active">
+                    <span class="planet-icon"></span>
+                    Mars
+                </button>
+                <button class="planet-btn jupiter">
+                    <span class="planet-icon"></span>
+                    Jupiter
+                </button>
             </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">🚀</div>
-                <h3 class="feature-title">Inovasi</h3>
-                <p class="feature-desc">Teknologi masa depan di ujung jari Anda</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">✨</div>
-                <h3 class="feature-title">Pengalaman</h3>
-                <p class="feature-desc">Perjalanan yang tak terlupakan</p>
-            </div>
+        </div>
+
+        <div class="mars-container">
+            <img src="../images/bumi.png" alt="Mars" class="mars-image" id="planetImage">
         </div>
     </div>
 
-    <!-- Section 3: Journey -->
-    <div class="section">
-        <h2>Perjalanan Anda</h2>
-        <p class="description">
-            Setiap petualangan dimulai dengan satu langkah kecil. 
-            Biarkan kami memandu Anda melalui galaksi penuh kemungkinan, 
-            di mana imajinasi Anda adalah satu-satunya batas.
-        </p>
-        <button class="cta-button" onclick="exploreGalaxy()">Bergabung Sekarang</button>
-    </div>
+    <script>
+        // Generate stars
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 150; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
 
-    <script src="../js/landing_page.js"></script>
+        // Planet selector functionality
+        const planetBtns = document.querySelectorAll('.planet-btn');
+        const heroTitle = document.querySelector('.hero-title');
+        const planetImage = document.getElementById('planetImage');
+        const planetName = document.getElementById('planetName');
+
+        const planetData = {
+            earth: {
+                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Earth</span>.',
+                image: '../images/bumi.png',
+                glowColor: 'rgba(74, 144, 226, 0.5)',
+                highlightColor: '#4a90e2'
+            },
+            mars: {
+                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Mars</span>.',
+                image: '../images/mars.png',
+                glowColor: 'rgba(255, 107, 53, 0.5)',
+                highlightColor: '#ff6b35'
+            },
+            jupiter: {
+                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Jupiter</span>.',
+                image: '../images/jupiter.png',
+                glowColor: 'rgba(212, 165, 116, 0.5)',
+                highlightColor: '#d4a574'
+            }
+        };
+
+        planetBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                planetBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const planet = btn.textContent.trim().toLowerCase();
+                if (planetData[planet]) {
+                    // Update title
+                    heroTitle.innerHTML = planetData[planet].title;
+                    
+                    // Update image
+                    planetImage.src = planetData[planet].image;
+                    
+                    // Update filter glow color
+                    planetImage.style.filter = `drop-shadow(0 -50px 70px ${planetData[planet].glowColor})`;
+                    
+                    // Update highlight text color - langsung ke element
+                    const newPlanetName = document.getElementById('planetName');
+                    if (newPlanetName) {
+                        newPlanetName.style.color = planetData[planet].highlightColor;
+                    }
+                }
+            });
+        });
+
+        // Set initial color untuk Mars (yang active pertama kali)
+        window.addEventListener('DOMContentLoaded', () => {
+            const activePlanet = document.querySelector('.planet-btn.active');
+            const planet = activePlanet.textContent.trim().toLowerCase();
+            if (planetData[planet] && planetName) {
+                planetName.style.color = planetData[planet].highlightColor;
+                planetImage.style.filter = `drop-shadow(0 -50px 70px ${planetData[planet].glowColor})`;
+            }
+        });
+    </script>
 </body>
 </html>
