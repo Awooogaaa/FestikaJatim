@@ -4,7 +4,133 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jelajah Angkasa Jatim</title>
-    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        body {
+            background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        header {
+            margin-top: 20px;
+        }
+
+        .solar-system {
+            position: relative;
+            margin: 50px auto;
+            width: 600px;
+            height: 600px;
+            /* TAMBAHKAN INI: Transisi untuk animasi zoom */
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
+
+        /* KELAS BARU: Untuk state "zoom-out" */
+        .solar-system.zoomed-out {
+            transform: scale(0.8); /* Buat jadi lebih kecil (bukan 2.5) */
+            opacity: 0.3;          /* Buat jadi redup (bukan 0) */
+            pointer-events: none;
+        }
+
+        .sun {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #ffcc00, #ff6600);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 60px #ffaa00;
+        }
+
+        .orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: rotate 20s linear infinite;
+            pointer-events: none;
+        }
+
+        .planet {
+            position: absolute;
+            top: -8px; /* Disesuaikan agar planet di tengah orbit */
+            left: 50%;
+             /* Pindahkan transform translateX ke :hover saja agar posisi awal benar */
+            transform: translateX(-50%);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            pointer-events: auto;
+        }
+
+        .planet:hover {
+            transform: scale(1.3) translateX(-50%);
+        }
+
+        .orbit-mercury { width: 140px; height: 140px; animation-duration: 10s; }
+        .orbit-venus   { width: 200px; height: 200px; animation-duration: 14s; }
+        .orbit-earth   { width: 270px; height: 270px; animation-duration: 18s; }
+        .orbit-mars    { width: 340px; height: 340px; animation-duration: 22s; }
+        .orbit-jupiter { width: 420px; height: 420px; animation-duration: 30s; }
+        .orbit-saturn  { width: 500px; height: 500px; animation-duration: 40s; }
+
+        .mercury { width: 15px; height: 15px; background: gray; }
+        .venus   { width: 20px; height: 20px; background: #d4a373; }
+        .earth   { width: 22px; height: 22px; background: #4cc9f0; }
+        .mars    { width: 18px; height: 18px; background: #ff6b6b; }
+        .jupiter { width: 35px; height: 35px; background: #ffb703; }
+        .saturn  { width: 30px; height: 30px; background: #f4a261; }
+
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to   { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Info Box (MODIFIKASI BESAR) */
+        .info-box {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            box-shadow: 0 0 10px #fff;
+
+            /* Properti Transisi Baru untuk "zoom-in" */
+            opacity: 1;
+            /* Pindahkan transform -50% ke sini */
+            transform: translateX(-50%) scale(1);
+            /* Info box akan muncul 0.3 detik SETELAH zoom-out dimulai */
+            transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s;
+            pointer-events: auto;
+        }
+
+        .hidden {
+            /* GANTI 'display: none' dengan ini agar bisa dianimasikan */
+            opacity: 0;
+            transform: translateX(-50%) scale(0.5); /* Mulai dari kecil */
+            pointer-events: none;
+            transition-delay: 0s; /* Saat disembunyikan, langsung saja */
+        }
+
+        .close-btn {
+            float: right;
+            cursor: pointer;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 0.9em;
+            color: #ccc;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -15,7 +141,6 @@
     <main class="solar-system">
         <div class="sun"></div>
 
-        <!-- Planet -->
         <div class="orbit orbit-mercury">
             <div class="planet mercury" onclick="showInfo('mercury')"></div>
         </div>
@@ -37,19 +162,98 @@
     </main>
     
 
-    <!-- Info Box -->
     <div id="info-box" class="info-box hidden">
         <span class="close-btn" onclick="hideInfo()">✖</span>
         <h2 id="planet-name"></h2>
         <p id="planet-desc"></p>
         <p id="planet-fact"></p>
     </div>
-        <script src="script.js"></script>
 
     <footer>
         <p>© 2025 STIKA JATIM | Festival Teknologi Informasi dan Komunikasi Pendidikan</p>
     </footer>
 
+    <script>
+        // TAMBAHAN: Ambil elemen tata surya
+        const solarSystem = document.querySelector('.solar-system');
 
+        // Ini adalah data planet Anda yang sudah ada
+        const planets = {
+            mercury: {
+                name: "Merkurius",
+                desc: "Mari kita mulai perjalanan kita ke Merkurius, si pelari cepat yang paling dekat dengan Matahari! Planet mungil ini adalah dunia yang penuh kontradiksi ekstrem. Bayangkan sebuah tempat di mana satu sisi terpanggang oleh panas yang bisa melelehkan timah (430°C), sementara sisi lainnya membeku dalam kegelapan yang lebih dingin dari kutub Bumi (-180°C).",
+                fact: "<b>Tahukah kamu?</b> kalau satu hari di Merkurius (176 hari Bumi) DUA KALI lebih lama dari satu tahunnya (88 hari)?<br><br><b>Fakta menarik dari planet ini ialah</b> ia memiliki 'ekor' seperti komet yang terbuat dari atom natrium!",
+                data: {
+                    jarak: 58, 
+                    diameter: 4879 
+                }
+            },
+            venus: {
+                name: "Venus",
+                desc: "Selamat datang di Venus, 'Kembaran Jahat' Bumi. Meski ukurannya mirip, Venus adalah neraka sesungguhnya. Planet ini diselimuti awan tebal asam sulfat yang memerangkap panas dalam efek rumah kaca tak terkendali, menjadikannya planet terpanas di tata surya—lebih panas dari Merkurius!",
+                fact: "<b>Tahukah kamu?</b> kalau Venus berputar ke arah yang berlawanan? Matahari di sana terbit di barat.<br><br><b>Fakta menarik dari planet ini ialah</b> tekanan udara di permukaannya 92 kali lebih besar dari di Bumi, setara dengan tekanan 1 km di bawah laut.",
+                data: {
+                    jarak: 108,
+                    diameter: 12104
+                }
+            },
+            earth: {
+                name: "Bumi",
+                desc: "Inilah rumah kita, Bumi! Sebuah oase kehidupan yang langka di alam semesta. Dari lautan biru yang luas hingga hutan hijau yang rimbun, planet kita adalah satu-satunya tempat yang kita tahu memiliki air cair di permukaannya dan atmosfer kaya oksigen yang dilindungi perisai magnet tak terlihat.",
+                fact: "<b>Tahukah kamu?</b> kalau Bumi sebenarnya tidak berputar 24 jam penuh? Waktu tepatnya adalah 23 jam, 56 menit, dan 4 detik. Inilah mengapa kita punya Tahun Kabisat.<br><br><b>Fakta menarik dari planet ini ialah</b> kita memiliki 'Bulan kedua' bernama 3753 Cruithne, sebuah asteroid yang mengikuti lintasan Bumi.",
+                data: {
+                    jarak: 150,
+                    diameter: 12742
+                }
+            },
+            mars: {
+                name: "Mars",
+                desc: "Mari kita kunjungi tetangga kita yang berdebu, Mars! Planet Merah ini memikat imajinasi kita dengan lanskapnya yang mirip gurun. Para ilmuwan percaya miliaran tahun lalu, Mars adalah dunia yang basah dengan sungai, danau, dan mungkin lautan. Kini, ia menjadi target utama pencarian tanda-tanda kehidupan di masa lalu.",
+                fact: "<b>Tahukah kamu?</b> kalau Mars adalah rumah bagi gunung berapi terbesar di tata surya? Olympus Mons tiga kali lebih tinggi dari Gunung Everest!<br><br><b>Fakta menarik dari planet ini ialah</b> Mars mengalami badai debu raksasa yang bisa menutupi seluruh planet selama berminggu-minggu.",
+                data: {
+                    jarak: 228,
+                    diameter: 6779
+                }
+            },
+            jupiter: {
+                name: "Jupiter",
+                desc: "Bersiaplah bertemu sang Raja Tata Surya, Jupiter! Raksasa gas ini begitu kolosal sehingga bisa menampung 1.300 Bumi di dalamnya. Ia adalah bola gas hidrogen dan helium raksasa dengan puncak awan amonia yang berputar-putar kencang, menciptakan sabuk dan zona berwarna-warni yang indah sekaligus ganas.",
+                fact: "<b>Tahukah kamu?</b> kalau Jupiter memiliki 'Bintik Merah Raksasa'? Itu adalah badai raksasa yang lebih besar dari Bumi dan telah berkecamuk setidaknya selama 350 tahun!<br><br><b>Fakta menarik dari planet ini ialah</b> Jupiter bertindak sebagai 'pengawal' Bumi, menarik komet dan asteroid berbahaya dengan gravitasinya.",
+                data: {
+                    jarak: 778,
+                    diameter: 139820
+                }
+            },
+            saturn: {
+                name: "Saturnus",
+                desc: "Inilah dia, permata tata surya kita, Saturnus! Tidak ada planet lain yang bisa menandingi keanggunan cincinnya yang spektakuler. Cincin ini bukanlah benda padat; mereka terdiri dari miliaran kepingan es dan batu—beberapa sekecil butiran debu, lainnya sebesar rumah. Sistem cincin ini sangat luas namun sangat tipis.",
+                fact: "<b>Tahukah kamu?</b> kalau Saturnus adalah satu-satunya planet yang kepadatannya lebih ringan dari air? Jika ada bak mandi raksasa yang cukup besar, Saturnus akan mengapung!<br><br><b>Fakta menarik dari planet ini ialah</b> bulannya, Titan, adalah satu-satunya tempat selain Bumi yang memiliki danau dan sungai (tapi terbuat dari metana cair).",
+                data: {
+                    jarak: 1400,
+                    diameter: 116460
+                }
+            }
+        };
+
+        function showInfo(planetKey) {
+            const info = planets[planetKey];
+            
+            document.getElementById("planet-name").innerText = info.name;
+            document.getElementById("planet-desc").innerText = info.desc;
+            document.getElementById("planet-fact").innerHTML = "💡 " + info.fact;
+            
+            // TAMBAHAN: Memicu animasi zoom-out pada tata surya
+            solarSystem.classList.add('zoomed-out');
+            
+            document.getElementById("info-box").classList.remove("hidden");
+        }
+
+        function hideInfo() {
+            // TAMBAHAN: Mengembalikan tata surya seperti semula
+            solarSystem.classList.remove('zoomed-out');
+
+            document.getElementById("info-box").classList.add("hidden");
+        }
+    </script>
 </body>
 </html>

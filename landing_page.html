@@ -346,6 +346,9 @@
                 <li><a href="#">Blog</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Support</a></li>
+                
+                <li><a href="planet.html">planet</a></li>
+                
             </ul>
             <a href="#" class="sign-up">Sign up</a>
         </nav>
@@ -385,7 +388,7 @@
         </div>
 
         <div class="mars-container">
-            <img src="../images/bumi.png" alt="Mars" class="mars-image" id="planetImage">
+            <img src="images/bumi.png" alt="Mars" class="mars-image" id="planetImage">
         </div>
     </div>
 
@@ -407,52 +410,55 @@
         const planetImage = document.getElementById('planetImage');
         const planetName = document.getElementById('planetName');
 
+        /*
+          PERBAIKAN 2: Menghapus "../" dari SEMUA jalur gambar di JavaScript
+        */
         const planetData = {
             mercury: {
                 title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Mercury</span>.',
-                image: '../images/mercury.png',
+                image: 'images/mercury.png', // <-- DIPERBAIKI
                 glowColor: 'rgba(140, 140, 140, 0.5)',
                 highlightColor: '#8c8c8c'
             },
             venus: {
                 title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Venus</span>.',
-                image: '../images/venus.png',
+                image: 'images/venus.png', // <-- DIPERBAIKI
                 glowColor: 'rgba(232, 184, 75, 0.5)',
                 highlightColor: '#e8b84b'
             },
             earth: {
                 title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Earth</span>.',
-                image: '../images/bumi.png',
+                image: 'images/bumi.png', // <-- DIPERBAIKI
                 glowColor: 'rgba(74, 144, 226, 0.5)',
                 highlightColor: '#4a90e2'
             },
             mars: {
                 title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Mars</span>.',
-                image: '../images/mars.png',
+                image: 'images/mars.png', // <-- DIPERBAIKI
                 glowColor: 'rgba(255, 107, 53, 0.5)',
                 highlightColor: '#ff6b35'
             },
             jupiter: {
-                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Jupiter</span>.',
-                image: '../images/jupiter.png',
+                title: 'This is the beginning of a story<br>between you and <span class="highlight"id="planetName">Jupiter</span>.',
+                image: 'images/jupiter.png', // <-- DIPERBAIKI
                 glowColor: 'rgba(212, 165, 116, 0.5)',
                 highlightColor: '#d4a574'
             },
             saturn: {
                 title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Saturn</span>.',
-                image: '../images/saturnus1.png',
+                image: 'images/saturnus1.png', // <-- DIPERBAIKI
                 glowColor: 'rgba(230, 207, 139, 0.5)',
                 highlightColor: '#e6cf8b'
             },
             uranus: {
                 title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Uranus</span>.',
-                image: '../images/uranus.png',
+                image: 'images/uranus.png', // <-- DIPERBAIKI
                 glowColor: 'rgba(79, 209, 217, 0.5)',
                 highlightColor: '#4fd1d9'
             },
             neptune: {
                 title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Neptune</span>.',
-                image: '../images/neptune.png',
+                image: 'images/neptune.png', // <-- DIPERBAIKI
                 glowColor: 'rgba(75, 112, 232, 0.5)',
                 highlightColor: '#4b70e8'
             }
@@ -507,7 +513,7 @@
             if (planetData[planet] && planetName) {
                 planetName.style.color = planetData[planet].highlightColor;
                 planetImage.style.filter = `drop-shadow(0 -50px 70px ${planetData[planet].glowColor})`;
-                planetImage.src = planetData[planet].image;
+                planetImage.src = planetData[planet].image; // <-- DIPERBAIKI (jalur awal)
             }
         });
     </script>
