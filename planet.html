@@ -412,48 +412,56 @@
         const returnBtn = document.getElementById('return-btn');
 
         // Data planet (SAYA TAMBAHKAN 'image' dan 'background')
+        // Data planet (SAYA TAMBAHKAN 'image' dan 'background')
         const planets = {
             mercury: {
                 name: "Merkurius",
                 desc: "Mari kita mulai perjalanan kita ke Merkurius, si pelari cepat yang paling dekat dengan Matahari! Planet mungil ini adalah dunia yang penuh kontradiksi ekstrem. Bayangkan sebuah tempat di mana satu sisi terpanggang oleh panas yang bisa melelehkan timah (430°C), sementara sisi lainnya membeku dalam kegelapan yang lebih dingin dari kutub Bumi (-180°C).",
                 fact: "<b>Tahukah kamu?</b> kalau satu hari di Merkurius (176 hari Bumi) DUA KALI lebih lama dari satu tahunnya (88 hari)?",
-                image: "images/mercury.png", // <== DIPIKIRKAN DARI KODE LANDING PAGE
+                image: "images/merkurius.png", // <== DIPERBAIKI
                 background: "images/mercury-bg.jpg" // <-- GANTI DENGAN GAMBAR ANDA
             },
             venus: {
                 name: "Venus",
                 desc: "Selamat datang di Venus, 'Kembaran Jahat' Bumi. Meski ukurannya mirip, Venus adalah neraka sesungguhnya. Planet ini diselimuti awan tebal asam sulfat yang memerangkap panas dalam efek rumah kaca tak terkendali, menjadikannya planet terpanas di tata surya—lebih panas dari Merkurius!",
                 fact: "<b>Tahukah kamu?</b> kalau Venus berputar ke arah yang berlawanan? Matahari di sana terbit di barat.",
-                image: "images/venus.png", // <== DIPIKIRKAN DARI KODE LANDING PAGE
-                background: "images/venus-bg.jpg" // <-- GANTI DENGAN GAMBAR ANDA (seperti di screenshot)
+                image: "images/venus.png", // <== SUDAH BENAR
+                background: "images/venus-bg.jpg" // <-- GANTI DENGAN GAMBAR ANDA
             },
             earth: {
                 name: "Bumi",
                 desc: "Inilah rumah kita, Bumi! Sebuah oase kehidupan yang langka di alam semesta. Dari lautan biru yang luas hingga hutan hijau yang rimbun, planet kita adalah satu-satunya tempat yang kita tahu memiliki air cair di permukaannya dan atmosfer kaya oksigen.",
                 fact: "<b>Tahukah kamu?</b> kalau Bumi sebenarnya tidak berputar 24 jam penuh? Waktu tepatnya adalah 23 jam, 56 menit, dan 4 detik.",
-                image: "images/bumi.png", // <== DIAMBIL DARI FILE ANDA
+                image: "images/bumi.png", // <== SUDAH BENAR
                 background: "images/earth-bg.jpg" // <-- GANTI DENGAN GAMBAR ANDA
             },
             mars: {
                 name: "Mars",
                 desc: "Mari kita kunjungi tetangga kita yang berdebu, Mars! Planet Merah ini memikat imajinasi kita dengan lanskapnya yang mirip gurun. Para ilmuwan percaya miliaran tahun lalu, Mars adalah dunia yang basah dengan sungai, danau, dan mungkin lautan.",
                 fact: "<b>Tahukah kamu?</b> kalau Mars adalah rumah bagi gunung berapi terbesar di tata surya? Olympus Mons tiga kali lebih tinggi dari Gunung Everest!",
-                image: "images/mars.png", // <== DIAMBIL DARI FILE ANDA
+                image: "images/mars.png", // <== SUDAH BENAR
                 background: "images/mars-bg.jpg" // <-- GANTI DENGAN GAMBAR ANDA
             },
             jupiter: {
                 name: "Jupiter",
                 desc: "Bersiaplah bertemu sang Raja Tata Surya, Jupiter! Raksasa gas ini begitu kolosal sehingga bisa menampung 1.300 Bumi di dalamnya. Ia adalah bola gas hidrogen dan helium raksasa dengan puncak awan amonia yang berputar-putar kencang.",
                 fact: "<b>Tahukah kamu?</b> kalau Jupiter memiliki 'Bintik Merah Raksasa'? Itu adalah badai raksasa yang lebih besar dari Bumi dan telah berkecamuk setidaknya selama 350 tahun!",
-                image: "images/jupiter.png", // <== DIAMBIL DARI FILE ANDA
+                image: "images/jupiter.png", // <== SUDAH BENAR
                 background: "images/jupiter-bg.jpg" // <-- GANTI DENGAN GAMBAR ANDA
             },
             saturn: {
                 name: "Saturnus",
                 desc: "Inilah dia, permata tata surya kita, Saturnus! Tidak ada planet lain yang bisa menandingi keanggunan cincinnya yang spektakuler. Cincin ini bukanlah benda padat; mereka terdiri dari miliaran kepingan es dan batu.",
                 fact: "<b>Tahukah kamu?</b> kalau Saturnus adalah satu-satunya planet yang kepadatannya lebih ringan dari air? Jika ada bak mandi raksasa yang cukup besar, Saturnus akan mengapung!",
-                image: "images/saturnus1.png", // <== DIAMBIL DARI FILE ANDA
+                image: "images/saturnus1.png", // <== SUDAH BENAR
                 background: "images/saturn-bg.jpg" // <-- GANTI DENGAN GAMBAR ANDA
+            },
+            neptune: {
+                name: "Neptunus",
+                desc: "Selamat datang di raksasa es terakhir, Neptunus. Planet biru cemerlang ini adalah dunia yang paling jauh dari Matahari, diselimuti angin tercepat di tata surya, mencapai kecepatan 2.100 km/jam!",
+                fact: "<b>Tahukah kamu?</b> Satu tahun di Neptunus sama dengan 165 tahun di Bumi. Sejak ditemukan pada tahun 1846, planet ini baru menyelesaikan satu putaran orbitnya pada tahun 2011.",
+                image: "images/neptunus.png", // <== BARU DITAMBAHKAN & DIPERBAIKI
+                background: "images/neptune-bg.jpg" // <-- GANTI DENGAN GAMBAR ANDA
             }
         };
 
