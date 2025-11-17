@@ -6,7 +6,7 @@
     <title>Jelajah Angkasa - Tata Surya</title>
     
     <style>
-        /* --- MENGADOPSI GAYA DARI LANDING PAGE --- */
+        /* --- GAYA DASAR & BINTANG (dari landing page) --- */
         * {
             margin: 0;
             padding: 0;
@@ -14,15 +14,15 @@
         }
 
         body {
-            /* Menggunakan font & background dari landing page */
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background: #000;
             color: #fff;
             text-align: center;
-            overflow-x: hidden;
+            overflow: hidden; /* Mencegah scroll di kedua tampilan */
+            height: 100vh;
         }
 
-        /* Navigasi (diambil dari landing page) */
+        /* Navigasi */
         nav {
             display: flex;
             justify-content: space-between;
@@ -31,7 +31,7 @@
             position: relative;
             z-index: 100;
         }
-
+        
         .logo {
             font-size: 22px;
             font-weight: 600;
@@ -73,7 +73,7 @@
             transform: scale(1.05);
         }
 
-        /* Background Bintang (diambil dari landing page) */
+        /* Background Bintang */
         .stars {
             position: fixed;
             top: 0;
@@ -81,7 +81,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: -1; /* Pindahkan ke belakang */
+            z-index: -1;
         }
 
         .star {
@@ -98,7 +98,14 @@
             50% { opacity: 0.8; }
         }
 
-        /* --- GAYA ASLI PLANET.HTML (DISESUAIKAN) --- */
+        /* --- TAMPILAN UTAMA (TATA SURYA) --- */
+
+        /* Judul Halaman & Tata Surya */
+        .page-title, .solar-system, footer {
+            position: relative;
+            z-index: 10;
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
         
         .page-title {
             margin-top: 40px;
@@ -118,13 +125,14 @@
             margin: 50px auto;
             width: 600px;
             height: 600px;
-            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-            z-index: 10;
         }
 
-        .solar-system.zoomed-out {
+        /* Saat detail aktif, sembunyikan tampilan tata surya */
+        body.detail-active .page-title,
+        body.detail-active .solar-system,
+        body.detail-active footer {
+            opacity: 0;
             transform: scale(0.8);
-            opacity: 0.3;
             pointer-events: none;
         }
 
@@ -185,72 +193,132 @@
             to   { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
-        /* Info Box (DIROMBAK agar mirip landing page) */
-        .info-box {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            width: 90%;
-            max-width: 500px; /* Batas lebar agar tidak terlalu besar */
-            
-            /* Gaya baru dari landing page */
-            background: rgba(20, 20, 20, 0.9);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 25px;
-            text-align: left; /* Lebih mudah dibaca */
-            z-index: 200;
+        /* --- TAMPILAN DETAIL PLANET (BARU) --- */
 
-            /* Properti transisi */
+        .planet-detail-view {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 150;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in 0.3s; /* Muncul setelah tata surya hilang */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Background (seperti di screenshot Venus) */
+        .detail-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: 1;
+            /* Gambar di-set oleh JS, contoh: */
+            /* background-image: url('images/venus-bg.jpg'); */
+        }
+        
+        /* Saat detail aktif, tampilkan */
+        body.detail-active .planet-detail-view {
             opacity: 1;
-            transform: translate(-50%, -50%) scale(1);
-            transition: opacity 0.4s ease, transform 0.4s ease;
             pointer-events: auto;
         }
-
-        .hidden {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0.5); /* Mulai dari tengah */
-            pointer-events: none;
+        
+        /* Layout Konten (seperti di screenshot Mars) */
+        .detail-content-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1400px;
+            padding: 0 60px;
+            position: relative;
+            z-index: 2;
         }
 
-        .close-btn {
-            float: right;
-            cursor: pointer;
-            font-size: 20px;
-            color: #888;
-            transition: color 0.3s ease;
-        }
-        .close-btn:hover {
-            color: #fff;
+        .detail-text-content {
+            flex-basis: 45%;
+            text-align: left;
         }
 
-        /* Penyesuaian teks di dalam info-box */
-        .info-box h2 {
-            margin-bottom: 15px;
-            font-weight: 600;
-            color: #fff;
+        .detail-planet-visual {
+            flex-basis: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .info-box p {
-            font-size: 15px;
-            line-height: 1.6;
+        
+        /* Styling Teks (seperti Mars) */
+        #detail-planet-name {
+            font-size: 100px; /* Ukuran besar */
+            font-weight: 700;
+            letter-spacing: -2px;
+            line-height: 1;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+        }
+
+        #detail-planet-desc, #detail-planet-fact {
+            font-size: 16px;
+            line-height: 1.7;
             color: #ccc;
+            max-width: 600px; /* Agar tidak terlalu lebar */
         }
-        .info-box #planet-fact {
+        
+        #detail-planet-fact {
             margin-top: 15px;
             padding-top: 15px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: #fff;
+        }
+        
+        /* Gambar Planet */
+        #detail-planet-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            animation: spin 60s linear infinite; /* Efek berputar lambat */
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+
+        /* Tombol Return (seperti Mars) */
+        .detail-button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .detail-button:hover {
+            background: #fff;
+            color: #000;
         }
 
 
         footer {
             margin: 50px 0 30px 0;
             font-size: 0.9em;
-            color: #6b6b6b; /* Samakan dengan nav links */
-            position: relative;
-            z-index: 10;
+            color: #6b6b6b;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
         }
     </style>
 </head>
@@ -262,7 +330,7 @@
         <ul class="nav-links">
             <li><a href="landing_page.html">Explore</a></li>
             <li><a href="planet.html" class="active">Solar System</a></li>
-            </ul>
+        </ul>
         <a href="#" class="sign-up">Sign up</a>
     </nav>
 
@@ -293,19 +361,35 @@
         </div>
     </main>
     
-    <div id="info-box" class="info-box hidden">
-        <span class="close-btn" onclick="hideInfo()">✖</span>
-        <h2 id="planet-name"></h2>
-        <p id="planet-desc"></p>
-        <p id="planet-fact"></p>
+    <div id="planet-detail-view" class="planet-detail-view">
+        
+        <div id="detail-background" class="detail-background"></div>
+        
+        <div class="detail-content-wrapper">
+            
+            <div class="detail-text-content">
+                <h1 id="detail-planet-name"></h1>
+                <p id="detail-planet-desc"></p>
+                <p id="detail-planet-fact"></p>
+                
+                <button id="return-btn" class="detail-button">
+                    <span>&lt;</span> Kembali
+                </button>
+            </div>
+            
+            <div class="detail-planet-visual">
+                <img id="detail-planet-image" src="" alt="Planet">
+            </div>
+        </div>
     </div>
+
 
     <footer>
         <p>© 2025 STIKA JATIM | Festival Teknologi Informasi dan Komunikasi Pendidikan</p>
     </footer>
 
     <script>
-        // --- SCRIPT DARI LANDING PAGE (BINTANG) ---
+        // --- SCRIPT BINTANG ---
         const starsContainer = document.getElementById('stars');
         for (let i = 0; i < 150; i++) {
             const star = document.createElement('div');
@@ -316,57 +400,88 @@
             starsContainer.appendChild(star);
         }
 
-        // --- SCRIPT ASLI DARI PLANET.HTML ---
-        const solarSystem = document.querySelector('.solar-system');
+        // --- SCRIPT TATA SURYA & TAMPILAN DETAIL ---
 
+        // Ambil elemen-elemen baru
+        const detailView = document.getElementById('planet-detail-view');
+        const detailName = document.getElementById('detail-planet-name');
+        const detailDesc = document.getElementById('detail-planet-desc');
+        const detailFact = document.getElementById('detail-planet-fact');
+        const detailImage = document.getElementById('detail-planet-image');
+        const detailBg = document.getElementById('detail-background');
+        const returnBtn = document.getElementById('return-btn');
+
+        // Data planet (SAYA TAMBAHKAN 'image' dan 'background')
         const planets = {
             mercury: {
                 name: "Merkurius",
                 desc: "Mari kita mulai perjalanan kita ke Merkurius, si pelari cepat yang paling dekat dengan Matahari! Planet mungil ini adalah dunia yang penuh kontradiksi ekstrem. Bayangkan sebuah tempat di mana satu sisi terpanggang oleh panas yang bisa melelehkan timah (430°C), sementara sisi lainnya membeku dalam kegelapan yang lebih dingin dari kutub Bumi (-180°C).",
-                fact: "<b>Tahukah kamu?</b> kalau satu hari di Merkurius (176 hari Bumi) DUA KALI lebih lama dari satu tahunnya (88 hari)?<br><br><b>Fakta menarik dari planet ini ialah</b> ia memiliki 'ekor' seperti komet yang terbuat dari atom natrium!",
+                fact: "<b>Tahukah kamu?</b> kalau satu hari di Merkurius (176 hari Bumi) DUA KALI lebih lama dari satu tahunnya (88 hari)?",
+                image: "images/mercury.png", // <== DIPIKIRKAN DARI KODE LANDING PAGE
+                background: "images/mercury-bg.jpg" // <-- GANTI DENGAN GAMBAR ANDA
             },
             venus: {
                 name: "Venus",
                 desc: "Selamat datang di Venus, 'Kembaran Jahat' Bumi. Meski ukurannya mirip, Venus adalah neraka sesungguhnya. Planet ini diselimuti awan tebal asam sulfat yang memerangkap panas dalam efek rumah kaca tak terkendali, menjadikannya planet terpanas di tata surya—lebih panas dari Merkurius!",
-                fact: "<b>Tahukah kamu?</b> kalau Venus berputar ke arah yang berlawanan? Matahari di sana terbit di barat.<br><br><b>Fakta menarik dari planet ini ialah</b> tekanan udara di permukaannya 92 kali lebih besar dari di Bumi, setara dengan tekanan 1 km di bawah laut.",
+                fact: "<b>Tahukah kamu?</b> kalau Venus berputar ke arah yang berlawanan? Matahari di sana terbit di barat.",
+                image: "images/venus.png", // <== DIPIKIRKAN DARI KODE LANDING PAGE
+                background: "images/venus-bg.jpg" // <-- GANTI DENGAN GAMBAR ANDA (seperti di screenshot)
             },
             earth: {
                 name: "Bumi",
-                desc: "Inilah rumah kita, Bumi! Sebuah oase kehidupan yang langka di alam semesta. Dari lautan biru yang luas hingga hutan hijau yang rimbun, planet kita adalah satu-satunya tempat yang kita tahu memiliki air cair di permukaannya dan atmosfer kaya oksigen yang dilindungi perisai magnet tak terlihat.",
-                fact: "<b>Tahukah kamu?</b> kalau Bumi sebenarnya tidak berputar 24 jam penuh? Waktu tepatnya adalah 23 jam, 56 menit, dan 4 detik. Inilah mengapa kita punya Tahun Kabisat.<br><br><b>Fakta menarik dari planet ini ialah</b> kita memiliki 'Bulan kedua' bernama 3753 Cruithne, sebuah asteroid yang mengikuti lintasan Bumi.",
+                desc: "Inilah rumah kita, Bumi! Sebuah oase kehidupan yang langka di alam semesta. Dari lautan biru yang luas hingga hutan hijau yang rimbun, planet kita adalah satu-satunya tempat yang kita tahu memiliki air cair di permukaannya dan atmosfer kaya oksigen.",
+                fact: "<b>Tahukah kamu?</b> kalau Bumi sebenarnya tidak berputar 24 jam penuh? Waktu tepatnya adalah 23 jam, 56 menit, dan 4 detik.",
+                image: "images/bumi.png", // <== DIAMBIL DARI FILE ANDA
+                background: "images/earth-bg.jpg" // <-- GANTI DENGAN GAMBAR ANDA
             },
             mars: {
                 name: "Mars",
-                desc: "Mari kita kunjungi tetangga kita yang berdebu, Mars! Planet Merah ini memikat imajasi kita dengan lanskapnya yang mirip gurun. Para ilmuwan percaya miliaran tahun lalu, Mars adalah dunia yang basah dengan sungai, danau, dan mungkin lautan. Kini, ia menjadi target utama pencarian tanda-tanda kehidupan di masa lalu.",
-                fact: "<b>Tahukah kamu?</b> kalau Mars adalah rumah bagi gunung berapi terbesar di tata surya? Olympus Mons tiga kali lebih tinggi dari Gunung Everest!<br><br><b>Fakta menarik dari planet ini ialah</b> Mars mengalami badai debu raksasa yang bisa menutupi seluruh planet selama berminggu-minggu.",
+                desc: "Mari kita kunjungi tetangga kita yang berdebu, Mars! Planet Merah ini memikat imajinasi kita dengan lanskapnya yang mirip gurun. Para ilmuwan percaya miliaran tahun lalu, Mars adalah dunia yang basah dengan sungai, danau, dan mungkin lautan.",
+                fact: "<b>Tahukah kamu?</b> kalau Mars adalah rumah bagi gunung berapi terbesar di tata surya? Olympus Mons tiga kali lebih tinggi dari Gunung Everest!",
+                image: "images/mars.png", // <== DIAMBIL DARI FILE ANDA
+                background: "images/mars-bg.jpg" // <-- GANTI DENGAN GAMBAR ANDA
             },
             jupiter: {
                 name: "Jupiter",
-                desc: "Bersiaplah bertemu sang Raja Tata Surya, Jupiter! Raksasa gas ini begitu kolosal sehingga bisa menampung 1.300 Bumi di dalamnya. Ia adalah bola gas hidrogen dan helium raksasa dengan puncak awan amonia yang berputar-putar kencang, menciptakan sabuk dan zona berwarna-warni yang indah sekaligus ganas.",
-                fact: "<b>Tahukah kamu?</b> kalau Jupiter memiliki 'Bintik Merah Raksasa'? Itu adalah badai raksasa yang lebih besar dari Bumi dan telah berkecamuk setidaknya selama 350 tahun!<br><br><b>Fakta menarik dari planet ini ialah</b> Jupiter bertindak sebagai 'pengawal' Bumi, menarik komet dan asteroid berbahaya dengan gravitasinya.",
+                desc: "Bersiaplah bertemu sang Raja Tata Surya, Jupiter! Raksasa gas ini begitu kolosal sehingga bisa menampung 1.300 Bumi di dalamnya. Ia adalah bola gas hidrogen dan helium raksasa dengan puncak awan amonia yang berputar-putar kencang.",
+                fact: "<b>Tahukah kamu?</b> kalau Jupiter memiliki 'Bintik Merah Raksasa'? Itu adalah badai raksasa yang lebih besar dari Bumi dan telah berkecamuk setidaknya selama 350 tahun!",
+                image: "images/jupiter.png", // <== DIAMBIL DARI FILE ANDA
+                background: "images/jupiter-bg.jpg" // <-- GANTI DENGAN GAMBAR ANDA
             },
             saturn: {
                 name: "Saturnus",
-                desc: "Inilah dia, permata tata surya kita, Saturnus! Tidak ada planet lain yang bisa menandingi keanggunan cincinnya yang spektakuler. Cincin ini bukanlah benda padat; mereka terdiri dari miliaran kepingan es dan batu—beberapa sekecil butiran debu, lainnya sebesar rumah. Sistem cincin ini sangat luas namun sangat tipis.",
-                fact: "<b>Tahukah kamu?</b> kalau Saturnus adalah satu-satunya planet yang kepadatannya lebih ringan dari air? Jika ada bak mandi raksasa yang cukup besar, Saturnus akan mengapung!<br><br><b>Fakta menarik dari planet ini ialah</b> bulannya, Titan, adalah satu-satunya tempat selain Bumi yang memiliki danau dan sungai (tapi terbuat dari metana cair).",
+                desc: "Inilah dia, permata tata surya kita, Saturnus! Tidak ada planet lain yang bisa menandingi keanggunan cincinnya yang spektakuler. Cincin ini bukanlah benda padat; mereka terdiri dari miliaran kepingan es dan batu.",
+                fact: "<b>Tahukah kamu?</b> kalau Saturnus adalah satu-satunya planet yang kepadatannya lebih ringan dari air? Jika ada bak mandi raksasa yang cukup besar, Saturnus akan mengapung!",
+                image: "images/saturnus1.png", // <== DIAMBIL DARI FILE ANDA
+                background: "images/saturn-bg.jpg" // <-- GANTI DENGAN GAMBAR ANDA
             }
         };
 
+        // FUNGSI BARU (Menggantikan modal)
         function showInfo(planetKey) {
             const info = planets[planetKey];
             
-            document.getElementById("planet-name").innerText = info.name;
-            document.getElementById("planet-desc").innerText = info.desc;
-            document.getElementById("planet-fact").innerHTML = "💡 " + info.fact;
+            // 1. Isi data ke tampilan detail
+            detailName.innerText = info.name;
+            detailDesc.innerText = info.desc;
+            detailFact.innerHTML = "💡 " + info.fact;
+            detailImage.src = info.image;
             
-            solarSystem.classList.add('zoomed-out');
-            document.getElementById("info-box").classList.remove("hidden");
+            // 2. Set background (jika Anda punya gambarnya)
+            // detailBg.style.backgroundImage = `url(${info.background})`;
+            
+            // 3. Tampilkan tampilan detail dengan memicu kelas di body
+            document.body.classList.add('detail-active');
         }
 
+        // FUNGSI BARU (Menggantikan modal)
         function hideInfo() {
-            solarSystem.classList.remove('zoomed-out');
-            document.getElementById("info-box").classList.add("hidden");
+            // Sembunyikan tampilan detail
+            document.body.classList.remove('detail-active');
         }
+
+        // Tambahkan listener ke tombol "Kembali"
+        returnBtn.addEventListener('click', hideInfo);
     </script>
 </body>
-</html> 
+</html>
