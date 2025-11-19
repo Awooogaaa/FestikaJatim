@@ -13,7 +13,7 @@
 
         html, body {
             height: 100%;
-            overflow: hidden; /* Hilangkan scroll */
+            overflow: hidden;
         }
 
         body {
@@ -27,7 +27,7 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            overflow: hidden; /* Hilangkan scroll */
+            overflow: hidden;
         }
 
         /* Navigation */
@@ -87,6 +87,12 @@
             align-items: center;
             position: relative;
             padding: 60px 20px 0;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .hero.split-view {
+            align-items: flex-start;
+            padding-left: 60px;
         }
 
         .hero-title {
@@ -99,6 +105,14 @@
             text-align: center;
             position: relative;
             z-index: 10;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .hero.split-view .hero-title {
+            text-align: left;
+            font-size: 48px;
+            max-width: 650px;
+            margin-bottom: 40px;
         }
 
         .hero-title .highlight {
@@ -111,7 +125,7 @@
                 0 0 80px currentColor;
         }
 
-        /* Mars Container - Half visible from bottom */
+        /* Mars Container */
         .mars-container {
             position: absolute;
             bottom: 0;
@@ -121,7 +135,14 @@
             height: 70vh;
             overflow: visible;
             z-index: 5;
-            pointer-events: none; /* Agar tidak menghalangi interaksi */
+            pointer-events: none;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .hero.split-view .mars-container {
+            left: 20%;
+            width: 1400px;
+            height: 60vh;
         }
 
         .mars-image {
@@ -134,6 +155,120 @@
             border-radius: 50%;
             filter: drop-shadow(0 -50px 70px rgba(62, 65, 255, 0.4));
             transition: filter 0.5s ease;
+        }
+
+        /* Info Card */
+        .info-card {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%) translateX(500px);
+            width: 450px;
+            background: rgba(20, 20, 20, 0.95);
+            background-color: transparent;
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 50;
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .info-card.visible {
+            transform: translateY(-50%) translateX(0);
+            opacity: 1;
+        }
+
+        .info-card h2 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .info-card .planet-type {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-card .description {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #ccc;
+            margin-bottom: 32px;
+        }
+
+        .info-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .explore-btn {
+            width: 100%;
+            padding: 16px;
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .explore-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
         }
 
         /* Planet Selector */
@@ -149,30 +284,53 @@
             z-index: 20;
             margin-top: auto;
             margin-bottom: 60px;
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .hero.split-view .planet-selector {
+            margin-left: 0;
         }
 
         .planet-btn {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             padding: 0;
+            padding-left: 5px;
             border: none;
             background: transparent;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             font-family: inherit;
-            width: 50px;
             height: 50px;
             position: relative;
+            border-radius: 30px;
+            overflow: hidden;
+            width: 50px;
         }
 
         .planet-btn:hover .planet-icon {
             transform: scale(1.15);
         }
 
+        .planet-btn:hover .planet-tooltip {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .planet-btn.active {
+            background: rgba(255, 255, 255, 0.05);
+            width: auto;
+            padding-right: 20px;
+        }
+
         .planet-btn.active .planet-icon {
             transform: scale(1.2);
             box-shadow: 0 0 20px currentColor;
+        }
+
+        .planet-btn.active .planet-tooltip {
+            display: none;
         }
 
         .planet-icon {
@@ -181,39 +339,120 @@
             border-radius: 50%;
             transition: all 0.3s ease;
             border: 2px solid rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+            margin-left: 0;
         }
 
-        /* Earth Icon */
+        /* Planet Name Label */
+        .planet-name-label {
+            margin-left: 12px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            pointer-events: none;
+        }
+
+        .planet-btn.active .planet-name-label {
+            opacity: 1;
+        }
+
+        /* Planet Tooltip */
+        .planet-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-8px);
+            background: rgba(20, 20, 20, 0.95);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 8px;
+            z-index: 10;
+        }
+
+        .planet-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: rgba(20, 20, 20, 0.95);
+        }
+
+        /* Planet Tooltip */
+        .planet-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-8px);
+            background: rgba(20, 20, 20, 0.95);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 8px;
+        }
+
+        .planet-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: rgba(20, 20, 20, 0.95);
+        }
+
+        .planet-btn:hover .planet-tooltip {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Planet Icons */
         .planet-btn.earth .planet-icon {
             background: linear-gradient(135deg, #4a90e2 0%, #63b8ff 100%);
             box-shadow: 0 0 15px rgba(74, 144, 226, 0.4);
         }
 
-        /* Mars Icon */
         .planet-btn.mars .planet-icon {
             background: linear-gradient(135deg, #ff6b35 0%, #ff8c61 100%);
             box-shadow: 0 0 15px rgba(255, 107, 53, 0.4);
         }
 
-        /* Jupiter Icon */
         .planet-btn.jupiter .planet-icon {
             background: linear-gradient(135deg, #d4a574 0%, #e8c9a0 100%);
             box-shadow: 0 0 15px rgba(212, 165, 116, 0.4);
         }
 
-        /* Mercury Icon */
         .planet-btn.mercury .planet-icon {
             background: linear-gradient(135deg, #8c8c8c 0%, #b8b8b8 100%);
             box-shadow: 0 0 15px rgba(140, 140, 140, 0.4);
         }
 
-        /* Venus Icon */
         .planet-btn.venus .planet-icon {
             background: linear-gradient(135deg, #e8b84b 0%, #f5d97a 100%);
             box-shadow: 0 0 15px rgba(232, 184, 75, 0.4);
         }
 
-        /* Saturn Icon */
         .planet-btn.saturn .planet-icon {
             background: linear-gradient(135deg, #e6cf8b 0%, #f5e6b8 100%);
             box-shadow: 0 0 15px rgba(230, 207, 139, 0.4);
@@ -231,13 +470,11 @@
             transform: translateY(-50%) rotate(-15deg);
         }
 
-        /* Uranus Icon */
         .planet-btn.uranus .planet-icon {
             background: linear-gradient(135deg, #4fd1d9 0%, #7de3e8 100%);
             box-shadow: 0 0 15px rgba(79, 209, 217, 0.4);
         }
 
-        /* Neptune Icon */
         .planet-btn.neptune .planet-icon {
             background: linear-gradient(135deg, #4b70e8 0%, #7a94f5 100%);
             box-shadow: 0 0 15px rgba(75, 112, 232, 0.4);
@@ -279,6 +516,16 @@
                 width: 160%;
                 height: 60vh;
             }
+
+            .info-card {
+                width: 380px;
+                right: 40px;
+                padding: 32px;
+            }
+
+            .hero.split-view .mars-container {
+                width: 120%;
+            }
         }
 
         @media (max-width: 768px) {
@@ -300,35 +547,40 @@
                 width: 90%;
             }
 
-            .planet-btn {
-                padding: 12px 20px;
-                font-size: 13px;
+            .planet-btn.active {
+                padding-right: 0;
+                width: 50px;
+            }
+
+            .planet-name-label {
+                display: none;
             }
 
             .mars-container {
                 width: 200%;
                 height: 50vh;
             }
-        }
 
-        @media (max-width: 480px) {
-            .hero-title {
-                font-size: 28px;
+            .info-card {
+                right: 20px;
+                left: 20px;
+                width: auto;
+                bottom: 120px;
+                top: auto;
+                transform: translateY(500px);
             }
 
-            .planet-selector {
-                width: 95%;
+            .info-card.visible {
+                transform: translateY(0);
             }
 
-            .planet-btn {
-                padding: 10px 16px;
-                font-size: 12px;
-                gap: 6px;
+            .hero.split-view {
+                padding-left: 20px;
             }
 
-            .planet-icon {
-                width: 18px;
-                height: 18px;
+            .hero.split-view .mars-container {
+                left: 50%;
+                width: 180%;
             }
         }
     </style>
@@ -340,20 +592,14 @@
         <nav>
             <div class="logo">✕pace</div>
             <ul class="nav-links">
-                <li><a href="#" class="active">Explore</a></li>
-                <li><a href="#">Journal</a></li>
-                <li><a href="#">Events</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Support</a></li>
-                
-                <li><a href="planet.html">planet</a></li>
-                
+                <li><a href="landing_page.html" class="active">Explore</a></li>
+                <li><a href="planet.html" class="active">Tatanan</a></li>
+                <li><a href="quiz.html" class="active">Quiz</a></li>
             </ul>
             <a href="#" class="sign-up">Sign up</a>
         </nav>
 
-        <div class="hero">
+        <div class="hero" id="hero">
             <h1 class="hero-title">
                 This is the beginning of a story<br>
                 between you and <span class="highlight" id="planetName">Earth</span>.
@@ -362,33 +608,77 @@
             <div class="planet-selector">
                 <button class="planet-btn mercury">
                     <span class="planet-icon"></span>
+                    <span class="planet-name-label">Mercury</span>
+                    <span class="planet-tooltip">Mercury</span>
                 </button>
                 <button class="planet-btn venus">
                     <span class="planet-icon"></span>
+                    <span class="planet-name-label">Venus</span>
+                    <span class="planet-tooltip">Venus</span>
                 </button>
                 <button class="planet-btn earth active">
                     <span class="planet-icon"></span>
+                    <span class="planet-name-label">Earth</span>
+                    <span class="planet-tooltip">Earth</span>
                 </button>
                 <button class="planet-btn mars">
                     <span class="planet-icon"></span>
+                    <span class="planet-name-label">Mars</span>
+                    <span class="planet-tooltip">Mars</span>
                 </button>
                 <button class="planet-btn jupiter">
                     <span class="planet-icon"></span>
+                    <span class="planet-name-label">Jupiter</span>
+                    <span class="planet-tooltip">Jupiter</span>
                 </button>
                 <button class="planet-btn saturn">
                     <span class="planet-icon"></span>
+                    <span class="planet-name-label">Saturn</span>
+                    <span class="planet-tooltip">Saturn</span>
                 </button>
                 <button class="planet-btn uranus">
                     <span class="planet-icon"></span>
+                    <span class="planet-name-label">Uranus</span>
+                    <span class="planet-tooltip">Uranus</span>
                 </button>
                 <button class="planet-btn neptune">
                     <span class="planet-icon"></span>
+                    <span class="planet-name-label">Neptune</span>
+                    <span class="planet-tooltip">Neptune</span>
                 </button>
             </div>
         </div>
 
         <div class="mars-container">
-            <img src="images/bumi.png" alt="Mars" class="mars-image" id="planetImage">
+            <img src="images/bumi.png" alt="Planet" class="mars-image" id="planetImage">
+        </div>
+
+        <div class="info-card" id="infoCard">
+            <button class="close-btn" id="closeBtn">×</button>
+            <h2 id="cardTitle">Earth</h2>
+            <div class="planet-type" id="cardType">Terrestrial Planet</div>
+            <p class="description" id="cardDescription">
+                Earth is the third planet from the Sun and the only astronomical object known to harbor life.
+            </p>
+            <div class="info-stats">
+                <div class="stat-item">
+                    <div class="stat-label">Distance</div>
+                    <div class="stat-value" id="statDistance">149.6M km</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Diameter</div>
+                    <div class="stat-value" id="statDiameter">12,742 km</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Day Length</div>
+                    <div class="stat-value" id="statDay">24 hours</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Year Length</div>
+                    <div class="stat-value" id="statYear">365 days</div>
+                </div>
+            </div>
+            <button class="explore-btn">Explore More</button>
         </div>
     </div>
 
@@ -404,72 +694,156 @@
             starsContainer.appendChild(star);
         }
 
-        // Planet selector functionality
+        // Planet data
+        const planetData = {
+            mercury: {
+                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Mercury</span>.',
+                image: 'images/merkurius.png',
+                glowColor: 'rgba(140, 140, 140, 0.5)',
+                highlightColor: '#8c8c8c',
+                cardTitle: 'Mercury',
+                type: 'Terrestrial Planet',
+                description: 'Mercury is the smallest planet in our solar system and closest to the Sun. It has a barren, crater-covered surface and extreme temperature variations.',
+                distance: '57.9M km',
+                diameter: '4,879 km',
+                day: '59 days',
+                year: '88 days'
+            },
+            venus: {
+                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Venus</span>.',
+                image: 'images/venus.png',
+                glowColor: 'rgba(232, 184, 75, 0.5)',
+                highlightColor: '#e8b84b',
+                cardTitle: 'Venus',
+                type: 'Terrestrial Planet',
+                description: 'Venus is the hottest planet in our solar system, with thick toxic atmosphere creating a runaway greenhouse effect. Often called Earth\'s twin due to similar size.',
+                distance: '108.2M km',
+                diameter: '12,104 km',
+                day: '243 days',
+                year: '225 days'
+            },
+            earth: {
+                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Earth</span>.',
+                image: 'images/bumi.png',
+                glowColor: 'rgba(74, 144, 226, 0.5)',
+                highlightColor: '#4a90e2',
+                cardTitle: 'Earth',
+                type: 'Terrestrial Planet',
+                description: 'Earth is the third planet from the Sun and the only astronomical object known to harbor life. Our home features vast oceans, diverse ecosystems, and a protective atmosphere.',
+                distance: '149.6M km',
+                diameter: '12,742 km',
+                day: '24 hours',
+                year: '365 days'
+            },
+            mars: {
+                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Mars</span>.',
+                image: 'images/mars.png',
+                glowColor: 'rgba(255, 107, 53, 0.5)',
+                highlightColor: '#ff6b35',
+                cardTitle: 'Mars',
+                type: 'Terrestrial Planet',
+                description: 'Mars is known as the Red Planet due to iron oxide on its surface. It has the largest volcano and canyon in the solar system, and evidence suggests it once had liquid water.',
+                distance: '227.9M km',
+                diameter: '6,779 km',
+                day: '25 hours',
+                year: '687 days'
+            },
+            jupiter: {
+                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Jupiter</span>.',
+                image: 'images/jupiter.png',
+                glowColor: 'rgba(212, 165, 116, 0.5)',
+                highlightColor: '#d4a574',
+                cardTitle: 'Jupiter',
+                type: 'Gas Giant',
+                description: 'Jupiter is the largest planet in our solar system. This gas giant has a famous Great Red Spot storm and at least 79 moons, including the four large Galilean moons.',
+                distance: '778.5M km',
+                diameter: '139,820 km',
+                day: '10 hours',
+                year: '12 years'
+            },
+            saturn: {
+                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Saturn</span>.',
+                image: 'images/saturnus1.png',
+                glowColor: 'rgba(230, 207, 139, 0.5)',
+                highlightColor: '#e6cf8b',
+                cardTitle: 'Saturn',
+                type: 'Gas Giant',
+                description: 'Saturn is famous for its spectacular ring system made of ice and rock. This gas giant is the second-largest planet and has over 80 moons, including Titan.',
+                distance: '1.4B km',
+                diameter: '116,460 km',
+                day: '11 hours',
+                year: '29 years'
+            },
+            uranus: {
+                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Uranus</span>.',
+                image: 'images/uranus.png',
+                glowColor: 'rgba(79, 209, 217, 0.5)',
+                highlightColor: '#4fd1d9',
+                cardTitle: 'Uranus',
+                type: 'Ice Giant',
+                description: 'Uranus is unique for rotating on its side. This ice giant has a blue-green color from methane in its atmosphere and has 27 known moons named after literary characters.',
+                distance: '2.9B km',
+                diameter: '50,724 km',
+                day: '17 hours',
+                year: '84 years'
+            },
+            neptune: {
+                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Neptune</span>.',
+                image: 'images/neptunus.png',
+                glowColor: 'rgba(75, 112, 232, 0.5)',
+                highlightColor: '#4b70e8',
+                cardTitle: 'Neptune',
+                type: 'Ice Giant',
+                description: 'Neptune is the windiest planet in our solar system with supersonic winds. This distant ice giant has a beautiful deep blue color and 14 known moons, including Triton.',
+                distance: '4.5B km',
+                diameter: '49,244 km',
+                day: '16 hours',
+                year: '165 years'
+            }
+        };
+
+        // Elements
         const planetBtns = document.querySelectorAll('.planet-btn');
         const heroTitle = document.querySelector('.hero-title');
         const planetImage = document.getElementById('planetImage');
         const planetName = document.getElementById('planetName');
+        const hero = document.getElementById('hero');
+        const infoCard = document.getElementById('infoCard');
+        const closeBtn = document.getElementById('closeBtn');
 
-        /*
-          PERBAIKAN 2: Menghapus "../" dari SEMUA jalur gambar di JavaScript
-        */
-        const planetData = {
-            mercury: {
-                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Mercury</span>.',
-                image: 'images/merkurius.png', // <-- DIPERBAIKI
-                glowColor: 'rgba(140, 140, 140, 0.5)',
-                highlightColor: '#8c8c8c'
-            },
-            venus: {
-                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Venus</span>.',
-                image: 'images/venus.png', // <-- SUDAH BENAR
-                glowColor: 'rgba(232, 184, 75, 0.5)',
-                highlightColor: '#e8b84b'
-            },
-            earth: {
-                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Earth</span>.',
-                image: 'images/bumi.png', // <-- SUDAH BENAR
-                glowColor: 'rgba(74, 144, 226, 0.5)',
-                highlightColor: '#4a90e2'
-            },
-            mars: {
-                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Mars</span>.',
-                image: 'images/mars.png', // <-- SUDAH BENAR
-                glowColor: 'rgba(255, 107, 53, 0.5)',
-                highlightColor: '#ff6b35'
-            },
-            jupiter: {
-                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Jupiter</span>.',
-                image: 'images/jupiter.png', // <-- SUDAH BENAR
-                glowColor: 'rgba(212, 165, 116, 0.5)',
-                highlightColor: '#d4a574'
-            },
-            saturn: {
-                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Saturn</span>.',
-                image: 'images/saturnus1.png', // <-- SUDAH BENAR (menggunakan saturnus1)
-                glowColor: 'rgba(230, 207, 139, 0.5)',
-                highlightColor: '#e6cf8b'
-            },
-            uranus: {
-                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Uranus</span>.',
-                image: 'images/uranus.png', // <-- PERINGATAN: File ini masih hilang
-                glowColor: 'rgba(79, 209, 217, 0.5)',
-                highlightColor: '#4fd1d9'
-            },
-            neptune: {
-                title: 'This is the beginning of a story<br>between you and <span class="highlight" id="planetName">Neptune</span>.',
-                image: 'images/neptunus.png', // <-- DIPERBAIKI
-                glowColor: 'rgba(75, 112, 232, 0.5)',
-                highlightColor: '#4b70e8'
-            }
-        };
+        let isCardVisible = false;
 
+        // Update info card
+        function updateInfoCard(planet) {
+            document.getElementById('cardTitle').textContent = planetData[planet].cardTitle;
+            document.getElementById('cardType').textContent = planetData[planet].type;
+            document.getElementById('cardDescription').textContent = planetData[planet].description;
+            document.getElementById('statDistance').textContent = planetData[planet].distance;
+            document.getElementById('statDiameter').textContent = planetData[planet].diameter;
+            document.getElementById('statDay').textContent = planetData[planet].day;
+            document.getElementById('statYear').textContent = planetData[planet].year;
+        }
+
+        // Show card
+        function showCard() {
+            hero.classList.add('split-view');
+            infoCard.classList.add('visible');
+            isCardVisible = true;
+        }
+
+        // Hide card
+        function hideCard() {
+            hero.classList.remove('split-view');
+            infoCard.classList.remove('visible');
+            isCardVisible = false;
+        }
+
+        // Planet button click
         planetBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 planetBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
 
-                // Get planet name from class
                 const classList = btn.classList;
                 let planet = '';
                 for (let className of classList) {
@@ -480,25 +854,27 @@
                 }
 
                 if (planetData[planet]) {
-                    // Update title
                     heroTitle.innerHTML = planetData[planet].title;
-                    
-                    // Update image
                     planetImage.src = planetData[planet].image;
-                    
-                    // Update filter glow color
                     planetImage.style.filter = `drop-shadow(0 -50px 70px ${planetData[planet].glowColor})`;
                     
-                    // Update highlight text color - langsung ke element
                     const newPlanetName = document.getElementById('planetName');
                     if (newPlanetName) {
                         newPlanetName.style.color = planetData[planet].highlightColor;
                     }
+
+                    updateInfoCard(planet);
+                    showCard();
                 }
             });
         });
 
-        // Set initial color untuk Earth (yang active pertama kali)
+        // Close button
+        closeBtn.addEventListener('click', () => {
+            hideCard();
+        });
+
+        // Initial setup
         window.addEventListener('DOMContentLoaded', () => {
             const activePlanet = document.querySelector('.planet-btn.active');
             const classList = activePlanet.classList;
@@ -513,7 +889,7 @@
             if (planetData[planet] && planetName) {
                 planetName.style.color = planetData[planet].highlightColor;
                 planetImage.style.filter = `drop-shadow(0 -50px 70px ${planetData[planet].glowColor})`;
-                planetImage.src = planetData[planet].image; // <-- DIPERBAIKI (jalur awal)
+                planetImage.src = planetData[planet].image;
             }
         });
     </script>
