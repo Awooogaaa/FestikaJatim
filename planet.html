@@ -20,16 +20,19 @@
             text-align: center;
             overflow: hidden;
             height: 100vh;
-            perspective: 1000px;
+            width: 100vw;
+            position: relative;
         }
 
-        /* Navigasi */
+        /* Navigasi Responsive */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 28px 60px;
-            position: relative;
+            padding: 20px 40px;
+            position: absolute;
+            top: 0;
+            width: 100%;
             z-index: 100;
             transition: opacity 0.5s;
         }
@@ -49,7 +52,7 @@
 
         .nav-links {
             display: flex;
-            gap: 40px;
+            gap: 30px;
             list-style: none;
         }
 
@@ -63,21 +66,6 @@
         .nav-links a:hover,
         .nav-links a.active {
             color: #fff;
-        }
-
-        .sign-up {
-            background: #fff;
-            color: #000;
-            padding: 11px 32px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
-            transition: transform 0.3s ease;
-        }
-
-        .sign-up:hover {
-            transform: scale(1.05);
         }
 
         /* Background Bintang */
@@ -105,31 +93,40 @@
             50% { opacity: 0.8; }
         }
 
-        /* --- TAMPILAN UTAMA (TATA SURYA) --- */
+        /* --- TAMPILAN UTAMA (TATA SURYA RESPONSIF) --- */
 
         .page-title {
-            margin-top: 20px;
+            position: absolute;
+            top: 100px;
+            width: 100%;
+            z-index: 10;
+            transition: all 0.8s ease;
+            padding: 0 20px;
+        }
+
+        .page-title h1 {
             font-size: 32px;
             font-weight: 500;
             color: #eee;
-            position: relative;
-            z-index: 10;
-            transition: all 0.8s ease;
         }
         
         .page-title p {
             font-size: 16px;
             font-weight: 300;
             color: #6b6b6b;
+            margin-top: 5px;
         }
 
+        /* WADAH UTAMA TATA SURYA */
         .solar-system {
             position: absolute;
-            top: 50%;
+            top: 55%;
             left: 50%;
-            width: 800px;
-            height: 800px;
-            transform: translate(-50%, -50%) scale(1);
+            width: 90vmin; 
+            height: 90vmin;
+            max-width: 800px;
+            max-height: 800px;
+            transform: translate(-50%, -50%);
             transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
             z-index: 10;
         }
@@ -141,7 +138,7 @@
         }
 
         body.detail-active .solar-system {
-            transform: translate(-50%, -50%) scale(4);
+            transform: translate(-50%, -50%) scale(3);
             opacity: 0;
             pointer-events: none;
         }
@@ -155,16 +152,16 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 120px;
-            height: 120px;
+            width: 15%;
+            height: 15%;
             background: radial-gradient(circle, #ffcc00, #ff6600);
             border-radius: 50%;
             transform: translate(-50%, -50%);
-            box-shadow: 0 0 80px #ffaa00;
+            box-shadow: 0 0 60px #ffaa00;
             z-index: 5;
         }
 
-        /* Orbit Umum */
+        /* Orbit */
         .orbit {
             position: absolute;
             top: 50%;
@@ -176,17 +173,16 @@
             pointer-events: none;
         }
 
-        /* LOGIKA PAUSE: Hanya pause jika class 'paused' ditambahkan via JS (saat hover planet) */
         .solar-system.paused .orbit {
             animation-play-state: paused;
         }
         
-        /* Planet Umum */
+        /* Planet */
         .planet {
             position: absolute;
-            top: -12px;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translate(-50%, -50%); 
             border-radius: 50%;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -194,24 +190,18 @@
             z-index: 10;
         }
 
-        .planet:hover {
-            transform: translateX(-50%) scale(1.5);
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
-            z-index: 20;
-        }
-
         /* Tooltip Nama Planet */
         .planet-name {
             position: absolute;
-            top: -35px;
+            top: -30px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 600;
             color: #fff;
             background: rgba(0, 0, 0, 0.8);
-            padding: 5px 12px;
-            border-radius: 15px;
+            padding: 4px 8px;
+            border-radius: 12px;
             opacity: 0;
             transition: opacity 0.3s ease;
             white-space: nowrap;
@@ -220,42 +210,32 @@
             animation: counter-rotate linear infinite; 
         }
 
-        .planet:hover .planet-name {
-            opacity: 1;
-        }
+        .planet:hover .planet-name { opacity: 1; }
+        .solar-system.paused .planet-name { animation-play-state: paused; }
 
-        .solar-system.paused .planet-name {
-            animation-play-state: paused;
-        }
-
-        /* UKURAN & KECEPATAN ORBIT */
-        .orbit-mercury { width: 180px; height: 180px; animation-duration: 5s; } 
-        .mercury { width: 24px; height: 24px; background: #a9a9a9; top: -12px; }
+        /* UKURAN & POSISI ORBIT */
+        .orbit-mercury { width: 22%; height: 22%; animation-duration: 5s; } 
+        .mercury { width: 12px; height: 12px; background: #a9a9a9; top: 0; left: 50%; margin-top: -6px; }
         .mercury .planet-name { animation-duration: 5s; }
 
-        .orbit-venus { width: 260px; height: 260px; animation-duration: 8s; }
-        .venus { width: 32px; height: 32px; background: #e6c288; top: -16px; }
+        .orbit-venus { width: 32%; height: 32%; animation-duration: 8s; }
+        .venus { width: 16px; height: 16px; background: #e6c288; top: 0; left: 50%; margin-top: -8px; }
         .venus .planet-name { animation-duration: 8s; }
 
-        .orbit-earth { width: 350px; height: 350px; animation-duration: 12s; }
-        .earth { width: 34px; height: 34px; background: #4a90e2; top: -17px; }
+        .orbit-earth { width: 44%; height: 44%; animation-duration: 12s; }
+        .earth { width: 18px; height: 18px; background: #4a90e2; top: 0; left: 50%; margin-top: -9px; }
         .earth .planet-name { animation-duration: 12s; }
 
-        .orbit-mars { width: 440px; height: 440px; animation-duration: 18s; }
-        .mars { width: 28px; height: 28px; background: #ff6b35; top: -14px; }
+        .orbit-mars { width: 56%; height: 56%; animation-duration: 18s; }
+        .mars { width: 14px; height: 14px; background: #ff6b35; top: 0; left: 50%; margin-top: -7px; }
         .mars .planet-name { animation-duration: 18s; }
 
-        .orbit-jupiter { width: 580px; height: 580px; animation-duration: 35s; }
-        .jupiter { width: 60px; height: 60px; background: #d4a574; top: -30px; }
+        .orbit-jupiter { width: 72%; height: 72%; animation-duration: 35s; }
+        .jupiter { width: 30px; height: 30px; background: #d4a574; top: 0; left: 50%; margin-top: -15px; }
         .jupiter .planet-name { animation-duration: 35s; }
 
-        .orbit-saturn { width: 740px; height: 740px; animation-duration: 55s; }
-        .saturn { 
-            width: 55px; height: 55px; 
-            background: #e6cf8b; 
-            top: -27px;
-            box-shadow: 0 0 0 8px rgba(230, 207, 139, 0.3); 
-        }
+        .orbit-saturn { width: 92%; height: 92%; animation-duration: 55s; }
+        .saturn { width: 26px; height: 26px; background: #e6cf8b; top: 0; left: 50%; margin-top: -13px; box-shadow: 0 0 0 4px rgba(230, 207, 139, 0.3); }
         .saturn .planet-name { animation-duration: 55s; }
 
         @keyframes rotate {
@@ -268,175 +248,139 @@
             to   { transform: translateX(-50%) rotate(-360deg); }
         }
 
-        /* --- TAMPILAN DETAIL PLANET (LAYOUT BARU) --- */
-
+        /* --- DETAIL VIEW --- */
         .planet-detail-view {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 150;
-            opacity: 0;
-            pointer-events: none;
-            transform: scale(0.8); 
-            transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 150; opacity: 0; pointer-events: none;
+            transform: scale(0.9); transition: all 0.5s ease;
+            display: flex; align-items: center; justify-content: center; overflow-y: auto;
         }
 
         .detail-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 15, 15, 0.96); /* Gelap pekat elegan */
-            z-index: 1;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 10, 10, 0.95); z-index: -1;
         }
         
-        body.detail-active .planet-detail-view {
-            opacity: 1;
-            transform: scale(1);
-            pointer-events: auto;
-            transition-delay: 0.3s;
-        }
+        body.detail-active .planet-detail-view { opacity: 1; transform: scale(1); pointer-events: auto; }
         
-        /* GRID LAYOUT 2 KOLOM (KIRI: GAMBAR BESAR, KANAN: INFO) */
         .detail-content-wrapper {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Bagi 2 rata */
-            grid-template-rows: 1fr auto;
-            gap: 50px;
-            width: 100%;
-            max-width: 1200px;
-            height: 80vh;
-            position: relative;
-            z-index: 2;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+            width: 90%; max-width: 1100px; margin: 40px auto; position: relative;
         }
 
-        /* 1. KOLOM KIRI (VISUAL PLANET) */
-        .grid-planet-visual {
-            grid-column: 1;
-            grid-row: 1 / span 2; /* Mengambil tinggi penuh di kiri */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-right: 1px solid rgba(255,255,255,0.1); /* Garis pemisah halus */
-            padding-right: 40px;
-        }
-
+        .grid-planet-visual { display: flex; align-items: center; justify-content: center; }
+        
         #detail-planet-image {
-            width: 100%;
-            max-width: 550px; /* Gambar lebih besar dari sebelumnya */
-            height: auto;
-            object-fit: contain;
-            filter: drop-shadow(0 0 60px rgba(255,255,255,0.15));
+            width: 100%; max-width: 450px; height: auto; object-fit: contain;
+            filter: drop-shadow(0 0 40px rgba(255,255,255,0.1));
             animation: floatPlanet 6s ease-in-out infinite;
         }
 
         @keyframes floatPlanet {
             0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(2deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
         }
 
-        /* 2. KOLOM KANAN ATAS (JUDUL & DESKRIPSI) */
-        .grid-text-desc {
-            grid-column: 2;
-            grid-row: 1;
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 20px;
-        }
+        .grid-text-area { display: flex; flex-direction: column; justify-content: center; text-align: left; color: #fff; }
 
         #detail-planet-name {
-            font-size: 72px;
-            font-weight: 800;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            background: linear-gradient(to right, #fff, #ccc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 56px; font-weight: 800; margin-bottom: 15px; text-transform: uppercase;
+            background: linear-gradient(to right, #fff, #888); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        #detail-planet-desc {
-            font-size: 17px;
-            line-height: 1.8;
-            color: #d1d1d1;
-            text-align: justify;
-        }
+        #detail-planet-desc { font-size: 16px; line-height: 1.6; color: #ccc; margin-bottom: 25px; text-align: justify; }
 
-        /* 3. KOLOM KANAN BAWAH (FAKTA & TOMBOL) */
-        .grid-fact-box {
-            grid-column: 2;
-            grid-row: 2;
-            padding-top: 20px;
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        .fact-box {
+            background: rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 12px;
+            border-left: 4px solid #4cc9f0; margin-bottom: 30px;
         }
 
         .fact-label {
-            font-size: 12px;
-            color: #4cc9f0;
-            letter-spacing: 1.5px;
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-bottom: 10px;
+            font-size: 11px; color: #4cc9f0; letter-spacing: 1px;
+            font-weight: 700; text-transform: uppercase; margin-bottom: 8px;
         }
 
-        #detail-planet-fact {
-            font-size: 16px;
-            line-height: 1.6;
-            color: #fff;
-            background: rgba(255, 255, 255, 0.07);
-            padding: 25px;
-            border-radius: 16px;
-            border-left: 5px solid #4cc9f0;
-            margin-bottom: 20px;
-        }
+        #detail-planet-fact { font-size: 14px; color: #fff; line-height: 1.5; }
 
         .detail-button {
-            align-self: flex-start;
-            background: transparent;
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.4);
-            padding: 14px 35px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            align-self: flex-start; background: transparent; color: #fff;
+            border: 1px solid rgba(255,255,255,0.4); padding: 12px 30px; border-radius: 50px;
+            cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.3s ease;
+            text-transform: uppercase; letter-spacing: 1px;
         }
         
-        .detail-button:hover {
-            background: #fff;
-            color: #000;
-            border-color: #fff;
-            padding-right: 45px; /* Efek memanjang */
-        }
+        .detail-button:hover { background: #fff; color: #000; }
 
         footer {
-            margin-bottom: 20px;
-            font-size: 0.9em;
-            color: #6b6b6b;
-            position: absolute;
-            bottom: 10px;
-            width: 100%;
-            transition: opacity 0.5s;
+            position: absolute; bottom: 10px; width: 100%; text-align: center;
+            color: #6b6b6b; font-size: 12px; z-index: 5; transition: opacity 0.5s;
         }
+
+        /* --- PERBAIKAN MEDIA QUERIES (MOBILE & TABLET) --- */
+
+        @media (max-width: 1024px) {
+            nav { padding: 20px; }
+            .page-title h1 { font-size: 28px; }
+            .page-title { top: 80px; }
+            .solar-system { width: 85vmin; height: 85vmin; }
+        }
+
+        /* Mobile (Portrait) - PERBAIKAN NAVIGASI */
+        @media (max-width: 768px) {
+            /* 1. Navigasi sekarang menampilkan links (stacked) */
+            nav { 
+                padding: 15px 20px;
+                flex-direction: column; /* Susun Logo di atas, Menu di bawah */
+                gap: 10px;
+            }
+            
+            .logo { font-size: 20px; }
+            
+            /* Mengubah display:none menjadi flex agar menu muncul */
+            .nav-links { 
+                display: flex; 
+                gap: 20px; 
+                justify-content: center;
+                width: 100%;
+                padding-bottom: 5px;
+            }
+            
+            .nav-links a {
+                font-size: 14px; /* Font sedikit lebih kecil agar muat */
+            }
+
+            /* 2. Sesuaikan posisi judul agar tidak tertutup navigasi yang lebih tinggi */
+            .page-title { 
+                top: 100px; 
+                padding: 0 15px; 
+            }
+            
+            .page-title h1 { font-size: 24px; }
+            .page-title p { display: none; }
+
+            /* Tata Surya */
+            .solar-system {
+                width: 95vmin; height: 95vmin; top: 50%;
+            }
+
+            /* Detail View Mobile */
+            .detail-content-wrapper {
+                grid-template-columns: 1fr; margin: 60px auto 20px; padding-bottom: 40px; gap: 20px;
+            }
+            .grid-planet-visual { order: 1; }
+            #detail-planet-image { max-width: 250px; }
+            .grid-text-area { order: 2; }
+            #detail-planet-name { font-size: 36px; text-align: center; }
+            #detail-planet-desc { font-size: 14px; text-align: center; }
+            .fact-box { text-align: left; }
+            .detail-button { align-self: center; width: 100%; text-align: center; margin-top: 10px; }
+        }
+        
+        @media (max-width: 360px) {
+            .page-title h1 { font-size: 20px; }
+            .solar-system { width: 98vmin; height: 98vmin; }
+        }
+
     </style>
 </head>
 <body>
@@ -447,14 +391,13 @@
         <ul class="nav-links">
             <li><a href="landing_page.html">Explore</a></li>
             <li><a href="planet.html" class="active">Solar System</a></li>
-            <li><a href="quiz.html" class="active">Quiz</a></li>
+            <li><a href="quiz.html">Quiz</a></li>
         </ul>
-        <a href="#" class="sign-up">Sign up</a>
     </nav>
 
     <div class="page-title">
         <h1>Jelajah Angkasa</h1>
-        <p>Arahkan kursor tepat ke PLANET untuk menghentikan waktu & klik untuk detail!</p>
+        <p>Klik pada planet untuk melihat detail!</p>
     </div>
 
     <main class="solar-system" id="solarSystem">
@@ -506,19 +449,17 @@
                 <img id="detail-planet-image" src="" alt="Planet Detail">
             </div>
 
-            <div class="grid-text-desc">
+            <div class="grid-text-area">
                 <h1 id="detail-planet-name">PLANET</h1>
                 <p id="detail-planet-desc">Deskripsi planet...</p>
-            </div>
-
-            <div class="grid-fact-box">
-                <div>
+                
+                <div class="fact-box">
                     <div class="fact-label">TAHUKAH KAMU?</div>
                     <p id="detail-planet-fact">Fakta unik...</p>
                 </div>
                 
                 <button id="return-btn" class="detail-button">
-                    <span>←</span> Kembali
+                    Kembali
                 </button>
             </div>
 
@@ -526,18 +467,18 @@
     </div>
 
     <footer>
-        <p>© 2025 STIKA JATIM | Festival Teknologi Informasi dan Komunikasi Pendidikan</p>
+        <p>© 2025 STIKA JATIM | FestikaJatim</p>
     </footer>
 
     <script>
         // --- GENERATE BINTANG ---
         const starsContainer = document.getElementById('stars');
-        for (let i = 0; i < 200; i++) {
+        for (let i = 0; i < 150; i++) {
             const star = document.createElement('div');
             star.className = 'star';
             star.style.left = Math.random() * 100 + '%';
             star.style.top = Math.random() * 100 + '%';
-            const size = Math.random() * 2 + 1;
+            const size = Math.random() * 2;
             star.style.width = size + 'px';
             star.style.height = size + 'px';
             star.style.animationDelay = Math.random() * 3 + 's';
@@ -547,83 +488,63 @@
         // --- DATA & LOGIKA ---
         const solarSystem = document.getElementById('solarSystem');
         const planetElements = document.querySelectorAll('.planet');
-        
-        // Elemen Detail
         const detailName = document.getElementById('detail-planet-name');
         const detailDesc = document.getElementById('detail-planet-desc');
         const detailFact = document.getElementById('detail-planet-fact');
         const detailImage = document.getElementById('detail-planet-image');
         const returnBtn = document.getElementById('return-btn');
 
-        // LOGIKA PAUSE
         planetElements.forEach(planet => {
-            planet.addEventListener('mouseenter', () => {
-                solarSystem.classList.add('paused');
-            });
-            planet.addEventListener('mouseleave', () => {
-                solarSystem.classList.remove('paused');
-            });
+            planet.addEventListener('mouseenter', () => { solarSystem.classList.add('paused'); });
+            planet.addEventListener('mouseleave', () => { solarSystem.classList.remove('paused'); });
         });
 
-        // DATA PLANET (Sudah tidak butuh surfaceImage)
         const planets = {
-    mercury: {
-        name: "Merkurius",
-        desc: "Merkurius adalah planet terkecil dan terdekat dengan Matahari, sehingga permukaannya menerima radiasi matahari yang luar biasa. Planet ini tidak memiliki atmosfer tebal untuk menahan panas atau melindungi dirinya dari hantaman meteor, sehingga kawah-kawah besar menghiasi hampir seluruh permukaannya. Dari kejauhan, Merkurius tampak mirip dengan Bulan, kering dan penuh permukaan berbatu. Karena rotasinya yang lambat dan jaraknya yang dekat dengan Matahari, Merkurius mengalami perbedaan suhu ekstrem antara siang dan malam yang dapat mencapai lebih dari 600°C!",
-        fact: "Satu hari di Merkurius berlangsung sekitar 176 hari Bumi, artinya satu kali matahari terbit hingga terbit kembali lebih lama dari satu tahunnya sendiri yang hanya 88 hari Bumi!"
-        ,
-        image: "images/merkurius.png"
-    },
-    venus: {
-        name: "Venus",
-        desc: "Venus sering disebut sebagai kembaran Bumi karena ukuran dan komposisinya hampir sama. Namun kondisi di permukaan Venus sama sekali tidak ramah kehidupan. Atmosfer karbon dioksidanya yang sangat tebal menjebak panas Matahari dengan efek rumah kaca tingkat ekstrem, menjadikannya planet terpanas di tata surya, bahkan lebih panas daripada Merkurius yang lebih dekat ke Matahari. Permukaan Venus tertutup awan belerang pekat, tekanan udaranya mencapai 92 kali tekanan di permukaan Bumi, dan suhu rata-rata mencapai 465°C. Misi penelitian yang pernah mendarat di Venus hanya bertahan beberapa menit hingga beberapa jam sebelum perangkatnya meleleh.",
-        fact: "Venus berputar terbalik dari planet-planet lain, sehingga jika kita berdiri di sana, Matahari akan terbit dari arah Barat lalu tenggelam ke Timur!"
-        ,
-        image: "images/venus.png"
-    },
-    earth: {
-        name: "Bumi",
-        desc: "Bumi adalah rumah bagi miliaran makhluk hidup dan satu-satunya planet yang diketahui mendukung kehidupan sejauh ini. Dengan 70% permukaan tertutup air dan atmosfer pelindung yang menjaga suhu tetap stabil, Bumi menjadi satu tempat yang sangat unik di tata surya. Siklus air, iklim yang seimbang, dan keberadaan oksigen menjadikan planet ini lingkungan sempurna bagi tumbuhan, hewan, dan manusia untuk berkembang. Selain itu, Bumi memiliki sistem pelindung berupa magnetosfer yang menjaga kita dari radiasi berbahaya yang dipancarkan Matahari.",
-        fact: "Bumi tidak benar-benar bulat sempurna, melainkan sedikit pepat di kutub dan menggembung di khatulistiwa karena rotasinya yang cepat."
-        ,
-        image: "images/bumi.png"
-    },
-    mars: {
-        name: "Mars",
-        desc: "Mars, si Planet Merah, telah lama menjadi objek penelitian para astronom dan ilmuwan karena potensi jejak kehidupan di masa lalu. Warna merahnya berasal dari oksida besi atau karat yang melapisi hampir seluruh permukaannya. Mars memiliki gunung berapi terbesar di tata surya bernama Olympus Mons serta lembah raksasa Valles Marineris yang ukurannya melampaui Grand Canyon. Walaupun atmosfer Mars sangat tipis dan tandus, banyak misi penjelajahan berhasil menemukan jejak mineral yang hanya terbentuk dengan bantuan air, memberi harapan bahwa Mars pernah memiliki lingkungan yang memungkinkan kehidupan sederhana.",
-        fact: "Mars memiliki badai debu terbesar di tata surya, yang dapat menyelimuti seluruh planet selama berminggu-minggu dan menutupi cahaya Matahari!"
-        ,
-        image: "images/mars.png"
-    },
-    jupiter: {
-        name: "Jupiter",
-        desc: "Jupiter adalah planet terbesar di tata surya, begitu besar sehingga seluruh planet lain bisa muat di dalamnya jika digabungkan. Planet ini tidak memiliki permukaan padat—sebagian besar terdiri dari gas hidrogen dan helium yang berputar cepat, menciptakan pola garis-garis ikonik pada atmosfernya. Jupiter juga dikelilingi oleh lusinan bulan, beberapa di antaranya seperti Europa diperkirakan memiliki lautan bawah es yang mungkin menyimpan kehidupan. Kekuatannya begitu besar sehingga gravitasinya membantu menjaga stabilitas orbit planet-planet lain di tata surya.",
-        fact: "Bintik Merah Raksasa di Jupiter adalah badai permanen yang sudah berlangsung setidaknya selama 300 tahun dan ukurannya masih lebih besar daripada seluruh Planet Bumi!"
-        ,
-        image: "images/jupiter.png"
-    },
-    saturn: {
-        name: "Saturnus",
-        desc: "Saturnus terkenal dengan sistem cincinnya yang paling spektakuler di tata surya. Cincin tersebut tersusun dari miliaran bongkahan es, batu, dan debu yang terus mengorbit planet raksasa berwarna kuning keemasan ini. Saturnus juga merupakan planet dengan kerapatan paling rendah di tata surya—begitu rendah sehingga jika ada kolam raksasa berisi air, Saturnus akan mengapung! Selain itu, Saturnus memiliki banyak bulan unik termasuk Titan, bulan terbesar yang memiliki atmosfer tebal dan danau metana cair, sehingga sering menjadi objek penelitian untuk kemungkinan kehidupan non-Bumi.",
-        fact: "Kecepatan angin di Saturnus bisa mencapai lebih dari 1.800 km/jam, menjadikannya salah satu lokasi dengan badai paling ganas di seluruh tata surya!"
-        ,
-        image: "images/saturnus1.png"
-    }
-    // Uranus & Neptunus bisa ditambah jika diperlukan
-};
-
+            mercury: {
+                name: "Merkurius",
+                desc: "Merkurius adalah planet terkecil dan terdekat dengan Matahari. Permukaannya penuh kawah mirip Bulan, dengan suhu yang sangat ekstrem antara siang (430°C) dan malam (-180°C) karena tidak memiliki atmosfer untuk menahan panas.",
+                fact: "Satu hari di Merkurius (satu rotasi) memakan waktu 59 hari Bumi, tetapi satu tahunnya (revolusi) hanya 88 hari.",
+                image: "images/merkurius.png"
+            },
+            venus: {
+                name: "Venus",
+                desc: "Venus adalah planet terpanas di tata surya karena atmosfer tebal karbon dioksida yang menciptakan efek rumah kaca tak terkendali. Sering disebut 'Bintang Kejora' karena kilaunya yang sangat terang.",
+                fact: "Venus berputar ke arah yang berlawanan dari kebanyakan planet lain. Matahari terbit di Barat dan terbenam di Timur.",
+                image: "images/venus.png"
+            },
+            earth: {
+                name: "Bumi",
+                desc: "Rumah kita, satu-satunya planet yang diketahui memiliki kehidupan. Memiliki air dalam bentuk cair di permukaannya dan atmosfer yang melindungi makhluk hidup dari radiasi berbahaya.",
+                fact: "Bumi sebenarnya tidak bulat sempurna, melainkan sedikit 'pepat' di kutub dan menggembung di khatulistiwa.",
+                image: "images/bumi.png"
+            },
+            mars: {
+                name: "Mars",
+                desc: "Mars, si Planet Merah, memiliki gunung berapi terbesar di tata surya (Olympus Mons). Ilmuwan terus mencari jejak air dan kehidupan masa lalu di sini.",
+                fact: "Warna merah Mars disebabkan oleh besi berkarat di tanahnya. Mars memiliki dua bulan kecil: Phobos dan Deimos.",
+                image: "images/mars.png"
+            },
+            jupiter: {
+                name: "Jupiter",
+                desc: "Raksasa gas terbesar di tata surya. Jupiter begitu besar sehingga semua planet lain bisa masuk ke dalamnya. Terkenal dengan Bintik Merah Raksasa, sebuah badai abadi.",
+                fact: "Jupiter memiliki medan magnet yang sangat kuat dan memiliki puluhan bulan, termasuk Europa yang mungkin memiliki lautan di bawah esnya.",
+                image: "images/jupiter.png"
+            },
+            saturn: {
+                name: "Saturnus",
+                desc: "Dikenal sebagai permata tata surya karena cincinnya yang indah dan kompleks, terbuat dari es dan bebatuan. Saturnus adalah planet dengan densitas terendah.",
+                fact: "Saturnus sangat ringan sehingga jika ada bak air raksasa yang cukup besar, planet ini akan mengapung di atasnya!",
+                image: "images/saturnus1.png"
+            }
+        };
 
         function showInfo(planetKey) {
             const info = planets[planetKey];
             if(!info) return;
-
-            // Update Konten
             detailName.innerText = info.name;
             detailDesc.innerText = info.desc;
             detailFact.innerHTML = info.fact;
             detailImage.src = info.image;
-            
-            // Trigger Animasi
             document.body.classList.add('detail-active');
         }
 
