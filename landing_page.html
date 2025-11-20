@@ -700,6 +700,37 @@
             color: #fff;
             font-size: 18px;
         }
+        
+        /* --- CSS TOMBOL SUARA --- */
+        .voice-control-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .voice-control-btn:hover {
+            transform: scale(1.1);
+            background: #fff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+        }
+
+        .voice-control-btn.muted {
+            background: rgba(100, 100, 100, 0.8);
+            color: #ccc;
+        }
 
         /* Responsive */
         @media (max-width: 1024px) {
@@ -1201,7 +1232,6 @@
             <button class="explore-btn">Jelajahi Lebih Lanjut</button>
         </div>
 
-        <!-- Detail Modal -->
         <div class="detail-modal" id="detailModal">
             <div class="detail-content">
                 <button class="detail-close-btn" id="detailCloseBtn">×</button>
@@ -1272,6 +1302,8 @@
             </div>
         </div>
     </div>
+
+    <button id="voiceToggleBtn" class="voice-control-btn" title="Hidupkan/Matikan Suara">🔊</button>
 
     <script>
         // Generate stars
@@ -1563,12 +1595,18 @@
             updateDetailModal(currentPlanet);
             detailModal.classList.add('active');
             document.body.style.overflow = 'hidden';
+            
+            // Voice: Read detail
+            const data = planetData[currentPlanet];
+            const teksDetail = `Detail lengkap tentang ${data.cardTitle}. ${data.detailAbout}`;
+            bicara(teksDetail);
         }
 
         // Hide detail modal
         function hideDetailModal() {
             detailModal.classList.remove('active');
             document.body.style.overflow = '';
+            synth.cancel();
         }
 
         // Show card
@@ -1583,6 +1621,7 @@
             hero.classList.remove('split-view');
             infoCard.classList.remove('visible');
             isCardVisible = false;
+            synth.cancel();
         }
 
         // Planet button click
@@ -1604,6 +1643,10 @@
                     // Add transitioning class for fade out
                     planetImage.classList.add('transitioning');
                     
+                    // Voice: Read intro
+                    const teksIntro = `Kamu memilih ${planetData[planet].cardTitle}. ${planetData[planet].description}`;
+                    bicara(teksIntro);
+                    
                     // Wait for fade out animation
                     setTimeout(() => {
                         // Update content
@@ -1622,7 +1665,7 @@
                         setTimeout(() => {
                             planetImage.classList.remove('transitioning');
                         }, 50);
-                    }, 200);
+                    }, 400);
 
                     if (!isCardVisible) {
                         showCard();
@@ -1684,59 +1727,43 @@
             }, 2000);
         });
 
+        // --- LOGIKA SUARA BARU ---
         const synth = window.speechSynthesis;
+        const voiceBtn = document.getElementById('voiceToggleBtn');
+        
+        // Cek memory (default on)
+        let isVoiceOn = localStorage.getItem('voiceState') !== 'off';
 
-    function bicara(teks) {
-        if (synth.speaking) synth.cancel();
-        const ucapan = new SpeechSynthesisUtterance(teks);
-        ucapan.lang = 'id-ID';
-        ucapan.rate = 0.9;
-        synth.speak(ucapan);
-    }
-
-    planetBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // ... (kode logika class active yang sudah ada biarkan saja) ...
-            
-            // Cari baris ini: if (planetData[planet]) { ... }
-            if (planetData[planet]) {
-                // ... (kode animasi gambar dll biarkan saja) ...
-                
-                // >> TAMBAHAN: Baca judul singkat planet saat diklik
-                // Ambil teks deskripsi singkat dari data
-                const teksIntro = `Kamu memilih ${planetData[planet].cardTitle}. ${planetData[planet].description}`;
-                bicara(teksIntro);
-
-                // ... (sisa kode setTimeout dll) ...
+        function updateVoiceUI() {
+            if (isVoiceOn) {
+                voiceBtn.textContent = '🔊';
+                voiceBtn.classList.remove('muted');
+            } else {
+                voiceBtn.textContent = '🔇';
+                voiceBtn.classList.add('muted');
+                synth.cancel();
             }
+        }
+
+        voiceBtn.addEventListener('click', () => {
+            isVoiceOn = !isVoiceOn;
+            localStorage.setItem('voiceState', isVoiceOn ? 'on' : 'off');
+            updateVoiceUI();
         });
-    });
 
-    function showDetailModal() {
-        updateDetailModal(currentPlanet);
-        detailModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        updateVoiceUI(); // Jalankan saat loading
 
-        // >> TAMBAHAN: Baca detail lengkap saat tombol "Jelajahi Lebih Lanjut" diklik
-        const data = planetData[currentPlanet];
-        const teksDetail = `Detail lengkap tentang ${data.cardTitle}. ${data.detailAbout}`;
-        bicara(teksDetail);
-    }
+        window.addEventListener('beforeunload', () => synth.cancel());
 
-
-    function hideDetailModal() {
-        detailModal.classList.remove('active');
-        document.body.style.overflow = '';
-        synth.cancel(); // Stop bicara
-    }
-
-    function hideCard() {
-        hero.classList.remove('split-view');
-        infoCard.classList.remove('visible');
-        isCardVisible = false;
-        synth.cancel(); // Stop bicara
-    }
-    
+        function bicara(teks) {
+            if (!isVoiceOn) return; // Stop jika dimatikan
+            if (synth.speaking) synth.cancel();
+            
+            const ucapan = new SpeechSynthesisUtterance(teks);
+            ucapan.lang = 'id-ID';
+            ucapan.rate = 0.9;
+            synth.speak(ucapan);
+        }
     </script>
 </body>
 </html>
