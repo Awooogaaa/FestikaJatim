@@ -1727,11 +1727,11 @@
             }, 2000);
         });
 
-        // --- LOGIKA SUARA BARU ---
+        // --- LOGIKA SUARA & TOMBOL (UPDATED) ---
         const synth = window.speechSynthesis;
         const voiceBtn = document.getElementById('voiceToggleBtn');
         
-        // Cek memory (default on)
+        // Cek status suara dari memori browser (default: true/hidup)
         let isVoiceOn = localStorage.getItem('voiceState') !== 'off';
 
         function updateVoiceUI() {
@@ -1741,23 +1741,43 @@
             } else {
                 voiceBtn.textContent = '🔇';
                 voiceBtn.classList.add('muted');
-                synth.cancel();
+                synth.cancel(); // Matikan suara jika sedang bicara
             }
         }
 
+        // Event Listener Tombol: Baca Ulang Saat Dinyalakan
         voiceBtn.addEventListener('click', () => {
             isVoiceOn = !isVoiceOn;
             localStorage.setItem('voiceState', isVoiceOn ? 'on' : 'off');
             updateVoiceUI();
+
+            // JIKA SUARA DINYALAKAN & MODAL TERBUKA: BACA INFO PLANET
+            if (isVoiceOn) {
+                if (document.getElementById('detailModal').classList.contains('active')) {
+                    // Modal terbuka
+                    const data = planetData[currentPlanet];
+                    bicara(`Detail lengkap tentang ${data.cardTitle}. ${data.detailAbout}`);
+                } else {
+                    // Hero section
+                    const data = planetData[currentPlanet];
+                    bicara(`Kamu memilih ${data.cardTitle}. ${data.description}`);
+                }
+            }
         });
 
         updateVoiceUI(); // Jalankan saat loading
 
-        window.addEventListener('beforeunload', () => synth.cancel());
+        window.addEventListener('beforeunload', () => {
+            synth.cancel();
+        });
 
         function bicara(teks) {
-            if (!isVoiceOn) return; // Stop jika dimatikan
-            if (synth.speaking) synth.cancel();
+            // Cek apakah suara diaktifkan
+            if (!isVoiceOn) return;
+
+            if (synth.speaking) {
+                synth.cancel();
+            }
             
             const ucapan = new SpeechSynthesisUtterance(teks);
             ucapan.lang = 'id-ID';

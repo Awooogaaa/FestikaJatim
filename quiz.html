@@ -21,13 +21,13 @@
             overflow-x: hidden;
         }
 
-        /* --- NAVIGASI (UPDATED) --- */
+        /* --- NAVIGASI (DESKTOP) --- */
         nav {
             display: flex;
             justify-content: space-between; /* Logo di kiri */
             align-items: center;
             padding: 28px 60px;
-            position: relative;
+            position: relative; /* Penting untuk centering menu */
             z-index: 100;
         }
 
@@ -37,7 +37,7 @@
             letter-spacing: -0.5px;
             text-decoration: none;
             color: #fff;
-            z-index: 101; /* Pastikan logo di atas */
+            z-index: 101; /* Pastikan logo di atas layer menu */
         }
 
         .nav-links {
@@ -45,7 +45,7 @@
             gap: 40px;
             list-style: none;
             
-            /* --- MENU TENGAH (DESKTOP) --- */
+            /* Trik membuat menu tepat di tengah layar (Desktop) */
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
@@ -63,9 +63,7 @@
             color: #fff;
         }
 
-        /* (Sign up style dihapus karena tombolnya dihapus) */
-
-        /* --- LATAR BELAKANG & ANIMASI --- */
+        /* --- BACKGROUND & ANIMASI --- */
         .stars {
             position: fixed;
             top: 0;
@@ -370,11 +368,11 @@
             color: #ccc;
         }
 
-        /* --- RESPONSIVE (UPDATED) --- */
+        /* --- RESPONSIVE MOBILE/TABLET --- */
         @media (max-width: 768px) {
             nav {
                 padding: 15px 20px;
-                flex-direction: column; /* Susun Logo dan Menu vertikal */
+                flex-direction: column; /* Logo atas, Menu bawah */
                 gap: 15px;
             }
 
@@ -383,7 +381,7 @@
             }
 
             .nav-links {
-                /* Reset posisi absolute agar tidak tumpuk di mobile */
+                /* Reset posisi absolute agar menu tidak menumpuk di mobile */
                 position: static;
                 transform: none;
                 
@@ -396,7 +394,8 @@
 
             .quiz-wrapper {
                 padding: 25px;
-                margin: 80px 20px 20px 20px; /* Tambah margin top agar tidak ketutup nav */
+                /* Tambahkan margin top agar konten tidak tertutup navbar yang tinggi */
+                margin: 40px 20px 20px 20px; 
             }
 
             #question-container {
@@ -404,7 +403,7 @@
             }
 
             .floating-planet {
-                display: none; /* Sembunyikan hiasan di mobile agar ringan */
+                display: none; /* Sembunyikan dekorasi berat di mobile */
             }
         }
     </style>
@@ -434,7 +433,7 @@
             <li><a href="planet.html">Tatanan</a></li>
             <li><a href="quiz.html" class="active">Kuis</a></li>
         </ul>
-        </nav>
+    </nav>
 
     <div class="page-title">
         <h1>Kuis Angkasa</h1>
@@ -551,11 +550,10 @@
             return shuffled;
         }
 
-        // === LOGIKA SUARA & TOMBOL ===
+        // === LOGIKA SUARA & TOMBOL (UPDATED) ===
         const synth = window.speechSynthesis;
         const voiceBtn = document.getElementById('voiceToggleBtn');
         
-        // Cek status suara dari memori browser (default: true/hidup)
         let isVoiceOn = localStorage.getItem('voiceState') !== 'off';
 
         function updateVoiceUI() {
@@ -565,27 +563,35 @@
             } else {
                 voiceBtn.textContent = '🔇';
                 voiceBtn.classList.add('muted');
-                synth.cancel(); // Matikan suara jika sedang bicara
+                synth.cancel();
             }
         }
 
-        // Event Listener Tombol
+        // Event Listener Tombol: Baca Ulang Saat Dinyalakan
         voiceBtn.addEventListener('click', () => {
             isVoiceOn = !isVoiceOn;
             localStorage.setItem('voiceState', isVoiceOn ? 'on' : 'off');
             updateVoiceUI();
+
+            // JIKA SUARA DINYALAKAN: BACA SOAL SAAT INI LANGSUNG
+            if (isVoiceOn && quizData.length > 0) {
+                const currentQ = quizData[currentQuestionIndex];
+                let teksSoal = `Pertanyaan nomor ${currentQuestionIndex + 1}. ${currentQ.question}. Pilihannya adalah: `;
+                currentQ.options.forEach((opt) => {
+                    teksSoal += `${opt}. `;
+                });
+                bicara(teksSoal);
+            }
         });
 
-        // Inisialisasi UI awal
         updateVoiceUI();
 
-        // Matikan suara saat pindah halaman
         window.addEventListener('beforeunload', () => {
             synth.cancel();
         });
 
         function bicara(teks) {
-            if (!isVoiceOn) return; // Cek apakah suara diaktifkan
+            if (!isVoiceOn) return;
 
             if (synth.speaking) {
                 synth.cancel();
