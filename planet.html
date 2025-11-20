@@ -48,7 +48,6 @@
             letter-spacing: -0.5px;
             text-decoration: none;
             color: #fff;
-            /* Pastikan logo berada di atas layer jika diperlukan */
             z-index: 101; 
         }
 
@@ -57,10 +56,10 @@
             gap: 30px;
             list-style: none;
             
-            /* --- PERUBAHAN UNTUK CENTER MENU --- */
-            position: absolute;      /* Lepaskan dari aliran flexbox biasa */
-            left: 50%;               /* Pindahkan ke tengah parent */
-            transform: translateX(-50%); /* Geser balik 50% lebarnya sendiri agar benar-benar tengah */
+            /* --- CENTER MENU ON DESKTOP --- */
+            position: absolute;      
+            left: 50%;               
+            transform: translateX(-50%); 
         }
 
         .nav-links a {
@@ -332,6 +331,37 @@
             color: #6b6b6b; font-size: 12px; z-index: 5; transition: opacity 0.5s;
         }
 
+        /* --- CSS TOMBOL SUARA --- */
+        .voice-control-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .voice-control-btn:hover {
+            transform: scale(1.1);
+            background: #fff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+        }
+
+        .voice-control-btn.muted {
+            background: rgba(100, 100, 100, 0.8);
+            color: #ccc;
+        }
+
         /* --- MEDIA QUERIES --- */
 
         @media (max-width: 1024px) {
@@ -391,9 +421,9 @@
     <nav>
         <a href="landing_page.html" class="logo">Galaxy</a>
         <ul class="nav-links">
-            <li><a href="landing_page.html">Explore</a></li>
-            <li><a href="planet.html" class="active">Solar System</a></li>
-            <li><a href="quiz.html">Quiz</a></li>
+            <li><a href="landing_page.html">Jelajahi</a></li>
+            <li><a href="planet.html" class="active">Tatanan</a></li>
+            <li><a href="quiz.html">Kuis</a></li>
         </ul>
     </nav>
 
@@ -484,6 +514,8 @@
         <p>© 2025 STIKA JATIM | FestikaJatim</p>
     </footer>
 
+    <button id="voiceToggleBtn" class="voice-control-btn" title="Hidupkan/Matikan Suara">🔊</button>
+
     <script>
         // --- GENERATE BINTANG ---
         const starsContainer = document.getElementById('stars');
@@ -514,98 +546,124 @@
         });
 
         const planets = {
-    mercury: {
-        name: "Merkurius",
-        desc: "Merkurius adalah planet terkecil sekaligus yang terdekat dengan Matahari. Karena ukurannya yang kecil, gaya gravitasinya juga rendah. Permukaannya dipenuhi kawah akibat hantaman meteorit dan asteroid sejak awal terbentuknya tata surya. Merkurius tidak memiliki atmosfer yang cukup tebal untuk menahan panas, sehingga suhu di siang hari bisa mencapai 430°C, sedangkan di malam hari turun drastis hingga -180°C. Planet ini juga tidak memiliki satelit alami dan memiliki permukaan berbatu menyerupai Bulan.",
-        fact: "Merkurius berotasi sangat lambat, sehingga satu hari di planet ini setara dengan sekitar 59 hari di Bumi. Namun, karena revolusinya cepat, satu tahun Merkurius hanya berlangsung 88 hari Bumi.",
-        image: "images/merkurius.png"
-    },
-    venus: {
-        name: "Venus",
-        desc: "Venus adalah planet kedua dari Matahari dan sering disebut sebagai 'saudara kembar Bumi' karena ukuran dan komposisinya mirip. Namun, kondisi permukaannya sangat berbeda. Atmosfer Venus tersusun dari karbon dioksida yang sangat tebal dan dipenuhi awan asam sulfat, menyebabkan efek rumah kaca tak terkendali. Hal ini membuat Venus menjadi planet terpanas di tata surya, bahkan lebih panas daripada Merkurius meski jaraknya lebih jauh dari Matahari. Permukaannya penuh dengan gunung api dan dataran vulkanik yang luas.",
-        fact: "Venus berputar pada sumbu yang berlawanan arah terhadap hampir semua planet lain. Akibatnya, di Venus Matahari terbit dari arah Barat dan terbenam di arah Timur.",
-        image: "images/venus.png"
-    },
-    earth: {
-        name: "Bumi",
-        desc: "Bumi adalah planet ketiga dari Matahari dan satu-satunya planet yang diketahui mendukung kehidupan. Hal ini dimungkinkan berkat atmosfernya yang kaya oksigen, keberadaan air dalam jumlah besar di permukaan, dan suhu yang stabil. Bumi juga memiliki medan magnet yang melindungi permukaan dari radiasi Matahari berbahaya. Planet ini memiliki satu satelit alami, yaitu Bulan, yang berperan penting dalam mengatur pasang surut air laut dan menstabilkan kemiringan sumbu rotasi Bumi.",
-        fact: "Bumi bukan berbentuk bola sempurna. Rotasinya menyebabkan planet ini sedikit pepat di kutub dan menggembung di khatulistiwa, sehingga bentuknya disebut 'geoid'.",
-        image: "images/bumi.png"
-    },
-    mars: {
-        name: "Mars",
-        desc: "Mars adalah planet keempat dan sering disebut sebagai 'Planet Merah' karena permukaannya yang didominasi oleh debu dan batuan kaya besi yang berkarat. Mars memiliki atmosfer tipis yang sebagian besar tersusun dari karbon dioksida. Salah satu fitur geologis paling mencolok adalah Olympus Mons, gunung berapi terbesar di tata surya. Banyak misi luar angkasa dikirim untuk mencari jejak air masa lalu atau kemungkinan kehidupan mikroba. Mars memiliki dua bulan kecil bernama Phobos dan Deimos.",
-        fact: "Warna merah khas Mars berasal dari oksida besi atau 'karat' di tanahnya. Selain itu, Mars memiliki lembah dan jurang raksasa yang jauh lebih besar dari Grand Canyon di Bumi.",
-        image: "images/mars.png"
-    },
-    jupiter: {
-        name: "Jupiter",
-        desc: "Jupiter adalah planet terbesar di tata surya dan tergolong sebagai raksasa gas. Planet ini memiliki atmosfer tebal yang sebagian besar tersusun dari hidrogen dan helium. Salah satu tanda khasnya adalah Bintik Merah Raksasa, sebuah badai besar yang telah berlangsung setidaknya selama 350 tahun dan lebih besar dari ukuran Bumi. Jupiter memiliki sistem cincin tipis serta puluhan bulan, termasuk Ganymede yang merupakan satelit alami terbesar di tata surya.",
-        fact: "Jupiter memiliki medan magnet terkuat di antara semua planet, bahkan lebih kuat dari Bumi berkali-kali lipat. Salah satu bulan terpentingnya, Europa, diperkirakan memiliki lautan cair di bawah permukaan esnya.",
-        image: "images/jupiter.png"
-    },
-    saturn: {
-        name: "Saturnus",
-        desc: "Saturnus adalah planet keenam dari Matahari dan dikenal karena sistem cincinnya yang besar dan menakjubkan. Cincin-cincin ini terbuat dari partikel es dan batuan yang ukurannya bervariasi dari butiran pasir hingga sebesar rumah. Saturnus adalah planet dengan densitas paling rendah di tata surya; bahkan, jika ditempatkan di dalam air yang cukup besar, planet ini dapat mengapung. Atmosfernya kaya hidrogen dan helium, serta dihiasi badai raksasa seperti 'Bintik Besar Putih' yang muncul setiap beberapa dekade.",
-        fact: "Saturnus memiliki lebih dari 80 bulan, termasuk Titan yang memiliki atmosfer tebal dan danau hidrokarbon cair di permukaannya.",
-        image: "images/saturnus1.png"
-    },
-    uranus: {
-        name: "Uranus",
-        desc: "Uranus adalah raksasa es yang memiliki komposisi berbeda dibanding raksasa gas seperti Jupiter dan Saturnus. Atmosfernya kaya metana yang menyerap cahaya merah dan memantulkan warna biru-hijau yang unik. Salah satu ciri paling menarik Uranus adalah kemiringan sumbunya yang mencapai hampir 90°, sehingga planet ini seperti berputar 'terbaring'. Akibatnya, setiap kutub dapat mengalami siang dan malam selama lebih dari 40 tahun Bumi.",
-        fact: "Uranus memiliki atmosfer terdingin di tata surya, dengan suhu mencapai -224°C. Planet ini juga memiliki cincin tipis dan 27 bulan yang telah diidentifikasi.",
-        image: "images/uranus.png"
-    },
-    neptune: {
-        name: "Neptunus",
-        desc: "Neptunus adalah planet kedelapan dan terjauh dari Matahari. Karena jaraknya yang ekstrem, cahaya Matahari yang tiba di permukaannya hanya sekitar 1/900 dari intensitas di Bumi. Atmosfer Neptunus kaya metana dan dikenal dengan badai besar berkecepatan sangat tinggi, bahkan angin tercepat di tata surya tercatat terjadi di planet ini. Planet ini berwarna biru gelap dan memiliki struktur awan yang dinamis. Neptunus juga memiliki cincin tipis serta beberapa bulan penting seperti Triton.",
-        fact: "Neptunus membutuhkan waktu 165 tahun Bumi untuk menyelesaikan satu kali revolusi mengelilingi Matahari. Triton, bulan terbesarnya, mengorbit secara retrograde, yang menunjukkan ia mungkin objek yang ditangkap dari luar.",
-        image: "images/neptunus.png"
-    }
-};
+            mercury: {
+                name: "Merkurius",
+                desc: "Merkurius adalah planet terkecil sekaligus yang terdekat dengan Matahari. Karena ukurannya yang kecil, gaya gravitasinya juga rendah. Permukaannya dipenuhi kawah akibat hantaman meteorit dan asteroid sejak awal terbentuknya tata surya. Merkurius tidak memiliki atmosfer yang cukup tebal untuk menahan panas, sehingga suhu di siang hari bisa mencapai 430°C, sedangkan di malam hari turun drastis hingga -180°C. Planet ini juga tidak memiliki satelit alami dan memiliki permukaan berbatu menyerupai Bulan.",
+                fact: "Merkurius berotasi sangat lambat, sehingga satu hari di planet ini setara dengan sekitar 59 hari di Bumi. Namun, karena revolusinya cepat, satu tahun Merkurius hanya berlangsung 88 hari Bumi.",
+                image: "images/merkurius.png"
+            },
+            venus: {
+                name: "Venus",
+                desc: "Venus adalah planet kedua dari Matahari dan sering disebut sebagai 'saudara kembar Bumi' karena ukuran dan komposisinya mirip. Namun, kondisi permukaannya sangat berbeda. Atmosfer Venus tersusun dari karbon dioksida yang sangat tebal dan dipenuhi awan asam sulfat, menyebabkan efek rumah kaca tak terkendali. Hal ini membuat Venus menjadi planet terpanas di tata surya, bahkan lebih panas daripada Merkurius meski jaraknya lebih jauh dari Matahari. Permukaannya penuh dengan gunung api dan dataran vulkanik yang luas.",
+                fact: "Venus berputar pada sumbu yang berlawanan arah terhadap hampir semua planet lain. Akibatnya, di Venus Matahari terbit dari arah Barat dan terbenam di arah Timur.",
+                image: "images/venus.png"
+            },
+            earth: {
+                name: "Bumi",
+                desc: "Bumi adalah planet ketiga dari Matahari dan satu-satunya planet yang diketahui mendukung kehidupan. Hal ini dimungkinkan berkat atmosfernya yang kaya oksigen, keberadaan air dalam jumlah besar di permukaan, dan suhu yang stabil. Bumi juga memiliki medan magnet yang melindungi permukaan dari radiasi Matahari berbahaya. Planet ini memiliki satu satelit alami, yaitu Bulan, yang berperan penting dalam mengatur pasang surut air laut dan menstabilkan kemiringan sumbu rotasi Bumi.",
+                fact: "Bumi bukan berbentuk bola sempurna. Rotasinya menyebabkan planet ini sedikit pepat di kutub dan menggembung di khatulistiwa, sehingga bentuknya disebut 'geoid'.",
+                image: "images/bumi.png"
+            },
+            mars: {
+                name: "Mars",
+                desc: "Mars adalah planet keempat dan sering disebut sebagai 'Planet Merah' karena permukaannya yang didominasi oleh debu dan batuan kaya besi yang berkarat. Mars memiliki atmosfer tipis yang sebagian besar tersusun dari karbon dioksida. Salah satu fitur geologis paling mencolok adalah Olympus Mons, gunung berapi terbesar di tata surya. Banyak misi luar angkasa dikirim untuk mencari jejak air masa lalu atau kemungkinan kehidupan mikroba. Mars memiliki dua bulan kecil bernama Phobos dan Deimos.",
+                fact: "Warna merah khas Mars berasal dari oksida besi atau 'karat' di tanahnya. Selain itu, Mars memiliki lembah dan jurang raksasa yang jauh lebih besar dari Grand Canyon di Bumi.",
+                image: "images/mars.png"
+            },
+            jupiter: {
+                name: "Jupiter",
+                desc: "Jupiter adalah planet terbesar di tata surya dan tergolong sebagai raksasa gas. Planet ini memiliki atmosfer tebal yang sebagian besar tersusun dari hidrogen dan helium. Salah satu tanda khasnya adalah Bintik Merah Raksasa, sebuah badai besar yang telah berlangsung setidaknya selama 350 tahun dan lebih besar dari ukuran Bumi. Jupiter memiliki sistem cincin tipis serta puluhan bulan, termasuk Ganymede yang merupakan satelit alami terbesar di tata surya.",
+                fact: "Jupiter memiliki medan magnet terkuat di antara semua planet, bahkan lebih kuat dari Bumi berkali-kali lipat. Salah satu bulan terpentingnya, Europa, diperkirakan memiliki lautan cair di bawah permukaan esnya.",
+                image: "images/jupiter.png"
+            },
+            saturn: {
+                name: "Saturnus",
+                desc: "Saturnus adalah planet keenam dari Matahari dan dikenal karena sistem cincinnya yang besar dan menakjubkan. Cincin-cincin ini terbuat dari partikel es dan batuan yang ukurannya bervariasi dari butiran pasir hingga sebesar rumah. Saturnus adalah planet dengan densitas paling rendah di tata surya; bahkan, jika ditempatkan di dalam air yang cukup besar, planet ini dapat mengapung. Atmosfernya kaya hidrogen dan helium, serta dihiasi badai raksasa seperti 'Bintik Besar Putih' yang muncul setiap beberapa dekade.",
+                fact: "Saturnus memiliki lebih dari 80 bulan, termasuk Titan yang memiliki atmosfer tebal dan danau hidrokarbon cair di permukaannya.",
+                image: "images/saturnus1.png"
+            },
+            uranus: {
+                name: "Uranus",
+                desc: "Uranus adalah raksasa es yang memiliki komposisi berbeda dibanding raksasa gas seperti Jupiter dan Saturnus. Atmosfernya kaya metana yang menyerap cahaya merah dan memantulkan warna biru-hijau yang unik. Salah satu ciri paling menarik Uranus adalah kemiringan sumbunya yang mencapai hampir 90°, sehingga planet ini seperti berputar 'terbaring'. Akibatnya, setiap kutub dapat mengalami siang dan malam selama lebih dari 40 tahun Bumi.",
+                fact: "Uranus memiliki atmosfer terdingin di tata surya, dengan suhu mencapai -224°C. Planet ini juga memiliki cincin tipis dan 27 bulan yang telah diidentifikasi.",
+                image: "images/uranus.png"
+            },
+            neptune: {
+                name: "Neptunus",
+                desc: "Neptunus adalah planet kedelapan dan terjauh dari Matahari. Karena jaraknya yang ekstrem, cahaya Matahari yang tiba di permukaannya hanya sekitar 1/900 dari intensitas di Bumi. Atmosfer Neptunus kaya metana dan dikenal dengan badai besar berkecepatan sangat tinggi, bahkan angin tercepat di tata surya tercatat terjadi di planet ini. Planet ini berwarna biru gelap dan memiliki struktur awan yang dinamis. Neptunus juga memiliki cincin tipis serta beberapa bulan penting seperti Triton.",
+                fact: "Neptunus membutuhkan waktu 165 tahun Bumi untuk menyelesaikan satu kali revolusi mengelilingi Matahari. Triton, bulan terbesarnya, mengorbit secara retrograde, yang menunjukkan ia mungkin objek yang ditangkap dari luar.",
+                image: "images/neptunus.png"
+            }
+        };
 
-const synth = window.speechSynthesis;
+        // --- LOGIKA SUARA & TOMBOL ---
+        const synth = window.speechSynthesis;
+        const voiceBtn = document.getElementById('voiceToggleBtn');
+        
+        // Cek status suara dari memori browser (default: true/hidup)
+        let isVoiceOn = localStorage.getItem('voiceState') !== 'off';
 
-    function bicara(teks) {
-        // Hentikan suara jika sedang bicara
-        if (synth.speaking) {
-            synth.cancel();
+        function updateVoiceUI() {
+            if (isVoiceOn) {
+                voiceBtn.textContent = '🔊';
+                voiceBtn.classList.remove('muted');
+            } else {
+                voiceBtn.textContent = '🔇';
+                voiceBtn.classList.add('muted');
+                synth.cancel(); // Matikan suara jika sedang bicara
+            }
         }
-        
-        const ucapan = new SpeechSynthesisUtterance(teks);
-        ucapan.lang = 'id-ID'; // Bahasa Indonesia
-        ucapan.rate = 0.9; // Kecepatan bicara (1 normal, 0.9 agak pelan agar jelas)
-        ucapan.pitch = 1; // Nada suara
-        
-        synth.speak(ucapan);
-    }
 
-    // ... (Variable const solarSystem, planets, dll biarkan saja) ...
+        // Event Listener Tombol
+        voiceBtn.addEventListener('click', () => {
+            isVoiceOn = !isVoiceOn;
+            localStorage.setItem('voiceState', isVoiceOn ? 'on' : 'off');
+            updateVoiceUI();
+        });
 
-    // --- MODIFIKASI FUNGSI SHOWINFO ---
-    function showInfo(planetKey) {
-        const info = planets[planetKey];
-        if(!info) return;
-        
-        detailName.innerText = info.name;
-        detailDesc.innerText = info.desc;
-        detailFact.innerHTML = info.fact;
-        detailImage.src = info.image;
-        
-        document.body.classList.add('detail-active');
+        // Inisialisasi UI awal
+        updateVoiceUI();
 
-        // >> TAMBAHAN: Panggil suara saat detail muncul
-        // Kita gabungkan Nama + Deskripsi agar dibaca sekaligus
-        const teksBacaan = `Planet ${info.name}. ${info.desc}. Tahukah kamu? ${info.fact}`;
-        bicara(teksBacaan);
-    }
+        // Matikan suara saat pindah halaman
+        window.addEventListener('beforeunload', () => {
+            synth.cancel();
+        });
 
-    function hideInfo() {
-        document.body.classList.remove('detail-active');
-        synth.cancel(); // Matikan suara saat tombol kembali ditekan
-    }
+        function bicara(teks) {
+            // Cek apakah suara diaktifkan
+            if (!isVoiceOn) return;
 
-    returnBtn.addEventListener('click', hideInfo);
-</script>
+            if (synth.speaking) {
+                synth.cancel();
+            }
+            
+            const ucapan = new SpeechSynthesisUtterance(teks);
+            ucapan.lang = 'id-ID';
+            ucapan.rate = 0.9;
+            ucapan.pitch = 1;
+            synth.speak(ucapan);
+        }
+
+        function showInfo(planetKey) {
+            const info = planets[planetKey];
+            if(!info) return;
+            detailName.innerText = info.name;
+            detailDesc.innerText = info.desc;
+            detailFact.innerHTML = info.fact;
+            detailImage.src = info.image;
+            document.body.classList.add('detail-active');
+
+            // Panggil suara
+            const teksBacaan = `Planet ${info.name}. ${info.desc}. Tahukah kamu? ${info.fact}`;
+            bicara(teksBacaan);
+        }
+
+        function hideInfo() {
+            document.body.classList.remove('detail-active');
+            synth.cancel(); 
+        }
+
+        returnBtn.addEventListener('click', hideInfo);
+    </script>
 </body>
 </html>
