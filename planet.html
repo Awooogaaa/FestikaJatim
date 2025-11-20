@@ -421,9 +421,9 @@
     <nav>
         <a href="landing_page.html" class="logo">Galaxy</a>
         <ul class="nav-links">
-            <li><a href="landing_page.html">Jelajahi</a></li>
-            <li><a href="planet.html" class="active">Tatanan</a></li>
-            <li><a href="quiz.html">Kuis</a></li>
+            <li><a href="landing_page.html">Explore</a></li>
+            <li><a href="planet.html" class="active">Solar System</a></li>
+            <li><a href="quiz.html">Quiz</a></li>
         </ul>
     </nav>
 
@@ -539,6 +539,7 @@
         const detailFact = document.getElementById('detail-planet-fact');
         const detailImage = document.getElementById('detail-planet-image');
         const returnBtn = document.getElementById('return-btn');
+        let currentPlanetKey = null;
 
         planetElements.forEach(planet => {
             planet.addEventListener('mouseenter', () => { solarSystem.classList.add('paused'); });
@@ -600,7 +601,6 @@
         const synth = window.speechSynthesis;
         const voiceBtn = document.getElementById('voiceToggleBtn');
         
-        // Cek status suara dari memori browser (default: true/hidup)
         let isVoiceOn = localStorage.getItem('voiceState') !== 'off';
 
         function updateVoiceUI() {
@@ -610,27 +610,33 @@
             } else {
                 voiceBtn.textContent = '🔇';
                 voiceBtn.classList.add('muted');
-                synth.cancel(); // Matikan suara jika sedang bicara
+                synth.cancel();
             }
         }
 
-        // Event Listener Tombol
+        // Event Listener Tombol: Baca Ulang Saat Dinyalakan
         voiceBtn.addEventListener('click', () => {
             isVoiceOn = !isVoiceOn;
             localStorage.setItem('voiceState', isVoiceOn ? 'on' : 'off');
             updateVoiceUI();
+
+            // JIKA SUARA DINYALAKAN & MODAL TERBUKA: BACA INFO PLANET
+            if (isVoiceOn && document.body.classList.contains('detail-active') && currentPlanetKey) {
+                const info = planets[currentPlanetKey];
+                const teksBacaan = `Planet ${info.name}. ${info.desc}. Tahukah kamu? ${info.fact}`;
+                bicara(teksBacaan);
+            } else if (isVoiceOn) {
+                 bicara("Mode suara diaktifkan. Silakan pilih planet.");
+            }
         });
 
-        // Inisialisasi UI awal
         updateVoiceUI();
 
-        // Matikan suara saat pindah halaman
         window.addEventListener('beforeunload', () => {
             synth.cancel();
         });
 
         function bicara(teks) {
-            // Cek apakah suara diaktifkan
             if (!isVoiceOn) return;
 
             if (synth.speaking) {
@@ -645,21 +651,23 @@
         }
 
         function showInfo(planetKey) {
+            currentPlanetKey = planetKey;
             const info = planets[planetKey];
             if(!info) return;
+            
             detailName.innerText = info.name;
             detailDesc.innerText = info.desc;
             detailFact.innerHTML = info.fact;
             detailImage.src = info.image;
             document.body.classList.add('detail-active');
 
-            // Panggil suara
             const teksBacaan = `Planet ${info.name}. ${info.desc}. Tahukah kamu? ${info.fact}`;
             bicara(teksBacaan);
         }
 
         function hideInfo() {
             document.body.classList.remove('detail-active');
+            currentPlanetKey = null;
             synth.cancel(); 
         }
 
