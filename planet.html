@@ -24,6 +24,28 @@
             position: relative;
         }
 
+        /* --- ANIMASI MASUK (Sama seperti Landing Page) --- */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Animasi khusus untuk Tata Surya (karena ada translate -50%, -50%) */
+        @keyframes solarScaleIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
         /* Navigasi Responsive */
         nav {
             display: flex;
@@ -35,6 +57,8 @@
             width: 100%;
             z-index: 100;
             transition: opacity 0.5s;
+            /* Animasi Masuk */
+            animation: fadeInDown 1s ease-out;
         }
 
         body.detail-active nav {
@@ -108,6 +132,10 @@
             z-index: 10;
             transition: all 0.8s ease;
             padding: 0 20px;
+            
+            /* Animasi Masuk */
+            opacity: 0;
+            animation: fadeIn 1.2s ease-out 0.3s forwards;
         }
 
         .page-title h1 {
@@ -135,6 +163,10 @@
             transform: translate(-50%, -50%);
             transition: all 1.2s cubic-bezier(0.645, 0.045, 0.355, 1);
             z-index: 10;
+
+            /* Animasi Masuk */
+            opacity: 0;
+            animation: solarScaleIn 1.5s ease-out 0.5s forwards;
         }
 
         /* Efek saat masuk detail */
@@ -371,64 +403,41 @@
             .solar-system { width: 85vmin; height: 85vmin; }
         }
 
-        /* --- RESPONSIVE MOBILE/TABLET (Ganti bagian ini saja) --- */
         @media (max-width: 768px) {
-            nav {
+            nav { 
                 padding: 15px 20px;
-                /* Ubah jadi row agar logo dan menu sejajar ke samping */
-                flex-direction: row; 
-                justify-content: space-between;
-                align-items: center;
-                gap: 0;
+                flex-direction: column;
+                gap: 10px;
             }
-
-            .logo { 
-                font-size: 20px;
-                position: relative;
-                left: 0;
-                z-index: 102; /* Pastikan logo di atas menu jika layar sangat kecil */
-            }
-
-            .nav-links {
-                /* Tetap gunakan teknik centering Desktop agar menu di tengah */
-                position: absolute;
-                left: 50%;
-                transform: translateX(-50%);
+            .logo { font-size: 20px; }
+            
+            .nav-links { 
+                /* --- RESET UNTUK MOBILE AGAR TIDAK TUMPUK --- */
+                position: static;   /* Kembalikan ke aliran normal */
+                transform: none;    /* Hapus pergeseran tengah */
                 
-                display: flex;
-                gap: 15px; /* Jarak antar menu diperkecil agar muat di HP */
+                display: flex; 
+                gap: 20px; 
                 justify-content: center;
-                width: auto;
-                padding-bottom: 0;
-                
-                /* Tambahan agar tidak bentrok visual dengan bintang */
-                background: rgba(0, 0, 0, 0.3); 
-                border-radius: 20px;
-                padding: 5px 15px;
+                width: 100%;
+                padding-bottom: 5px;
             }
             
-            .nav-links a {
-                font-size: 12px; /* Ukuran font sedikit diperkecil */
-            }
-
-            /* Penyesuaian agar konten kuis/planet tidak tertutup navbar */
-            .quiz-wrapper {
-                margin: 100px 20px 20px 20px;
-            }
+            .nav-links a { font-size: 14px; }
+            .page-title { top: 100px; padding: 0 15px; }
+            .page-title h1 { font-size: 24px; }
+            .page-title p { display: none; }
             
-            .page-title {
-                top: 85px;
-            }
-
-            /* Sembunyikan hiasan berat di mobile */
-            .floating-planet {
-                display: none; 
-            }
+            .solar-system { width: 95vmin; height: 95vmin; top: 55%; }
             
-            /* Khusus HP Layar Sangat Kecil (di bawah 380px) */
-            @media (max-width: 380px) {
-                .logo { display: none; } /* Sembunyikan logo jika layar terlalu sempit agar menu tidak rusak */
-            }
+            .detail-content-wrapper { grid-template-columns: 1fr; margin: 60px auto 20px; padding-bottom: 40px; gap: 20px; }
+            .grid-planet-visual { order: 1; }
+            #detail-planet-image { max-width: 250px; }
+            .grid-text-area { order: 2; }
+            #detail-planet-name { font-size: 36px; text-align: center; }
+            #detail-planet-desc { font-size: 14px; text-align: center; }
+            .fact-box { text-align: left; }
+            .detail-button { align-self: center; width: 100%; text-align: center; margin-top: 10px; }
         }
         
         @media (max-width: 360px) {
@@ -444,9 +453,9 @@
     <nav>
         <a href="landing_page.html" class="logo">Galaxy</a>
         <ul class="nav-links">
-            <li><a href="landing_page.html">Jelajahi</a></li>
-            <li><a href="planet.html" class="active">Tatanan</a></li>
-            <li><a href="quiz.html">Kuis</a></li>
+            <li><a href="landing_page.html">Explore</a></li>
+            <li><a href="planet.html" class="active">Solar System</a></li>
+            <li><a href="quiz.html">Quiz</a></li>
         </ul>
     </nav>
 
@@ -648,8 +657,6 @@
                 const info = planets[currentPlanetKey];
                 const teksBacaan = `Planet ${info.name}. ${info.desc}. Tahukah kamu? ${info.fact}`;
                 bicara(teksBacaan);
-            } else if (isVoiceOn) {
-                 bicara("Mode suara diaktifkan. Silakan pilih planet.");
             }
         });
 
@@ -677,7 +684,6 @@
             currentPlanetKey = planetKey;
             const info = planets[planetKey];
             if(!info) return;
-            
             detailName.innerText = info.name;
             detailDesc.innerText = info.desc;
             detailFact.innerHTML = info.fact;
