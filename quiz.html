@@ -369,41 +369,63 @@
         }
 
         /* --- RESPONSIVE MOBILE/TABLET --- */
+        /* --- RESPONSIVE MOBILE/TABLET (Ganti bagian ini saja) --- */
         @media (max-width: 768px) {
             nav {
                 padding: 15px 20px;
-                flex-direction: column; /* Logo atas, Menu bawah */
-                gap: 15px;
+                /* Ubah jadi row agar logo dan menu sejajar ke samping */
+                flex-direction: row; 
+                justify-content: space-between;
+                align-items: center;
+                gap: 0;
             }
 
             .logo { 
-                font-size: 24px; 
+                font-size: 20px;
+                position: relative;
+                left: 0;
+                z-index: 102; /* Pastikan logo di atas menu jika layar sangat kecil */
             }
 
             .nav-links {
-                /* Reset posisi absolute agar menu tidak menumpuk di mobile */
-                position: static;
-                transform: none;
+                /* Tetap gunakan teknik centering Desktop agar menu di tengah */
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
                 
                 display: flex;
-                gap: 20px;
+                gap: 15px; /* Jarak antar menu diperkecil agar muat di HP */
                 justify-content: center;
-                width: 100%;
-                flex-wrap: wrap;
+                width: auto;
+                padding-bottom: 0;
+                
+                /* Tambahan agar tidak bentrok visual dengan bintang */
+                background: rgba(0, 0, 0, 0.3); 
+                border-radius: 20px;
+                padding: 5px 15px;
+            }
+            
+            .nav-links a {
+                font-size: 12px; /* Ukuran font sedikit diperkecil */
             }
 
+            /* Penyesuaian agar konten kuis/planet tidak tertutup navbar */
             .quiz-wrapper {
-                padding: 25px;
-                /* Tambahkan margin top agar konten tidak tertutup navbar yang tinggi */
-                margin: 40px 20px 20px 20px; 
+                margin: 100px 20px 20px 20px;
+            }
+            
+            .page-title {
+                top: 85px;
             }
 
-            #question-container {
-                font-size: 20px;
-            }
-
+            /* Sembunyikan hiasan berat di mobile */
             .floating-planet {
-                display: none; /* Sembunyikan dekorasi berat di mobile */
+                display: none; 
+            }
+            
+            /* Khusus HP Layar Sangat Kecil (di bawah 380px) */
+            @media (max-width: 380px) {
+                .logo { display: none; } /* Sembunyikan logo jika layar terlalu sempit agar menu tidak rusak */
             }
         }
     </style>

@@ -371,41 +371,64 @@
             .solar-system { width: 85vmin; height: 85vmin; }
         }
 
+        /* --- RESPONSIVE MOBILE/TABLET (Ganti bagian ini saja) --- */
         @media (max-width: 768px) {
-            nav { 
+            nav {
                 padding: 15px 20px;
-                flex-direction: column;
-                gap: 10px;
+                /* Ubah jadi row agar logo dan menu sejajar ke samping */
+                flex-direction: row; 
+                justify-content: space-between;
+                align-items: center;
+                gap: 0;
             }
-            .logo { font-size: 20px; }
-            
-            .nav-links { 
-                /* --- RESET UNTUK MOBILE AGAR TIDAK TUMPUK --- */
-                position: static;   /* Kembalikan ke aliran normal */
-                transform: none;    /* Hapus pergeseran tengah */
+
+            .logo { 
+                font-size: 20px;
+                position: relative;
+                left: 0;
+                z-index: 102; /* Pastikan logo di atas menu jika layar sangat kecil */
+            }
+
+            .nav-links {
+                /* Tetap gunakan teknik centering Desktop agar menu di tengah */
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
                 
-                display: flex; 
-                gap: 20px; 
+                display: flex;
+                gap: 15px; /* Jarak antar menu diperkecil agar muat di HP */
                 justify-content: center;
-                width: 100%;
-                padding-bottom: 5px;
+                width: auto;
+                padding-bottom: 0;
+                
+                /* Tambahan agar tidak bentrok visual dengan bintang */
+                background: rgba(0, 0, 0, 0.3); 
+                border-radius: 20px;
+                padding: 5px 15px;
             }
             
-            .nav-links a { font-size: 14px; }
-            .page-title { top: 100px; padding: 0 15px; }
-            .page-title h1 { font-size: 24px; }
-            .page-title p { display: none; }
+            .nav-links a {
+                font-size: 12px; /* Ukuran font sedikit diperkecil */
+            }
+
+            /* Penyesuaian agar konten kuis/planet tidak tertutup navbar */
+            .quiz-wrapper {
+                margin: 100px 20px 20px 20px;
+            }
             
-            .solar-system { width: 95vmin; height: 95vmin; top: 55%; }
+            .page-title {
+                top: 85px;
+            }
+
+            /* Sembunyikan hiasan berat di mobile */
+            .floating-planet {
+                display: none; 
+            }
             
-            .detail-content-wrapper { grid-template-columns: 1fr; margin: 60px auto 20px; padding-bottom: 40px; gap: 20px; }
-            .grid-planet-visual { order: 1; }
-            #detail-planet-image { max-width: 250px; }
-            .grid-text-area { order: 2; }
-            #detail-planet-name { font-size: 36px; text-align: center; }
-            #detail-planet-desc { font-size: 14px; text-align: center; }
-            .fact-box { text-align: left; }
-            .detail-button { align-self: center; width: 100%; text-align: center; margin-top: 10px; }
+            /* Khusus HP Layar Sangat Kecil (di bawah 380px) */
+            @media (max-width: 380px) {
+                .logo { display: none; } /* Sembunyikan logo jika layar terlalu sempit agar menu tidak rusak */
+            }
         }
         
         @media (max-width: 360px) {
