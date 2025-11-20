@@ -120,7 +120,8 @@
         /* WADAH UTAMA TATA SURYA */
         .solar-system {
             position: absolute;
-            top: 55%;
+            /* Mengubah top dari 55% ke 60% agar lebih ke bawah */
+            top: 60%; 
             left: 50%;
             width: 90vmin; 
             height: 90vmin;
@@ -152,8 +153,8 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 15%;
-            height: 15%;
+            width: 10%; 
+            height: 10%;
             background: radial-gradient(circle, #ffcc00, #ff6600);
             border-radius: 50%;
             transform: translate(-50%, -50%);
@@ -214,29 +215,38 @@
         .solar-system.paused .planet-name { animation-play-state: paused; }
 
         /* UKURAN & POSISI ORBIT */
-        .orbit-mercury { width: 22%; height: 22%; animation-duration: 5s; } 
-        .mercury { width: 12px; height: 12px; background: #a9a9a9; top: 0; left: 50%; margin-top: -6px; }
+        
+        .orbit-mercury { width: 16%; height: 16%; animation-duration: 5s; } 
+        .mercury { width: 10px; height: 10px; background: #a9a9a9; top: 0; left: 50%; margin-top: -5px; }
         .mercury .planet-name { animation-duration: 5s; }
 
-        .orbit-venus { width: 32%; height: 32%; animation-duration: 8s; }
-        .venus { width: 16px; height: 16px; background: #e6c288; top: 0; left: 50%; margin-top: -8px; }
+        .orbit-venus { width: 24%; height: 24%; animation-duration: 8s; }
+        .venus { width: 14px; height: 14px; background: #e6c288; top: 0; left: 50%; margin-top: -7px; }
         .venus .planet-name { animation-duration: 8s; }
 
-        .orbit-earth { width: 44%; height: 44%; animation-duration: 12s; }
-        .earth { width: 18px; height: 18px; background: #4a90e2; top: 0; left: 50%; margin-top: -9px; }
+        .orbit-earth { width: 34%; height: 34%; animation-duration: 12s; }
+        .earth { width: 16px; height: 16px; background: #4a90e2; top: 0; left: 50%; margin-top: -8px; }
         .earth .planet-name { animation-duration: 12s; }
 
-        .orbit-mars { width: 56%; height: 56%; animation-duration: 18s; }
-        .mars { width: 14px; height: 14px; background: #ff6b35; top: 0; left: 50%; margin-top: -7px; }
+        .orbit-mars { width: 44%; height: 44%; animation-duration: 18s; }
+        .mars { width: 12px; height: 12px; background: #ff6b35; top: 0; left: 50%; margin-top: -6px; }
         .mars .planet-name { animation-duration: 18s; }
 
-        .orbit-jupiter { width: 72%; height: 72%; animation-duration: 35s; }
-        .jupiter { width: 30px; height: 30px; background: #d4a574; top: 0; left: 50%; margin-top: -15px; }
+        .orbit-jupiter { width: 58%; height: 58%; animation-duration: 35s; }
+        .jupiter { width: 28px; height: 28px; background: #d4a574; top: 0; left: 50%; margin-top: -14px; }
         .jupiter .planet-name { animation-duration: 35s; }
 
-        .orbit-saturn { width: 92%; height: 92%; animation-duration: 55s; }
-        .saturn { width: 26px; height: 26px; background: #e6cf8b; top: 0; left: 50%; margin-top: -13px; box-shadow: 0 0 0 4px rgba(230, 207, 139, 0.3); }
+        .orbit-saturn { width: 72%; height: 72%; animation-duration: 55s; }
+        .saturn { width: 24px; height: 24px; background: #e6cf8b; top: 0; left: 50%; margin-top: -12px; box-shadow: 0 0 0 4px rgba(230, 207, 139, 0.3); }
         .saturn .planet-name { animation-duration: 55s; }
+
+        .orbit-uranus { width: 84%; height: 84%; animation-duration: 70s; }
+        .uranus { width: 18px; height: 18px; background: #4fd1d9; top: 0; left: 50%; margin-top: -9px; }
+        .uranus .planet-name { animation-duration: 70s; }
+
+        .orbit-neptune { width: 96%; height: 96%; animation-duration: 85s; }
+        .neptune { width: 18px; height: 18px; background: #4b70e8; top: 0; left: 50%; margin-top: -9px; }
+        .neptune .planet-name { animation-duration: 85s; }
 
         @keyframes rotate {
             from { transform: translate(-50%, -50%) rotate(0deg); }
@@ -316,7 +326,7 @@
             color: #6b6b6b; font-size: 12px; z-index: 5; transition: opacity 0.5s;
         }
 
-        /* --- PERBAIKAN MEDIA QUERIES (MOBILE & TABLET) --- */
+        /* --- MEDIA QUERIES --- */
 
         @media (max-width: 1024px) {
             nav { padding: 20px; }
@@ -325,18 +335,13 @@
             .solar-system { width: 85vmin; height: 85vmin; }
         }
 
-        /* Mobile (Portrait) - PERBAIKAN NAVIGASI */
         @media (max-width: 768px) {
-            /* 1. Navigasi sekarang menampilkan links (stacked) */
             nav { 
                 padding: 15px 20px;
-                flex-direction: column; /* Susun Logo di atas, Menu di bawah */
+                flex-direction: column;
                 gap: 10px;
             }
-            
             .logo { font-size: 20px; }
-            
-            /* Mengubah display:none menjadi flex agar menu muncul */
             .nav-links { 
                 display: flex; 
                 gap: 20px; 
@@ -344,29 +349,15 @@
                 width: 100%;
                 padding-bottom: 5px;
             }
-            
-            .nav-links a {
-                font-size: 14px; /* Font sedikit lebih kecil agar muat */
-            }
-
-            /* 2. Sesuaikan posisi judul agar tidak tertutup navigasi yang lebih tinggi */
-            .page-title { 
-                top: 100px; 
-                padding: 0 15px; 
-            }
-            
+            .nav-links a { font-size: 14px; }
+            .page-title { top: 100px; padding: 0 15px; }
             .page-title h1 { font-size: 24px; }
             .page-title p { display: none; }
-
-            /* Tata Surya */
-            .solar-system {
-                width: 95vmin; height: 95vmin; top: 50%;
-            }
-
-            /* Detail View Mobile */
-            .detail-content-wrapper {
-                grid-template-columns: 1fr; margin: 60px auto 20px; padding-bottom: 40px; gap: 20px;
-            }
+            
+            /* Tata Surya: Top diubah dari 50% menjadi 55% agar turun sedikit */
+            .solar-system { width: 95vmin; height: 95vmin; top: 55%; }
+            
+            .detail-content-wrapper { grid-template-columns: 1fr; margin: 60px auto 20px; padding-bottom: 40px; gap: 20px; }
             .grid-planet-visual { order: 1; }
             #detail-planet-image { max-width: 250px; }
             .grid-text-area { order: 2; }
@@ -436,6 +427,18 @@
         <div class="orbit orbit-saturn">
             <div class="planet saturn" onclick="showInfo('saturn')">
                 <span class="planet-name">Saturnus</span>
+            </div>
+        </div>
+
+        <div class="orbit orbit-uranus">
+            <div class="planet uranus" onclick="showInfo('uranus')">
+                <span class="planet-name">Uranus</span>
+            </div>
+        </div>
+
+        <div class="orbit orbit-neptune">
+            <div class="planet neptune" onclick="showInfo('neptune')">
+                <span class="planet-name">Neptunus</span>
             </div>
         </div>
     </main>
@@ -535,6 +538,18 @@
                 desc: "Dikenal sebagai permata tata surya karena cincinnya yang indah dan kompleks, terbuat dari es dan bebatuan. Saturnus adalah planet dengan densitas terendah.",
                 fact: "Saturnus sangat ringan sehingga jika ada bak air raksasa yang cukup besar, planet ini akan mengapung di atasnya!",
                 image: "images/saturnus1.png"
+            },
+            uranus: {
+                name: "Uranus",
+                desc: "Uranus adalah raksasa es yang unik karena berotasi miring hampir 90 derajat. Planet ini memiliki warna biru-hijau yang indah akibat kandungan gas metana di atmosfernya.",
+                fact: "Suhu atmosfer terendah di Uranus mencapai -224°C, menjadikannya planet dengan atmosfer terdingin di tata surya.",
+                image: "images/uranus.png"
+            },
+            neptune: {
+                name: "Neptunus",
+                desc: "Neptunus adalah planet terjauh dari Matahari yang dikenal sebagai planet paling berangin di tata surya. Memiliki warna biru tua yang pekat dan badai supersonik.",
+                fact: "Satu tahun di Neptunus (waktu untuk mengelilingi matahari) berlangsung selama 165 tahun Bumi.",
+                image: "images/neptunus.png"
             }
         };
 
