@@ -735,28 +735,97 @@
         @media (max-width: 768px) {
             nav {
                 padding: 20px 24px;
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .logo {
+                position: absolute;
+                left: 24px;
+                font-size: 20px;
+            }
+
+            .nav-center {
+                position: static;
+                transform: none;
             }
 
             .nav-links {
-                display: none;
+                display: flex;
+                gap: 20px;
+            }
+
+            .nav-links a {
+                font-size: 14px;
+            }
+
+            .hero {
+                padding: 40px 20px 0;
             }
 
             .hero-title {
-                font-size: 36px;
-                margin-bottom: 40px;
+                font-size: 28px;
+                margin-bottom: 30px;
+                max-width: 100%;
+                line-height: 1.3;
+            }
+
+            .hero.split-view {
+                padding-left: 20px;
+                align-items: center;
+            }
+
+            .hero.split-view .hero-title {
+                font-size: 24px;
+                text-align: center;
             }
 
             .planet-selector {
-                flex-direction: row;
-                width: 90%;
+                flex-wrap: nowrap;
+                width: calc(100% - 40px);
+                padding: 15px 20px;
+                gap: 10px;
+                margin-bottom: 40px;
+                overflow-x: auto;
+                justify-content: flex-start;
+            }
+
+            .planet-selector::-webkit-scrollbar {
+                height: 4px;
+            }
+
+            .planet-selector::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.05);
+            }
+
+            .planet-selector::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 2px;
+            }
+
+            .planet-btn {
+                width: 45px;
+                height: 45px;
+                padding: 0;
+                flex-shrink: 0;
             }
 
             .planet-btn.active {
                 padding-right: 0;
-                width: 50px;
+                width: 45px;
+            }
+
+            .planet-icon {
+                width: 35px;
+                height: 35px;
+                margin: auto;
             }
 
             .planet-name-label {
+                display: none;
+            }
+
+            .planet-tooltip {
                 display: none;
             }
 
@@ -765,44 +834,272 @@
                 height: 50vh;
             }
 
+            .hero.split-view .mars-container {
+                left: 50%;
+                width: 200%;
+                height: 45vh;
+            }
+
             .info-card {
                 right: 20px;
                 left: 20px;
                 width: auto;
-                bottom: 120px;
-                top: auto;
-                transform: translateY(500px);
+                bottom: auto;
+                top: 50%;
+                transform: translateY(-50%) translateX(0);
+                padding: 28px;
+                max-height: 70vh;
+                overflow-y: auto;
+                opacity: 0;
+                pointer-events: none;
             }
 
             .info-card.visible {
-                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
             }
 
-            .hero.split-view {
-                padding-left: 20px;
+            .info-card::-webkit-scrollbar {
+                width: 4px;
             }
 
-            .hero.split-view .mars-container {
-                left: 50%;
-                width: 180%;
+            .info-card::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.05);
+            }
+
+            .info-card::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 2px;
+            }
+
+            .info-card h2 {
+                font-size: 28px;
+            }
+
+            .info-stats {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin-bottom: 24px;
+            }
+
+            .stat-item {
+                padding: 12px;
+            }
+
+            .explore-btn {
+                padding: 14px;
+                font-size: 14px;
+            }
+
+            /* Detail Modal Mobile */
+            .detail-modal {
+                padding: 10px;
             }
 
             .detail-content {
-                padding: 30px;
-                max-height: 85vh;
+                padding: 24px;
+                max-height: 90vh;
+                width: 100%;
             }
 
             .detail-header {
                 flex-direction: column;
                 text-align: center;
+                margin-bottom: 30px;
+                padding-bottom: 20px;
+            }
+
+            .detail-planet-icon {
+                width: 60px;
+                height: 60px;
             }
 
             .detail-title-section h2 {
-                font-size: 36px;
+                font-size: 32px;
+            }
+
+            .detail-section {
+                margin-bottom: 25px;
+            }
+
+            .detail-section h3 {
+                font-size: 20px;
+                margin-bottom: 12px;
+            }
+
+            .detail-section p {
+                font-size: 14px;
+                line-height: 1.7;
             }
 
             .detail-stats-grid {
                 grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .detail-stat-item {
+                padding: 14px;
+            }
+
+            .detail-stat-label {
+                font-size: 11px;
+            }
+
+            .detail-stat-value {
+                font-size: 16px;
+            }
+
+            .fun-facts-list li {
+                font-size: 14px;
+                line-height: 1.7;
+            }
+
+            .detail-close-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 18px;
+                left: 16px;
+            }
+
+            nav {
+                padding: 16px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 13px;
+            }
+
+            .hero {
+                padding: 30px 16px 0;
+            }
+
+            .hero-title {
+                font-size: 24px;
+                margin-bottom: 25px;
+            }
+
+            .hero.split-view .hero-title {
+                font-size: 20px;
+            }
+
+            .planet-selector {
+                width: calc(100% - 32px);
+                padding: 12px 16px;
+                gap: 8px;
+                margin-bottom: 30px;
+            }
+
+            .planet-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .planet-btn.active {
+                width: 40px;
+            }
+
+            .planet-icon {
+                width: 30px;
+                height: 30px;
+            }
+
+            .mars-container {
+                width: 220%;
+                height: 45vh;
+            }
+
+            .hero.split-view .mars-container {
+                width: 220%;
+                height: 40vh;
+            }
+
+            .info-card {
+                right: 16px;
+                left: 16px;
+                padding: 20px;
+                max-height: 65vh;
+            }
+
+            .info-card h2 {
+                font-size: 24px;
+            }
+
+            .info-card .planet-type {
+                font-size: 12px;
+                margin-bottom: 16px;
+            }
+
+            .info-card .description {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+
+            .close-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 16px;
+                top: 16px;
+                right: 16px;
+            }
+
+            .detail-content {
+                padding: 20px;
+            }
+
+            .detail-header {
+                margin-bottom: 24px;
+                padding-bottom: 16px;
+            }
+
+            .detail-planet-icon {
+                width: 50px;
+                height: 50px;
+            }
+
+            .detail-title-section h2 {
+                font-size: 28px;
+            }
+
+            .detail-title-section .planet-type {
+                font-size: 12px;
+            }
+
+            .detail-section h3 {
+                font-size: 18px;
+            }
+
+            .detail-section p {
+                font-size: 13px;
+            }
+
+            .detail-stat-value {
+                font-size: 15px;
+            }
+
+            .fun-facts-list li {
+                font-size: 13px;
+                padding-left: 24px;
+            }
+
+            .fun-facts-list li:before {
+                font-size: 16px;
+            }
+
+            .detail-close-btn {
+                width: 32px;
+                height: 32px;
+                top: 16px;
+                right: 16px;
             }
         }
     </style>
@@ -812,7 +1109,7 @@
     
     <div class="container">
         <nav>
-            <div class="logo">Galaxy</div>
+            <div class="logo">✕pace</div>
             <div class="nav-center">
                 <ul class="nav-links">
                     <li><a href="landing_page.html" class="active">Jelajahi</a></li>
@@ -1325,7 +1622,7 @@
                         setTimeout(() => {
                             planetImage.classList.remove('transitioning');
                         }, 50);
-                    }, 150);
+                    }, 400);
 
                     if (!isCardVisible) {
                         showCard();
