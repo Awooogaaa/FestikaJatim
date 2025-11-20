@@ -27,7 +27,7 @@
         /* Navigasi Responsive */
         nav {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-between; /* Logo tetap di kiri */
             align-items: center;
             padding: 20px 40px;
             position: absolute;
@@ -48,12 +48,19 @@
             letter-spacing: -0.5px;
             text-decoration: none;
             color: #fff;
+            /* Pastikan logo berada di atas layer jika diperlukan */
+            z-index: 101; 
         }
 
         .nav-links {
             display: flex;
             gap: 30px;
             list-style: none;
+            
+            /* --- PERUBAHAN UNTUK CENTER MENU --- */
+            position: absolute;      /* Lepaskan dari aliran flexbox biasa */
+            left: 50%;               /* Pindahkan ke tengah parent */
+            transform: translateX(-50%); /* Geser balik 50% lebarnya sendiri agar benar-benar tengah */
         }
 
         .nav-links a {
@@ -120,7 +127,7 @@
         /* WADAH UTAMA TATA SURYA */
         .solar-system {
             position: absolute;
-            top: 55%;
+            top: 60%; 
             left: 50%;
             width: 90vmin; 
             height: 90vmin;
@@ -152,8 +159,8 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 15%;
-            height: 15%;
+            width: 10%; 
+            height: 10%;
             background: radial-gradient(circle, #ffcc00, #ff6600);
             border-radius: 50%;
             transform: translate(-50%, -50%);
@@ -214,29 +221,38 @@
         .solar-system.paused .planet-name { animation-play-state: paused; }
 
         /* UKURAN & POSISI ORBIT */
-        .orbit-mercury { width: 22%; height: 22%; animation-duration: 5s; } 
-        .mercury { width: 12px; height: 12px; background: #a9a9a9; top: 0; left: 50%; margin-top: -6px; }
+        
+        .orbit-mercury { width: 16%; height: 16%; animation-duration: 5s; } 
+        .mercury { width: 10px; height: 10px; background: #a9a9a9; top: 0; left: 50%; margin-top: -5px; }
         .mercury .planet-name { animation-duration: 5s; }
 
-        .orbit-venus { width: 32%; height: 32%; animation-duration: 8s; }
-        .venus { width: 16px; height: 16px; background: #e6c288; top: 0; left: 50%; margin-top: -8px; }
+        .orbit-venus { width: 24%; height: 24%; animation-duration: 8s; }
+        .venus { width: 14px; height: 14px; background: #e6c288; top: 0; left: 50%; margin-top: -7px; }
         .venus .planet-name { animation-duration: 8s; }
 
-        .orbit-earth { width: 44%; height: 44%; animation-duration: 12s; }
-        .earth { width: 18px; height: 18px; background: #4a90e2; top: 0; left: 50%; margin-top: -9px; }
+        .orbit-earth { width: 34%; height: 34%; animation-duration: 12s; }
+        .earth { width: 16px; height: 16px; background: #4a90e2; top: 0; left: 50%; margin-top: -8px; }
         .earth .planet-name { animation-duration: 12s; }
 
-        .orbit-mars { width: 56%; height: 56%; animation-duration: 18s; }
-        .mars { width: 14px; height: 14px; background: #ff6b35; top: 0; left: 50%; margin-top: -7px; }
+        .orbit-mars { width: 44%; height: 44%; animation-duration: 18s; }
+        .mars { width: 12px; height: 12px; background: #ff6b35; top: 0; left: 50%; margin-top: -6px; }
         .mars .planet-name { animation-duration: 18s; }
 
-        .orbit-jupiter { width: 72%; height: 72%; animation-duration: 35s; }
-        .jupiter { width: 30px; height: 30px; background: #d4a574; top: 0; left: 50%; margin-top: -15px; }
+        .orbit-jupiter { width: 58%; height: 58%; animation-duration: 35s; }
+        .jupiter { width: 28px; height: 28px; background: #d4a574; top: 0; left: 50%; margin-top: -14px; }
         .jupiter .planet-name { animation-duration: 35s; }
 
-        .orbit-saturn { width: 92%; height: 92%; animation-duration: 55s; }
-        .saturn { width: 26px; height: 26px; background: #e6cf8b; top: 0; left: 50%; margin-top: -13px; box-shadow: 0 0 0 4px rgba(230, 207, 139, 0.3); }
+        .orbit-saturn { width: 72%; height: 72%; animation-duration: 55s; }
+        .saturn { width: 24px; height: 24px; background: #e6cf8b; top: 0; left: 50%; margin-top: -12px; box-shadow: 0 0 0 4px rgba(230, 207, 139, 0.3); }
         .saturn .planet-name { animation-duration: 55s; }
+
+        .orbit-uranus { width: 84%; height: 84%; animation-duration: 70s; }
+        .uranus { width: 18px; height: 18px; background: #4fd1d9; top: 0; left: 50%; margin-top: -9px; }
+        .uranus .planet-name { animation-duration: 70s; }
+
+        .orbit-neptune { width: 96%; height: 96%; animation-duration: 85s; }
+        .neptune { width: 18px; height: 18px; background: #4b70e8; top: 0; left: 50%; margin-top: -9px; }
+        .neptune .planet-name { animation-duration: 85s; }
 
         @keyframes rotate {
             from { transform: translate(-50%, -50%) rotate(0deg); }
@@ -316,7 +332,7 @@
             color: #6b6b6b; font-size: 12px; z-index: 5; transition: opacity 0.5s;
         }
 
-        /* --- PERBAIKAN MEDIA QUERIES (MOBILE & TABLET) --- */
+        /* --- MEDIA QUERIES --- */
 
         @media (max-width: 1024px) {
             nav { padding: 20px; }
@@ -325,19 +341,19 @@
             .solar-system { width: 85vmin; height: 85vmin; }
         }
 
-        /* Mobile (Portrait) - PERBAIKAN NAVIGASI */
         @media (max-width: 768px) {
-            /* 1. Navigasi sekarang menampilkan links (stacked) */
             nav { 
                 padding: 15px 20px;
-                flex-direction: column; /* Susun Logo di atas, Menu di bawah */
+                flex-direction: column;
                 gap: 10px;
             }
-            
             .logo { font-size: 20px; }
             
-            /* Mengubah display:none menjadi flex agar menu muncul */
             .nav-links { 
+                /* --- RESET UNTUK MOBILE AGAR TIDAK TUMPUK --- */
+                position: static;   /* Kembalikan ke aliran normal */
+                transform: none;    /* Hapus pergeseran tengah */
+                
                 display: flex; 
                 gap: 20px; 
                 justify-content: center;
@@ -345,28 +361,14 @@
                 padding-bottom: 5px;
             }
             
-            .nav-links a {
-                font-size: 14px; /* Font sedikit lebih kecil agar muat */
-            }
-
-            /* 2. Sesuaikan posisi judul agar tidak tertutup navigasi yang lebih tinggi */
-            .page-title { 
-                top: 100px; 
-                padding: 0 15px; 
-            }
-            
+            .nav-links a { font-size: 14px; }
+            .page-title { top: 100px; padding: 0 15px; }
             .page-title h1 { font-size: 24px; }
             .page-title p { display: none; }
-
-            /* Tata Surya */
-            .solar-system {
-                width: 95vmin; height: 95vmin; top: 50%;
-            }
-
-            /* Detail View Mobile */
-            .detail-content-wrapper {
-                grid-template-columns: 1fr; margin: 60px auto 20px; padding-bottom: 40px; gap: 20px;
-            }
+            
+            .solar-system { width: 95vmin; height: 95vmin; top: 55%; }
+            
+            .detail-content-wrapper { grid-template-columns: 1fr; margin: 60px auto 20px; padding-bottom: 40px; gap: 20px; }
             .grid-planet-visual { order: 1; }
             #detail-planet-image { max-width: 250px; }
             .grid-text-area { order: 2; }
@@ -387,7 +389,7 @@
     <div class="stars" id="stars"></div>
 
     <nav>
-        <a href="landing_page.html" class="logo">✕pace</a>
+        <a href="landing_page.html" class="logo">Galaxy</a>
         <ul class="nav-links">
             <li><a href="landing_page.html">Explore</a></li>
             <li><a href="planet.html" class="active">Solar System</a></li>
@@ -436,6 +438,18 @@
         <div class="orbit orbit-saturn">
             <div class="planet saturn" onclick="showInfo('saturn')">
                 <span class="planet-name">Saturnus</span>
+            </div>
+        </div>
+
+        <div class="orbit orbit-uranus">
+            <div class="planet uranus" onclick="showInfo('uranus')">
+                <span class="planet-name">Uranus</span>
+            </div>
+        </div>
+
+        <div class="orbit orbit-neptune">
+            <div class="planet neptune" onclick="showInfo('neptune')">
+                <span class="planet-name">Neptunus</span>
             </div>
         </div>
     </main>
@@ -500,43 +514,56 @@
         });
 
         const planets = {
-            mercury: {
-                name: "Merkurius",
-                desc: "Merkurius adalah planet terkecil dan terdekat dengan Matahari. Permukaannya penuh kawah mirip Bulan, dengan suhu yang sangat ekstrem antara siang (430°C) dan malam (-180°C) karena tidak memiliki atmosfer untuk menahan panas.",
-                fact: "Satu hari di Merkurius (satu rotasi) memakan waktu 59 hari Bumi, tetapi satu tahunnya (revolusi) hanya 88 hari.",
-                image: "images/merkurius.png"
-            },
-            venus: {
-                name: "Venus",
-                desc: "Venus adalah planet terpanas di tata surya karena atmosfer tebal karbon dioksida yang menciptakan efek rumah kaca tak terkendali. Sering disebut 'Bintang Kejora' karena kilaunya yang sangat terang.",
-                fact: "Venus berputar ke arah yang berlawanan dari kebanyakan planet lain. Matahari terbit di Barat dan terbenam di Timur.",
-                image: "images/venus.png"
-            },
-            earth: {
-                name: "Bumi",
-                desc: "Rumah kita, satu-satunya planet yang diketahui memiliki kehidupan. Memiliki air dalam bentuk cair di permukaannya dan atmosfer yang melindungi makhluk hidup dari radiasi berbahaya.",
-                fact: "Bumi sebenarnya tidak bulat sempurna, melainkan sedikit 'pepat' di kutub dan menggembung di khatulistiwa.",
-                image: "images/bumi.png"
-            },
-            mars: {
-                name: "Mars",
-                desc: "Mars, si Planet Merah, memiliki gunung berapi terbesar di tata surya (Olympus Mons). Ilmuwan terus mencari jejak air dan kehidupan masa lalu di sini.",
-                fact: "Warna merah Mars disebabkan oleh besi berkarat di tanahnya. Mars memiliki dua bulan kecil: Phobos dan Deimos.",
-                image: "images/mars.png"
-            },
-            jupiter: {
-                name: "Jupiter",
-                desc: "Raksasa gas terbesar di tata surya. Jupiter begitu besar sehingga semua planet lain bisa masuk ke dalamnya. Terkenal dengan Bintik Merah Raksasa, sebuah badai abadi.",
-                fact: "Jupiter memiliki medan magnet yang sangat kuat dan memiliki puluhan bulan, termasuk Europa yang mungkin memiliki lautan di bawah esnya.",
-                image: "images/jupiter.png"
-            },
-            saturn: {
-                name: "Saturnus",
-                desc: "Dikenal sebagai permata tata surya karena cincinnya yang indah dan kompleks, terbuat dari es dan bebatuan. Saturnus adalah planet dengan densitas terendah.",
-                fact: "Saturnus sangat ringan sehingga jika ada bak air raksasa yang cukup besar, planet ini akan mengapung di atasnya!",
-                image: "images/saturnus1.png"
-            }
-        };
+    mercury: {
+        name: "Merkurius",
+        desc: "Merkurius adalah planet terkecil sekaligus yang terdekat dengan Matahari. Karena ukurannya yang kecil, gaya gravitasinya juga rendah. Permukaannya dipenuhi kawah akibat hantaman meteorit dan asteroid sejak awal terbentuknya tata surya. Merkurius tidak memiliki atmosfer yang cukup tebal untuk menahan panas, sehingga suhu di siang hari bisa mencapai 430°C, sedangkan di malam hari turun drastis hingga -180°C. Planet ini juga tidak memiliki satelit alami dan memiliki permukaan berbatu menyerupai Bulan.",
+        fact: "Merkurius berotasi sangat lambat, sehingga satu hari di planet ini setara dengan sekitar 59 hari di Bumi. Namun, karena revolusinya cepat, satu tahun Merkurius hanya berlangsung 88 hari Bumi.",
+        image: "images/merkurius.png"
+    },
+    venus: {
+        name: "Venus",
+        desc: "Venus adalah planet kedua dari Matahari dan sering disebut sebagai 'saudara kembar Bumi' karena ukuran dan komposisinya mirip. Namun, kondisi permukaannya sangat berbeda. Atmosfer Venus tersusun dari karbon dioksida yang sangat tebal dan dipenuhi awan asam sulfat, menyebabkan efek rumah kaca tak terkendali. Hal ini membuat Venus menjadi planet terpanas di tata surya, bahkan lebih panas daripada Merkurius meski jaraknya lebih jauh dari Matahari. Permukaannya penuh dengan gunung api dan dataran vulkanik yang luas.",
+        fact: "Venus berputar pada sumbu yang berlawanan arah terhadap hampir semua planet lain. Akibatnya, di Venus Matahari terbit dari arah Barat dan terbenam di arah Timur.",
+        image: "images/venus.png"
+    },
+    earth: {
+        name: "Bumi",
+        desc: "Bumi adalah planet ketiga dari Matahari dan satu-satunya planet yang diketahui mendukung kehidupan. Hal ini dimungkinkan berkat atmosfernya yang kaya oksigen, keberadaan air dalam jumlah besar di permukaan, dan suhu yang stabil. Bumi juga memiliki medan magnet yang melindungi permukaan dari radiasi Matahari berbahaya. Planet ini memiliki satu satelit alami, yaitu Bulan, yang berperan penting dalam mengatur pasang surut air laut dan menstabilkan kemiringan sumbu rotasi Bumi.",
+        fact: "Bumi bukan berbentuk bola sempurna. Rotasinya menyebabkan planet ini sedikit pepat di kutub dan menggembung di khatulistiwa, sehingga bentuknya disebut 'geoid'.",
+        image: "images/bumi.png"
+    },
+    mars: {
+        name: "Mars",
+        desc: "Mars adalah planet keempat dan sering disebut sebagai 'Planet Merah' karena permukaannya yang didominasi oleh debu dan batuan kaya besi yang berkarat. Mars memiliki atmosfer tipis yang sebagian besar tersusun dari karbon dioksida. Salah satu fitur geologis paling mencolok adalah Olympus Mons, gunung berapi terbesar di tata surya. Banyak misi luar angkasa dikirim untuk mencari jejak air masa lalu atau kemungkinan kehidupan mikroba. Mars memiliki dua bulan kecil bernama Phobos dan Deimos.",
+        fact: "Warna merah khas Mars berasal dari oksida besi atau 'karat' di tanahnya. Selain itu, Mars memiliki lembah dan jurang raksasa yang jauh lebih besar dari Grand Canyon di Bumi.",
+        image: "images/mars.png"
+    },
+    jupiter: {
+        name: "Jupiter",
+        desc: "Jupiter adalah planet terbesar di tata surya dan tergolong sebagai raksasa gas. Planet ini memiliki atmosfer tebal yang sebagian besar tersusun dari hidrogen dan helium. Salah satu tanda khasnya adalah Bintik Merah Raksasa, sebuah badai besar yang telah berlangsung setidaknya selama 350 tahun dan lebih besar dari ukuran Bumi. Jupiter memiliki sistem cincin tipis serta puluhan bulan, termasuk Ganymede yang merupakan satelit alami terbesar di tata surya.",
+        fact: "Jupiter memiliki medan magnet terkuat di antara semua planet, bahkan lebih kuat dari Bumi berkali-kali lipat. Salah satu bulan terpentingnya, Europa, diperkirakan memiliki lautan cair di bawah permukaan esnya.",
+        image: "images/jupiter.png"
+    },
+    saturn: {
+        name: "Saturnus",
+        desc: "Saturnus adalah planet keenam dari Matahari dan dikenal karena sistem cincinnya yang besar dan menakjubkan. Cincin-cincin ini terbuat dari partikel es dan batuan yang ukurannya bervariasi dari butiran pasir hingga sebesar rumah. Saturnus adalah planet dengan densitas paling rendah di tata surya; bahkan, jika ditempatkan di dalam air yang cukup besar, planet ini dapat mengapung. Atmosfernya kaya hidrogen dan helium, serta dihiasi badai raksasa seperti 'Bintik Besar Putih' yang muncul setiap beberapa dekade.",
+        fact: "Saturnus memiliki lebih dari 80 bulan, termasuk Titan yang memiliki atmosfer tebal dan danau hidrokarbon cair di permukaannya.",
+        image: "images/saturnus1.png"
+    },
+    uranus: {
+        name: "Uranus",
+        desc: "Uranus adalah raksasa es yang memiliki komposisi berbeda dibanding raksasa gas seperti Jupiter dan Saturnus. Atmosfernya kaya metana yang menyerap cahaya merah dan memantulkan warna biru-hijau yang unik. Salah satu ciri paling menarik Uranus adalah kemiringan sumbunya yang mencapai hampir 90°, sehingga planet ini seperti berputar 'terbaring'. Akibatnya, setiap kutub dapat mengalami siang dan malam selama lebih dari 40 tahun Bumi.",
+        fact: "Uranus memiliki atmosfer terdingin di tata surya, dengan suhu mencapai -224°C. Planet ini juga memiliki cincin tipis dan 27 bulan yang telah diidentifikasi.",
+        image: "images/uranus.png"
+    },
+    neptune: {
+        name: "Neptunus",
+        desc: "Neptunus adalah planet kedelapan dan terjauh dari Matahari. Karena jaraknya yang ekstrem, cahaya Matahari yang tiba di permukaannya hanya sekitar 1/900 dari intensitas di Bumi. Atmosfer Neptunus kaya metana dan dikenal dengan badai besar berkecepatan sangat tinggi, bahkan angin tercepat di tata surya tercatat terjadi di planet ini. Planet ini berwarna biru gelap dan memiliki struktur awan yang dinamis. Neptunus juga memiliki cincin tipis serta beberapa bulan penting seperti Triton.",
+        fact: "Neptunus membutuhkan waktu 165 tahun Bumi untuk menyelesaikan satu kali revolusi mengelilingi Matahari. Triton, bulan terbesarnya, mengorbit secara retrograde, yang menunjukkan ia mungkin objek yang ditangkap dari luar.",
+        image: "images/neptunus.png"
+    }
+};
+
 
         function showInfo(planetKey) {
             const info = planets[planetKey];
