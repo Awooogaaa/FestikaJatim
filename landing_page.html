@@ -38,12 +38,19 @@
             padding: 28px 60px;
             position: relative;
             z-index: 100;
+            animation: fadeInDown 1s ease-out;
         }
 
         .logo {
             font-size: 22px;
             font-weight: 600;
             letter-spacing: -0.5px;
+        }
+
+        .nav-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .nav-links {
@@ -62,21 +69,6 @@
         .nav-links a:hover,
         .nav-links a.active {
             color: #fff;
-        }
-
-        .sign-up {
-            background: #fff;
-            color: #000;
-            padding: 11px 32px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
-            transition: transform 0.3s ease;
-        }
-
-        .sign-up:hover {
-            transform: scale(1.05);
         }
 
         /* Hero Section */
@@ -106,6 +98,8 @@
             position: relative;
             z-index: 10;
             transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+            animation: fadeIn 1.2s ease-out 0.3s forwards;
         }
 
         .hero.split-view .hero-title {
@@ -154,13 +148,19 @@
             height: auto;
             border-radius: 50%;
             filter: drop-shadow(0 -50px 70px rgba(62, 65, 255, 0.4));
-            transition: filter 0.6s ease, opacity 0.4s ease, transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 1;
+        }
+
+        .mars-image.initial-load {
+            opacity: 0;
+            animation: scaleIn 1.5s ease-out 0.4s forwards;
         }
 
         .mars-image.transitioning {
             opacity: 0;
-            transform: translateX(-50%) scale(0.95);
+            transform: translateX(-50%) scale(0.85);
+            filter: drop-shadow(0 -50px 70px rgba(62, 65, 255, 0)) blur(10px);
         }
 
         /* Info Card */
@@ -291,6 +291,8 @@
             margin-top: auto;
             margin-bottom: 60px;
             transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.6s forwards;
         }
 
         .hero.split-view .planet-selector {
@@ -467,12 +469,236 @@
             height: 2px;
             background: #fff;
             border-radius: 50%;
-            animation: twinkle 3s infinite;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards, twinkle 3s infinite;
         }
 
         @keyframes twinkle {
             0%, 100% { opacity: 0.2; }
             50% { opacity: 0.8; }
+        }
+
+        /* Loading Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Detail Modal */
+        .detail-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            padding: 20px;
+        }
+
+        .detail-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .detail-content {
+            background: rgba(20, 20, 20, 0.95);
+            border-radius: 24px;
+            padding: 50px;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .detail-modal.active .detail-content {
+            transform: scale(1);
+        }
+
+        .detail-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .detail-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .detail-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        .detail-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .detail-planet-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .detail-title-section h2 {
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+
+        .detail-title-section .planet-type {
+            font-size: 14px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .detail-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .detail-close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .detail-section {
+            margin-bottom: 35px;
+        }
+
+        .detail-section h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+
+        .detail-section p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #ccc;
+            margin-bottom: 12px;
+        }
+
+        .detail-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .detail-stat-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .detail-stat-label {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-stat-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .fun-facts-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .fun-facts-list li {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #ccc;
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .fun-facts-list li:before {
+            content: "★";
+            position: absolute;
+            left: 0;
+            color: #fff;
+            font-size: 18px;
         }
 
         /* Responsive */
@@ -495,6 +721,14 @@
 
             .hero.split-view .mars-container {
                 width: 120%;
+            }
+
+            .detail-content {
+                padding: 40px;
+            }
+
+            .detail-stats-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -552,6 +786,24 @@
                 left: 50%;
                 width: 180%;
             }
+
+            .detail-content {
+                padding: 30px;
+                max-height: 85vh;
+            }
+
+            .detail-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .detail-title-section h2 {
+                font-size: 36px;
+            }
+
+            .detail-stats-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -560,13 +812,14 @@
     
     <div class="container">
         <nav>
-            <div class="logo">✕pace</div>
-            <ul class="nav-links">
-                <li><a href="landing_page.html" class="active">Jelajahi</a></li>
-                <li><a href="planet.html" class="active">Tatanan</a></li>
-                <li><a href="quiz.html" class="active">Kuis</a></li>
-            </ul>
-            <a href="#" class="sign-up">Daftar</a>
+            <div class="logo">Galaxy</div>
+            <div class="nav-center">
+                <ul class="nav-links">
+                    <li><a href="landing_page.html" class="active">Jelajahi</a></li>
+                    <li><a href="planet.html" class="active">Tatanan</a></li>
+                    <li><a href="quiz.html" class="active">Kuis</a></li>
+                </ul>
+            </div>
         </nav>
 
         <div class="hero" id="hero">
@@ -620,7 +873,7 @@
         </div>
 
         <div class="mars-container">
-            <img src="images/bumi.png" alt="Planet" class="mars-image" id="planetImage">
+            <img src="images/bumi.png" alt="Planet" class="mars-image initial-load" id="planetImage">
         </div>
 
         <div class="info-card" id="infoCard">
@@ -650,6 +903,77 @@
             </div>
             <button class="explore-btn">Jelajahi Lebih Lanjut</button>
         </div>
+
+        <!-- Detail Modal -->
+        <div class="detail-modal" id="detailModal">
+            <div class="detail-content">
+                <button class="detail-close-btn" id="detailCloseBtn">×</button>
+                
+                <div class="detail-header">
+                    <div class="detail-planet-icon" id="detailPlanetIcon"></div>
+                    <div class="detail-title-section">
+                        <h2 id="detailTitle">Bumi</h2>
+                        <div class="planet-type" id="detailType">Planet Terestrial</div>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>Tentang Planet</h3>
+                    <p id="detailAbout"></p>
+                </div>
+
+                <div class="detail-section">
+                    <h3>Karakteristik Fisik</h3>
+                    <div class="detail-stats-grid">
+                        <div class="detail-stat-item">
+                            <div class="detail-stat-label">Jarak dari Matahari</div>
+                            <div class="detail-stat-value" id="detailDistance">149,6 Juta km</div>
+                        </div>
+                        <div class="detail-stat-item">
+                            <div class="detail-stat-label">Diameter</div>
+                            <div class="detail-stat-value" id="detailDiameter">12.742 km</div>
+                        </div>
+                        <div class="detail-stat-item">
+                            <div class="detail-stat-label">Massa</div>
+                            <div class="detail-stat-value" id="detailMass">5,97 × 10²⁴ kg</div>
+                        </div>
+                        <div class="detail-stat-item">
+                            <div class="detail-stat-label">Gravitasi</div>
+                            <div class="detail-stat-value" id="detailGravity">9,8 m/s²</div>
+                        </div>
+                        <div class="detail-stat-item">
+                            <div class="detail-stat-label">Lama Hari</div>
+                            <div class="detail-stat-value" id="detailDay">24 jam</div>
+                        </div>
+                        <div class="detail-stat-item">
+                            <div class="detail-stat-label">Lama Tahun</div>
+                            <div class="detail-stat-value" id="detailYear">365 hari</div>
+                        </div>
+                        <div class="detail-stat-item">
+                            <div class="detail-stat-label">Suhu Rata-rata</div>
+                            <div class="detail-stat-value" id="detailTemp">15°C</div>
+                        </div>
+                        <div class="detail-stat-item">
+                            <div class="detail-stat-label">Jumlah Bulan</div>
+                            <div class="detail-stat-value" id="detailMoons">1</div>
+                        </div>
+                        <div class="detail-stat-item">
+                            <div class="detail-stat-label">Komposisi Atmosfer</div>
+                            <div class="detail-stat-value" id="detailAtmosphere">N₂, O₂</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-section">
+                    <h3>Fakta Menarik</h3>
+                    <ul class="fun-facts-list" id="detailFacts">
+                        <li>Satu-satunya planet yang diketahui memiliki kehidupan</li>
+                        <li>70% permukaan tertutup air</li>
+                        <li>Atmosfer melindungi dari radiasi berbahaya</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -660,14 +984,14 @@
             star.className = 'star';
             star.style.left = Math.random() * 100 + '%';
             star.style.top = Math.random() * 100 + '%';
-            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.animationDelay = (Math.random() * 2) + 's';
             starsContainer.appendChild(star);
         }
 
         // Data planet
         const planetData = {
             mercury: {
-                title: 'Ini adalah awal dari sebuah cerita<br>antara kamu dan <span class="highlight" id="planetName">Merkurius</span>.',
+                title: 'Temukan misteri planet terdekat<br>dengan matahari, <span class="highlight" id="planetName">Merkurius</span>.',
                 image: 'images/merkurius.png',
                 glowColor: 'rgba(140, 140, 140, 0.5)',
                 highlightColor: '#8c8c8c',
@@ -677,10 +1001,23 @@
                 distance: '57,9 Juta km',
                 diameter: '4.879 km',
                 day: '59 hari',
-                year: '88 hari'
+                year: '88 hari',
+                detailAbout: 'Merkurius adalah planet terdekat dengan Matahari dan planet terkecil di Tata Surya kita. Dengan jarak rata-rata hanya 57,9 juta km dari Matahari, Merkurius mengalami variasi suhu yang sangat ekstrem. Pada siang hari, suhu permukaan bisa mencapai 430°C, tetapi pada malam hari turun drastis hingga -180°C. Planet ini tidak memiliki atmosfer yang signifikan untuk menahan panas, sehingga menyebabkan fluktuasi suhu yang ekstrem ini. Permukaannya dipenuhi kawah-kawah akibat tumbukan asteroid dan komet selama miliaran tahun, mirip dengan Bulan kita.',
+                mass: '3,30 × 10²³ kg',
+                gravity: '3,7 m/s²',
+                temp: '167°C',
+                moons: '0',
+                atmosphere: 'Sangat tipis',
+                facts: [
+                    'Memiliki hari yang lebih panjang daripada tahunnya (59 hari Bumi vs 88 hari Bumi)',
+                    'Tidak memiliki bulan atau cincin',
+                    'Memiliki inti besi yang sangat besar, mencakup 75% dari diameternya',
+                    'Hanya dapat dilihat dari Bumi saat fajar atau senja',
+                    'Permukaan penuh dengan kawah, yang terbesar bernama Caloris Basin dengan diameter 1.550 km'
+                ]
             },
             venus: {
-                title: 'Ini adalah awal dari sebuah cerita<br>antara kamu dan <span class="highlight" id="planetName">Venus</span>.',
+                title: 'Jelajahi planet kembar Bumi<br>yang misterius, <span class="highlight" id="planetName">Venus</span>.',
                 image: 'images/venus.png',
                 glowColor: 'rgba(232, 184, 75, 0.5)',
                 highlightColor: '#e8b84b',
@@ -690,7 +1027,20 @@
                 distance: '108,2 Juta km',
                 diameter: '12.104 km',
                 day: '243 hari',
-                year: '225 hari'
+                year: '225 hari',
+                detailAbout: 'Venus sering disebut sebagai "saudara kembar" Bumi karena ukuran dan massanya yang hampir sama, namun kondisi permukaannya sangat berbeda dan ekstrem. Atmosfer Venus sangat tebal dan terdiri dari 96,5% karbon dioksida, menciptakan efek rumah kaca yang sangat kuat. Hal ini menjadikan Venus sebagai planet terpanas di Tata Surya dengan suhu permukaan rata-rata 462°C, bahkan lebih panas dari Merkurius meskipun lebih jauh dari Matahari. Tekanan atmosfer di permukaan Venus adalah 92 kali lebih besar dari Bumi, setara dengan tekanan 900 meter di bawah permukaan laut. Awan tebal asam sulfat menutupi seluruh planet, membuat permukaannya tidak terlihat dari luar angkasa dalam cahaya tampak.',
+                mass: '4,87 × 10²⁴ kg',
+                gravity: '8,9 m/s²',
+                temp: '462°C',
+                moons: '0',
+                atmosphere: 'CO₂, N₂',
+                facts: [
+                    'Berotasi berlawanan arah dengan planet lain (rotasi retrograde)',
+                    'Satu hari di Venus lebih lama dari satu tahunnya',
+                    'Planet paling terang di langit malam setelah Bulan',
+                    'Hujan asam sulfat terjadi di atmosfer bagian atas',
+                    'Gunung berapi masih mungkin aktif hingga saat ini'
+                ]
             },
             earth: {
                 title: 'Ini adalah awal dari sebuah cerita<br>antara kamu dan <span class="highlight" id="planetName">Bumi</span>.',
@@ -703,10 +1053,23 @@
                 distance: '149,6 Juta km',
                 diameter: '12.742 km',
                 day: '24 jam',
-                year: '365 hari'
+                year: '365 hari',
+                detailAbout: 'Bumi adalah planet ketiga dari Matahari dan satu-satunya tempat di alam semesta yang diketahui memiliki kehidupan. Dengan jarak optimal dari Matahari (149,6 juta km), Bumi berada di zona layak huni yang memungkinkan air dalam bentuk cair ada di permukaannya. Sekitar 71% permukaan Bumi tertutup oleh air, menjadikannya "Planet Biru". Atmosfer Bumi terdiri dari 78% nitrogen dan 21% oksigen, yang melindungi kehidupan dari radiasi berbahaya dan mempertahankan suhu yang stabil. Bumi memiliki satu bulan alami yang mempengaruhi pasang surut dan stabilitas rotasi planet. Medan magnet Bumi melindungi atmosfer dari angin matahari dan memungkinkan kehidupan berkembang selama miliaran tahun.',
+                mass: '5,97 × 10²⁴ kg',
+                gravity: '9,8 m/s²',
+                temp: '15°C',
+                moons: '1',
+                atmosphere: 'N₂, O₂, Ar',
+                facts: [
+                    'Satu-satunya planet yang tidak dinamai dari dewa Yunani atau Romawi',
+                    '70% permukaan tertutup air, tapi hanya 3% yang merupakan air tawar',
+                    'Memiliki medan magnet kuat yang melindungi dari radiasi matahari',
+                    'Atmosfer menyediakan oksigen dan melindungi dari meteorit kecil',
+                    'Titik tertinggi: Gunung Everest (8.848 m), titik terendah: Palung Mariana (10.994 m)'
+                ]
             },
             mars: {
-                title: 'Ini adalah awal dari sebuah cerita<br>antara kamu dan <span class="highlight" id="planetName">Mars</span>.',
+                title: 'Rasakan petualangan di planet merah,<br>masa depan umat manusia, <span class="highlight" id="planetName">Mars</span>.',
                 image: 'images/mars.png',
                 glowColor: 'rgba(255, 107, 53, 0.5)',
                 highlightColor: '#ff6b35',
@@ -716,10 +1079,23 @@
                 distance: '227,9 Juta km',
                 diameter: '6.779 km',
                 day: '25 jam',
-                year: '687 hari'
+                year: '687 hari',
+                detailAbout: 'Mars, yang dikenal sebagai "Planet Merah", mendapatkan warnanya dari oksida besi (karat) yang menutupi permukaannya. Sebagai planet keempat dari Matahari, Mars telah lama menjadi target eksplorasi manusia karena kondisinya yang paling mirip dengan Bumi dibanding planet lain. Mars memiliki empat musim seperti Bumi karena kemiringan sumbunya yang serupa (25 derajat vs 23,5 derajat Bumi). Planet ini memiliki fitur geologis yang menakjubkan, termasuk Olympus Mons, gunung berapi tertinggi di Tata Surya dengan tinggi 21 km, dan Valles Marineris, sistem ngarai terbesar dengan panjang 4.000 km. Bukti kuat menunjukkan bahwa Mars pernah memiliki air cair mengalir di permukaannya miliaran tahun lalu, dan es air masih ada di kutub dan di bawah permukaan.',
+                mass: '6,42 × 10²³ kg',
+                gravity: '3,7 m/s²',
+                temp: '-63°C',
+                moons: '2 (Phobos, Deimos)',
+                atmosphere: 'CO₂, N₂, Ar',
+                facts: [
+                    'Memiliki Olympus Mons, gunung berapi tertinggi di Tata Surya (21 km)',
+                    'Pernah memiliki air cair di permukaan, bukti sungai dan danau purba',
+                    'Badai debu dapat menutupi seluruh planet dan berlangsung berbulan-bulan',
+                    'Memiliki musim seperti Bumi karena kemiringan sumbu yang serupa',
+                    'Target utama untuk kolonisasi manusia di masa depan'
+                ]
             },
             jupiter: {
-                title: 'Ini adalah awal dari sebuah cerita<br>antara kamu dan <span class="highlight" id="planetName">Jupiter</span>.',
+                title: 'Saksikan keagungan raksasa gas terbesar,<br>sang penguasa, <span class="highlight" id="planetName">Jupiter</span>.',
                 image: 'images/jupiter.png',
                 glowColor: 'rgba(212, 165, 116, 0.5)',
                 highlightColor: '#d4a574',
@@ -729,10 +1105,23 @@
                 distance: '778,5 Juta km',
                 diameter: '139.820 km',
                 day: '10 jam',
-                year: '12 tahun'
+                year: '12 tahun',
+                detailAbout: 'Jupiter adalah planet terbesar di Tata Surya kita, dengan massa 2,5 kali massa gabungan semua planet lain. Sebagai raksasa gas, Jupiter sebagian besar terdiri dari hidrogen dan helium, mirip dengan komposisi Matahari. Fitur paling ikonik Jupiter adalah Bintik Merah Besar (Great Red Spot), sebuah badai antisiklon raksasa yang telah berlangsung setidaknya 400 tahun dan cukup besar untuk muat tiga Bumi. Jupiter memiliki sistem bulan yang luar biasa dengan 95 bulan yang diketahui, termasuk empat bulan Galilean (Io, Europa, Ganymede, dan Callisto) yang ditemukan Galileo Galilei pada 1610. Planet ini juga memiliki sistem cincin tipis dan medan magnet terkuat di Tata Surya, 20.000 kali lebih kuat dari Bumi.',
+                mass: '1,90 × 10²⁷ kg',
+                gravity: '24,8 m/s²',
+                temp: '-108°C',
+                moons: '95',
+                atmosphere: 'H₂, He',
+                facts: [
+                    'Massa 2,5 kali lebih besar dari semua planet lain digabungkan',
+                    'Bintik Merah Besar adalah badai yang telah berlangsung lebih dari 400 tahun',
+                    'Memiliki cincin tipis yang tidak terlihat jelas seperti Saturnus',
+                    'Medan magnet terkuat di Tata Surya, 20.000 kali lebih kuat dari Bumi',
+                    'Bulan Europa mungkin memiliki lautan di bawah es yang bisa menampung kehidupan'
+                ]
             },
             saturn: {
-                title: 'Ini adalah awal dari sebuah cerita<br>antara kamu dan <span class="highlight" id="planetName">Saturnus</span>.',
+                title: 'Terpesona dengan keindahan cincin<br>sang permata langit, <span class="highlight" id="planetName">Saturnus</span>.',
                 image: 'images/saturnus1.png',
                 glowColor: 'rgba(230, 207, 139, 0.5)',
                 highlightColor: '#e6cf8b',
@@ -742,10 +1131,23 @@
                 distance: '1,4 Miliar km',
                 diameter: '116.460 km',
                 day: '11 jam',
-                year: '29 tahun'
+                year: '29 tahun',
+                detailAbout: 'Saturnus adalah planet terbesar kedua di Tata Surya dan terkenal dengan sistem cincin spektakulernya yang paling mencolok di antara semua planet. Cincin-cincin ini terdiri dari miliaran partikel es dan batu yang berukuran dari butiran pasir hingga sebesar rumah, membentang hingga 282.000 km dari planet namun hanya setebal 10 meter di beberapa bagian. Sebagai raksasa gas, Saturnus memiliki densitas terendah dari semua planet - bahkan lebih ringan dari air, secara teoritis bisa mengapung jika ada lautan yang cukup besar. Saturnus memiliki 146 bulan yang dikonfirmasi, termasuk Titan, bulan terbesar kedua di Tata Surya yang memiliki atmosfer tebal dan danau metana cair di permukaannya. Angin di Saturnus dapat mencapai kecepatan hingga 1.800 km/jam di atmosfer bagian atas.',
+                mass: '5,68 × 10²⁶ kg',
+                gravity: '10,4 m/s²',
+                temp: '-138°C',
+                moons: '146',
+                atmosphere: 'H₂, He',
+                facts: [
+                    'Cincin terbuat dari miliaran partikel es dan batu',
+                    'Densitas paling rendah - bisa mengapung di air jika ada lautan yang cukup besar',
+                    'Bulan Titan memiliki atmosfer tebal dan danau metana cair',
+                    'Badai heksagonal di kutub utara, fenomena unik di Tata Surya',
+                    'Cincin utama membentang 282.000 km tapi hanya setebal 10 meter'
+                ]
             },
             uranus: {
-                title: 'Ini adalah awal dari sebuah cerita<br>antara kamu dan <span class="highlight" id="planetName">Uranus</span>.',
+                title: 'Temui planet es yang unik,<br>sang planet miring, <span class="highlight" id="planetName">Uranus</span>.',
                 image: 'images/uranus.png',
                 glowColor: 'rgba(79, 209, 217, 0.5)',
                 highlightColor: '#4fd1d9',
@@ -755,10 +1157,23 @@
                 distance: '2,9 Miliar km',
                 diameter: '50.724 km',
                 day: '17 jam',
-                year: '84 tahun'
+                year: '84 tahun',
+                detailAbout: 'Uranus adalah planet ketujuh dari Matahari dan memiliki karakteristik paling unik di Tata Surya - berotasi hampir miring 98 derajat ke samping, seakan berguling mengelilingi Matahari. Hal ini kemungkinan disebabkan oleh tabrakan dengan benda langit besar di masa lalu. Sebagai raksasa es, Uranus memiliki komposisi yang berbeda dari Jupiter dan Saturnus, dengan lebih banyak "es" seperti air, metana, dan amonia. Warna biru-hijau khas Uranus berasal dari metana di atmosfer yang menyerap cahaya merah. Uranus memiliki 27 bulan yang diketahui, semua dinamai berdasarkan karakter dari karya William Shakespeare dan Alexander Pope. Planet ini juga memiliki sistem cincin yang redup dan medan magnet yang sangat miring dan tidak simetris.',
+                mass: '8,68 × 10²⁵ kg',
+                gravity: '8,7 m/s²',
+                temp: '-195°C',
+                moons: '27',
+                atmosphere: 'H₂, He, CH₄',
+                facts: [
+                    'Berotasi miring 98 derajat, hampir terbalik di sisinya',
+                    'Satu musim berlangsung 21 tahun Bumi karena kemiringan ekstrem',
+                    'Bulan-bulannya dinamai dari karakter Shakespeare dan Alexander Pope',
+                    'Memiliki 13 cincin redup yang sulit dilihat',
+                    'Atmosfer mengandung metana yang memberikan warna biru-hijau'
+                ]
             },
             neptune: {
-                title: 'Ini adalah awal dari sebuah cerita<br>antara kamu dan <span class="highlight" id="planetName">Neptunus</span>.',
+                title: 'Selami kedalaman planet terjauh,<br>sang dewa laut, <span class="highlight" id="planetName">Neptunus</span>.',
                 image: 'images/neptunus.png',
                 glowColor: 'rgba(75, 112, 232, 0.5)',
                 highlightColor: '#4b70e8',
@@ -768,7 +1183,20 @@
                 distance: '4,5 Miliar km',
                 diameter: '49.244 km',
                 day: '16 jam',
-                year: '165 tahun'
+                year: '165 tahun',
+                detailAbout: 'Neptunus adalah planet terjauh dari Matahari di Tata Surya kita dan merupakan planet paling berangin yang pernah ditemukan. Angin di Neptunus dapat mencapai kecepatan hingga 2.100 km/jam, lebih cepat dari kecepatan suara di Bumi. Warna biru tua yang indah berasal dari metana di atmosfer yang menyerap cahaya merah. Neptunus ditemukan pada tahun 1846 melalui perhitungan matematika sebelum diamati secara langsung, menjadikannya satu-satunya planet yang ditemukan melalui prediksi teoritis. Planet ini memiliki 16 bulan yang diketahui, dengan Triton sebagai yang terbesar. Triton unik karena mengorbit berlawanan arah dengan rotasi Neptunus (orbit retrograde), menunjukkan bahwa ia kemungkinan adalah objek Sabuk Kuiper yang ditangkap gravitasi Neptunus.',
+                mass: '1,02 × 10²⁶ kg',
+                gravity: '11,2 m/s²',
+                temp: '-200°C',
+                moons: '16',
+                atmosphere: 'H₂, He, CH₄',
+                facts: [
+                    'Angin tercepat di Tata Surya, mencapai 2.100 km/jam',
+                    'Ditemukan melalui perhitungan matematika sebelum diamati langsung',
+                    'Bulan Triton mengorbit berlawanan arah (orbit retrograde)',
+                    'Memiliki Bintik Gelap Besar, badai mirip Bintik Merah Jupiter',
+                    'Satu tahun di Neptunus = 165 tahun Bumi'
+                ]
             }
         };
 
@@ -780,8 +1208,12 @@
         const hero = document.getElementById('hero');
         const infoCard = document.getElementById('infoCard');
         const closeBtn = document.getElementById('closeBtn');
+        const exploreBtn = document.querySelector('.explore-btn');
+        const detailModal = document.getElementById('detailModal');
+        const detailCloseBtn = document.getElementById('detailCloseBtn');
 
         let isCardVisible = false;
+        let currentPlanet = 'earth';
 
         // Update info card
         function updateInfoCard(planet) {
@@ -792,6 +1224,54 @@
             document.getElementById('statDiameter').textContent = planetData[planet].diameter;
             document.getElementById('statDay').textContent = planetData[planet].day;
             document.getElementById('statYear').textContent = planetData[planet].year;
+            currentPlanet = planet;
+        }
+
+        // Update detail modal
+        function updateDetailModal(planet) {
+            const data = planetData[planet];
+            const planetBtn = document.querySelector(`.planet-btn.${planet}`);
+            const iconStyles = window.getComputedStyle(planetBtn.querySelector('.planet-icon'));
+            
+            document.getElementById('detailTitle').textContent = data.cardTitle;
+            document.getElementById('detailType').textContent = data.type;
+            document.getElementById('detailAbout').textContent = data.detailAbout;
+            document.getElementById('detailDistance').textContent = data.distance;
+            document.getElementById('detailDiameter').textContent = data.diameter;
+            document.getElementById('detailMass').textContent = data.mass;
+            document.getElementById('detailGravity').textContent = data.gravity;
+            document.getElementById('detailDay').textContent = data.day;
+            document.getElementById('detailYear').textContent = data.year;
+            document.getElementById('detailTemp').textContent = data.temp;
+            document.getElementById('detailMoons').textContent = data.moons;
+            document.getElementById('detailAtmosphere').textContent = data.atmosphere;
+            
+            // Set planet icon style
+            const detailIcon = document.getElementById('detailPlanetIcon');
+            detailIcon.style.background = iconStyles.background;
+            detailIcon.style.boxShadow = iconStyles.boxShadow;
+            
+            // Update facts list
+            const factsList = document.getElementById('detailFacts');
+            factsList.innerHTML = '';
+            data.facts.forEach(fact => {
+                const li = document.createElement('li');
+                li.textContent = fact;
+                factsList.appendChild(li);
+            });
+        }
+
+        // Show detail modal
+        function showDetailModal() {
+            updateDetailModal(currentPlanet);
+            detailModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Hide detail modal
+        function hideDetailModal() {
+            detailModal.classList.remove('active');
+            document.body.style.overflow = '';
         }
 
         // Show card
@@ -845,7 +1325,7 @@
                         setTimeout(() => {
                             planetImage.classList.remove('transitioning');
                         }, 50);
-                    }, 200);
+                    }, 150);
 
                     if (!isCardVisible) {
                         showCard();
@@ -857,6 +1337,30 @@
         // Close button
         closeBtn.addEventListener('click', () => {
             hideCard();
+        });
+
+        // Explore button - show detail modal
+        exploreBtn.addEventListener('click', () => {
+            showDetailModal();
+        });
+
+        // Detail modal close button
+        detailCloseBtn.addEventListener('click', () => {
+            hideDetailModal();
+        });
+
+        // Close modal when clicking outside
+        detailModal.addEventListener('click', (e) => {
+            if (e.target === detailModal) {
+                hideDetailModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && detailModal.classList.contains('active')) {
+                hideDetailModal();
+            }
         });
 
         // Initial setup
@@ -876,6 +1380,11 @@
                 planetImage.style.filter = `drop-shadow(0 -50px 70px ${planetData[planet].glowColor})`;
                 planetImage.src = planetData[planet].image;
             }
+
+            // Remove initial-load class after animation completes
+            setTimeout(() => {
+                planetImage.classList.remove('initial-load');
+            }, 2000);
         });
     </script>
 </body>
