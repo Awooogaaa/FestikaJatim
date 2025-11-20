@@ -21,9 +21,10 @@
             overflow-x: hidden;
         }
 
+        /* --- NAVIGASI (UPDATED) --- */
         nav {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-between; /* Logo di kiri */
             align-items: center;
             padding: 28px 60px;
             position: relative;
@@ -36,12 +37,18 @@
             letter-spacing: -0.5px;
             text-decoration: none;
             color: #fff;
+            z-index: 101; /* Pastikan logo di atas */
         }
 
         .nav-links {
             display: flex;
             gap: 40px;
             list-style: none;
+            
+            /* --- MENU TENGAH (DESKTOP) --- */
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .nav-links a {
@@ -56,9 +63,9 @@
             color: #fff;
         }
 
-        
-        
+        /* (Sign up style dihapus karena tombolnya dihapus) */
 
+        /* --- LATAR BELAKANG & ANIMASI --- */
         .stars {
             position: fixed;
             top: 0;
@@ -114,21 +121,9 @@
             animation: float 20s infinite ease-in-out;
         }
 
-        .planet-1 {
-            animation-delay: 0s;
-        }
-
-        .planet-2 {
-            top: 20%;
-            right: 10%;
-            animation-delay: 5s;
-        }
-
-        .planet-3 {
-            bottom: -5%;
-            left: 10%;
-            animation-delay: 7s;
-        }
+        .planet-1 { animation-delay: 0s; }
+        .planet-2 { top: 20%; right: 10%; animation-delay: 5s; }
+        .planet-3 { bottom: -5%; left: 10%; animation-delay: 7s; }
 
         @keyframes float {
             0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
@@ -137,7 +132,7 @@
             75% { transform: translateY(-30px) translateX(-20px) rotate(50deg); }
         }
 
-        /* Quiz Container dengan efek yang lebih menarik */
+        /* --- QUIZ CONTAINER --- */
         .quiz-wrapper {
             background: linear-gradient(135deg, rgba(30, 30, 40, 0.95), rgba(20, 20, 30, 0.95));
             backdrop-filter: blur(20px);
@@ -329,39 +324,11 @@
             font-size: 1.25em;
             cursor: pointer;
             top: 70px;
+            border: none;
         }
 
-        #next-btn .span {
-            position: relative;
-            z-index: 1;
-        }
-
-        #next-btn:hover::before {
-            content: "";
-            position: absolute;
-            inset: 1px;
-            background: #272727;
-            border-radius: 9px;
-            transition: 0.5s;
-        }
-
-        #next-btn:hover::before {
-            opacity: 0;
-        }
-
-        #next-btn::after {
-            content: "";
-            position: absolute;
-            inset: 0px;
-            background: linear-gradient(45deg, #0ce39a, #69007f, #fc0987);
-            border-radius: 9px;
-            transition: 0.5s;
-            opacity: 0;
-            filter: blur(20px);
-        }
-
-        #next-btn:hover::after {
-            opacity: 1;
+        #next-btn:hover {
+            transform: scale(1.05);
         }
 
         footer {
@@ -403,12 +370,42 @@
             color: #ccc;
         }
 
-        /* Responsive */
+        /* --- RESPONSIVE (UPDATED) --- */
         @media (max-width: 768px) {
-            nav { padding: 20px 30px; }
-            .quiz-wrapper { padding: 25px; margin: 20px; }
-            #question-container { font-size: 20px; }
-            .floating-planet { display: none; }
+            nav {
+                padding: 15px 20px;
+                flex-direction: column; /* Susun Logo dan Menu vertikal */
+                gap: 15px;
+            }
+
+            .logo { 
+                font-size: 24px; 
+            }
+
+            .nav-links {
+                /* Reset posisi absolute agar tidak tumpuk di mobile */
+                position: static;
+                transform: none;
+                
+                display: flex;
+                gap: 20px;
+                justify-content: center;
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .quiz-wrapper {
+                padding: 25px;
+                margin: 80px 20px 20px 20px; /* Tambah margin top agar tidak ketutup nav */
+            }
+
+            #question-container {
+                font-size: 20px;
+            }
+
+            .floating-planet {
+                display: none; /* Sembunyikan hiasan di mobile agar ringan */
+            }
         }
     </style>
 </head>
@@ -417,25 +414,27 @@
     <div class="stars" id="stars"></div>
     <div class="floating-objects">
         <div class="floating-planet planet-1">
-            <img src="images/kuis/astronot.png" alt="" style="width: 250px; height: 400px; margin-top: 200px; margin-left: 80px;">
+            <img src="images/kuis/astronot.png" alt=""
+                style="width: 250px; height: 400px; margin-top: 200px; margin-left: 80px;">
         </div>
         <div class="floating-planet planet-2">
-            <img src="images/kuis/saturn.png" alt="" style="width: 250px; height: 400px; margin-top: 200px; margin-left: 80px;">
+            <img src="images/kuis/saturn.png" alt=""
+                style="width: 250px; height: 400px; margin-top: 200px; margin-left: 80px;">
         </div>
         <div class="floating-planet planet-3">
-            <img src="images/kuis/roket.png" alt="" style="width: 250px; height: 400px; margin-top: 200px; margin-left: 80px;">
+            <img src="images/kuis/roket.png" alt=""
+                style="width: 250px; height: 400px; margin-top: 200px; margin-left: 80px;">
         </div>
     </div>
 
     <nav>
-        <a href="landing_page.html" class="logo">Galaxy</a>
+        <a href="landing_page.html" class="logo">✕pace</a>
         <ul class="nav-links">
             <li><a href="landing_page.html">Jelajahi</a></li>
             <li><a href="planet.html">Tatanan</a></li>
             <li><a href="quiz.html" class="active">Kuis</a></li>
         </ul>
-        
-    </nav>
+        </nav>
 
     <div class="page-title">
         <h1>Kuis Angkasa</h1>
@@ -479,71 +478,70 @@
             starsContainer.appendChild(star);
         }
 
-        // Data Pertanyaan dengan Fakta Unik - Database lengkap
+        // Data Pertanyaan
         const allQuestions = [
             {
                 question: "Planet apakah yang dikenal sebagai 'Kembaran Jahat' Bumi dan merupakan planet terpanas di tata surya?",
                 options: ["Merkurius", "Venus", "Mars", "Jupiter"],
                 answer: "Venus",
-                funFact: "Venus memiliki suhu permukaan sekitar 465°C - cukup panas untuk melelehkan timah! Atmosfernya yang tebal mengandung 96% karbon dioksida, menciptakan efek rumah kaca ekstrem. Menariknya, Venus adalah satu-satunya planet yang berputar berlawanan arah jarum jam jika dilihat dari kutub utara."
+                funFact: "Venus memiliki suhu permukaan sekitar 465°C - cukup panas untuk melelehkan timah! Atmosfernya yang tebal mengandung 96% karbon dioksida."
             },
             {
                 question: "Gunung berapi terbesar di tata surya, Olympus Mons, berada di planet mana?",
                 options: ["Bumi", "Jupiter", "Mars", "Saturnus"],
                 answer: "Mars",
-                funFact: "Olympus Mons tingginya mencapai 21 kilometer - hampir 3 kali tinggi Gunung Everest! Luasnya setara dengan negara Prancis. Gunung ini adalah gunung berapi perisai, mirip dengan gunung berapi Hawaii tetapi dalam skala yang jauh lebih besar. Meskipun sangat besar, kemiringannya hanya sekitar 5 derajat."
+                funFact: "Olympus Mons tingginya mencapai 21 kilometer - hampir 3 kali tinggi Gunung Everest! Luasnya setara dengan negara Prancis."
             },
             {
                 question: "Planet mana yang memiliki 'Bintik Merah Raksasa', sebuah badai kolosal yang lebih besar dari Bumi?",
                 options: ["Jupiter", "Saturnus", "Neptunus", "Uranus"],
                 answer: "Jupiter",
-                funFact: "Bintik Merah Raksasa adalah badai antisiklon yang telah berlangsung setidaknya selama 350 tahun! Angin di dalamnya bertiup dengan kecepatan hingga 640 km/jam. Ukurannya perlahan menyusut - pada tahun 1800-an, bintik ini bisa memuat 3 Bumi, sekarang 'hanya' bisa memuat 1 Bumi."
+                funFact: "Bintik Merah Raksasa adalah badai antisiklon yang telah berlangsung setidaknya selama 350 tahun! Angin di dalamnya bertiup hingga 640 km/jam."
             },
             {
                 question: "Planet mana satu-satunya yang memiliki kepadatan lebih ringan dari air (akan mengapung di bak mandi raksasa)?",
                 options: ["Bumi", "Venus", "Saturnus", "Mars"],
                 answer: "Saturnus",
-                funFact: "Saturnus memiliki kepadatan rata-rata hanya 0.687 g/cm³, sedangkan air memiliki kepadatan 1 g/cm³. Ini karena Saturnus sebagian besar terdiri dari hidrogen dan helium. Cincin ikonik Saturnus terdiri dari miliaran partikel es dan batu yang mengorbit planet, dengan lebar hingga 282.000 km tetapi ketebalannya hanya sekitar 10 meter!"
+                funFact: "Saturnus memiliki kepadatan rata-rata hanya 0.687 g/cm³, sedangkan air memiliki kepadatan 1 g/cm³. Ini karena Saturnus sebagian besar terdiri dari gas."
             },
             {
                 question: "Satu hari di planet ini DUA KALI lebih lama dari satu tahunnya. Planet apakah ini?",
                 options: ["Merkurius", "Neptunus", "Bumi", "Jupiter"],
                 answer: "Merkurius",
-                funFact: "Satu hari di Merkurius (rotasi penuh pada porosnya) membutuhkan waktu 59 hari Bumi, sementara satu tahunnya (mengelilingi Matahari) hanya 88 hari Bumi. Ini berarti jika Anda berdiri di Merkurius, Anda akan melihat Matahari terbit, berhenti, bergerak mundur, lalu terbit lagi sebelum akhirnya terbenam!"
+                funFact: "Satu hari di Merkurius (rotasi penuh) membutuhkan waktu 59 hari Bumi, sementara satu tahunnya (mengelilingi Matahari) hanya 88 hari Bumi."
             },
             {
                 question: "Planet mana yang memiliki angin tercepat di tata surya dengan kecepatan mencapai 2.100 km/jam?",
                 options: ["Jupiter", "Saturnus", "Uranus", "Neptunus"],
                 answer: "Neptunus",
-                funFact: "Angin di Neptunus adalah yang tercepat di tata surya, mencapai 2.100 km/jam - lebih cepat dari kecepatan suara! Planet biru ini berjarak sangat jauh dari Matahari, membuatnya sangat dingin dengan suhu -214°C. Satu tahun di Neptunus sama dengan 165 tahun Bumi!"
+                funFact: "Angin di Neptunus adalah yang tercepat di tata surya, mencapai 2.100 km/jam - lebih cepat dari kecepatan suara!"
             },
             {
                 question: "Planet mana yang memiliki sumbu rotasi paling miring sehingga hampir 'berbaring' saat mengelilingi Matahari?",
                 options: ["Mars", "Jupiter", "Uranus", "Saturnus"],
                 answer: "Uranus",
-                funFact: "Uranus memiliki kemiringan sumbu 98 derajat, membuatnya hampir berputar miring! Para ilmuwan menduga tabrakan dahsyat dengan objek sebesar Bumi di masa lalu menyebabkan hal ini. Akibatnya, kutub Uranus mengalami siang dan malam yang masing-masing berlangsung selama 42 tahun!"
+                funFact: "Uranus memiliki kemiringan sumbu 98 derajat! Akibatnya, kutub Uranus mengalami siang dan malam yang masing-masing berlangsung selama 42 tahun!"
             },
             {
                 question: "Berapa lama waktu yang dibutuhkan cahaya Matahari untuk sampai ke Bumi?",
                 options: ["8 detik", "8 menit", "8 jam", "8 hari"],
                 answer: "8 menit",
-                funFact: "Cahaya Matahari membutuhkan waktu sekitar 8 menit 20 detik untuk mencapai Bumi meskipun bergerak dengan kecepatan 300.000 km/detik! Ini berarti ketika kita melihat Matahari, kita sebenarnya melihat seperti apa Matahari 8 menit yang lalu. Jarak Bumi ke Matahari sekitar 150 juta kilometer!"
+                funFact: "Cahaya Matahari membutuhkan waktu sekitar 8 menit 20 detik untuk mencapai Bumi meskipun bergerak dengan kecepatan 300.000 km/detik!"
             },
             {
                 question: "Berapa banyak bulan yang dimiliki Mars?",
                 options: ["Tidak ada", "1 bulan", "2 bulan", "4 bulan"],
                 answer: "2 bulan",
-                funFact: "Mars memiliki dua bulan kecil bernama Phobos dan Deimos (yang artinya 'Ketakutan' dan 'Teror' dalam bahasa Yunani). Keduanya sangat kecil dan bentuknya tidak beraturan seperti kentang! Phobos mengorbit sangat dekat dengan Mars dan akan jatuh ke planet tersebut dalam 50 juta tahun ke depan."
+                funFact: "Mars memiliki dua bulan kecil bernama Phobos dan Deimos. Phobos mengorbit sangat dekat dengan Mars dan akan jatuh ke planet tersebut suatu saat nanti."
             },
             {
                 question: "Planet mana yang memiliki musim terpanjang di tata surya?",
                 options: ["Bumi", "Mars", "Neptunus", "Jupiter"],
                 answer: "Neptunus",
-                funFact: "Karena Neptunus membutuhkan 165 tahun Bumi untuk mengelilingi Matahari, satu musimnya berlangsung selama lebih dari 40 tahun! Bayangkan mengalami musim panas yang sama selama 40 tahun. Meskipun jauh dari Matahari, Neptunus memiliki cuaca yang sangat aktif dengan badai besar."
+                funFact: "Karena Neptunus membutuhkan 165 tahun Bumi untuk mengelilingi Matahari, satu musimnya berlangsung selama lebih dari 40 tahun!"
             }
         ];
 
-        // Fungsi untuk mengacak array
         function shuffleArray(array) {
             const shuffled = [...array];
             for (let i = shuffled.length - 1; i > 0; i--) {
@@ -587,8 +585,7 @@
         });
 
         function bicara(teks) {
-            // Cek apakah suara diaktifkan
-            if (!isVoiceOn) return;
+            if (!isVoiceOn) return; // Cek apakah suara diaktifkan
 
             if (synth.speaking) {
                 synth.cancel();
@@ -596,13 +593,12 @@
             
             const ucapan = new SpeechSynthesisUtterance(teks);
             ucapan.lang = 'id-ID';
-            ucapan.rate = 0.9; // Sedikit lebih pelan agar soal jelas
+            ucapan.rate = 0.9;
             synth.speak(ucapan);
         }
 
-        // Pilih 5 pertanyaan acak dari database
+        // Logika Kuis
         let quizData = [];
-
         const questionEl = document.getElementById('question-container');
         const optionsContainerEl = document.getElementById('options-container');
         const nextBtnEl = document.getElementById('next-btn');
@@ -619,10 +615,8 @@
         function startQuiz() {
             currentQuestionIndex = 0;
             score = 0;
-            // Pilih 5 pertanyaan acak dari database setiap kali mulai
             if (typeof allQuestions !== 'undefined' && allQuestions.length > 0) {
                  quizData = shuffleArray(allQuestions).slice(0, 5);
-                 // Acak juga urutan opsi untuk setiap pertanyaan
                  quizData = quizData.map(q => ({
                     ...q,
                     options: shuffleArray(q.options)
@@ -657,7 +651,7 @@
             questionEl.innerText = currentQuestion.question;
             updateScoreDisplay();
 
-            // >> SUARA: Bacakan soal dan pilihan jawaban
+            // SUARA: Bacakan soal dan pilihan jawaban
             let teksSoal = `Pertanyaan nomor ${currentQuestionIndex + 1}. ${currentQuestion.question}. Pilihannya adalah: `;
             currentQuestion.options.forEach((opt) => {
                 teksSoal += `${opt}. `;
@@ -680,7 +674,6 @@
         function selectAnswer(selectedButton, selectedOption, correctAnswer, funFact) {
             Array.from(optionsContainerEl.children).forEach(button => {
                 button.disabled = true;
-
                 if (button.innerText === correctAnswer) {
                     button.classList.add('correct');
                 }
@@ -692,30 +685,22 @@
                 selectedButton.classList.add('correct');
                 score++;
                 updateScoreDisplay();
-
-                // >> SUARA: Respon Benar
+                
                 const responBenar = `Jawaban kamu Benar! Fakta uniknya: ${funFact}`;
                 bicara(responBenar);
-
             } else {
                 feedbackEl.innerText = `❌ Salah. Jawaban yang benar adalah ${correctAnswer}.`;
                 feedbackEl.style.color = "#f03e3e";
                 selectedButton.classList.add('wrong');
-
-                // >> SUARA: Respon Salah
+                
                 const responSalah = `Jawaban kamu Salah. Jawaban yang benar adalah ${correctAnswer}. Fakta uniknya: ${funFact}`;
                 bicara(responSalah);
             }
 
-            // Tampilkan Fakta Unik
             const factBox = document.createElement('div');
             factBox.className = 'fun-fact-reveal';
-            factBox.innerHTML = `
-                <h3>💡 Fakta Unik</h3>
-                <p>${funFact}</p>
-            `;
+            factBox.innerHTML = `<h3>💡 Fakta Unik</h3><p>${funFact}</p>`;
             funFactContainerEl.appendChild(factBox);
-
             nextBtnEl.style.display = 'block';
         }
 
@@ -724,7 +709,6 @@
             if (currentQuestionIndex < quizData.length) {
                 showQuestion();
             } else {
-                // >> SUARA: Skor Akhir
                 const skorAkhir = `Kuis Selesai. Skor akhir Anda adalah ${score} dari ${quizData.length}.`;
                 bicara(skorAkhir);
 
