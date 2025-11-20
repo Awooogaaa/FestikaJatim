@@ -27,7 +27,7 @@
         /* Navigasi Responsive */
         nav {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-between; /* Logo tetap di kiri */
             align-items: center;
             padding: 20px 40px;
             position: absolute;
@@ -48,12 +48,19 @@
             letter-spacing: -0.5px;
             text-decoration: none;
             color: #fff;
+            /* Pastikan logo berada di atas layer jika diperlukan */
+            z-index: 101; 
         }
 
         .nav-links {
             display: flex;
             gap: 30px;
             list-style: none;
+            
+            /* --- PERUBAHAN UNTUK CENTER MENU --- */
+            position: absolute;      /* Lepaskan dari aliran flexbox biasa */
+            left: 50%;               /* Pindahkan ke tengah parent */
+            transform: translateX(-50%); /* Geser balik 50% lebarnya sendiri agar benar-benar tengah */
         }
 
         .nav-links a {
@@ -120,7 +127,6 @@
         /* WADAH UTAMA TATA SURYA */
         .solar-system {
             position: absolute;
-            /* Mengubah top dari 55% ke 60% agar lebih ke bawah */
             top: 60%; 
             left: 50%;
             width: 90vmin; 
@@ -342,19 +348,24 @@
                 gap: 10px;
             }
             .logo { font-size: 20px; }
+            
             .nav-links { 
+                /* --- RESET UNTUK MOBILE AGAR TIDAK TUMPUK --- */
+                position: static;   /* Kembalikan ke aliran normal */
+                transform: none;    /* Hapus pergeseran tengah */
+                
                 display: flex; 
                 gap: 20px; 
                 justify-content: center;
                 width: 100%;
                 padding-bottom: 5px;
             }
+            
             .nav-links a { font-size: 14px; }
             .page-title { top: 100px; padding: 0 15px; }
             .page-title h1 { font-size: 24px; }
             .page-title p { display: none; }
             
-            /* Tata Surya: Top diubah dari 50% menjadi 55% agar turun sedikit */
             .solar-system { width: 95vmin; height: 95vmin; top: 55%; }
             
             .detail-content-wrapper { grid-template-columns: 1fr; margin: 60px auto 20px; padding-bottom: 40px; gap: 20px; }
