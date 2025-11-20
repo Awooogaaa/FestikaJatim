@@ -601,6 +601,22 @@
             return shuffled;
         }
 
+        // === FITUR SUARA (Aksesibilitas) ===
+        const synth = window.speechSynthesis;
+
+        // PERBAIKAN: Matikan suara saat pindah halaman
+        window.addEventListener('beforeunload', () => {
+            synth.cancel();
+        });
+
+        function bicara(teks) {
+            if (synth.speaking) synth.cancel();
+            const ucapan = new SpeechSynthesisUtterance(teks);
+            ucapan.lang = 'id-ID';
+            ucapan.rate = 0.9; // Sedikit lebih pelan agar soal jelas
+            synth.speak(ucapan);
+        }
+
         // Pilih 5 pertanyaan acak dari database
         let quizData = [];
 
@@ -651,6 +667,13 @@
             questionEl.innerText = currentQuestion.question;
             updateScoreDisplay();
 
+            // >> SUARA: Bacakan soal dan pilihan jawaban
+            let teksSoal = `Pertanyaan nomor ${currentQuestionIndex + 1}. ${currentQuestion.question}. Pilihannya adalah: `;
+            currentQuestion.options.forEach((opt) => {
+                teksSoal += `${opt}. `;
+            });
+            bicara(teksSoal);
+
             currentQuestion.options.forEach(option => {
                 const button = document.createElement('button');
                 button.innerText = option;
@@ -679,10 +702,19 @@
                 selectedButton.classList.add('correct');
                 score++;
                 updateScoreDisplay();
+
+                // >> SUARA: Respon Benar
+                const responBenar = `Jawaban kamu Benar! Fakta uniknya: ${funFact}`;
+                bicara(responBenar);
+
             } else {
                 feedbackEl.innerText = `❌ Salah. Jawaban yang benar adalah ${correctAnswer}.`;
                 feedbackEl.style.color = "#f03e3e";
                 selectedButton.classList.add('wrong');
+
+                // >> SUARA: Respon Salah
+                const responSalah = `Jawaban kamu Salah. Jawaban yang benar adalah ${correctAnswer}. Fakta uniknya: ${funFact}`;
+                bicara(responSalah);
             }
 
             // Tampilkan Fakta Unik
@@ -702,6 +734,10 @@
             if (currentQuestionIndex < quizData.length) {
                 showQuestion();
             } else {
+                // >> SUARA: Skor Akhir
+                const skorAkhir = `Kuis Selesai. Skor akhir Anda adalah ${score} dari ${quizData.length}.`;
+                bicara(skorAkhir);
+
                 questionEl.innerText = `🎊 Kuis Selesai!`;
                 optionsContainerEl.innerHTML = `
                     <div style="text-align: center; padding: 30px; font-size: 18px;">

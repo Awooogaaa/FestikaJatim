@@ -564,22 +564,48 @@
     }
 };
 
+const synth = window.speechSynthesis;
 
-        function showInfo(planetKey) {
-            const info = planets[planetKey];
-            if(!info) return;
-            detailName.innerText = info.name;
-            detailDesc.innerText = info.desc;
-            detailFact.innerHTML = info.fact;
-            detailImage.src = info.image;
-            document.body.classList.add('detail-active');
+    function bicara(teks) {
+        // Hentikan suara jika sedang bicara
+        if (synth.speaking) {
+            synth.cancel();
         }
+        
+        const ucapan = new SpeechSynthesisUtterance(teks);
+        ucapan.lang = 'id-ID'; // Bahasa Indonesia
+        ucapan.rate = 0.9; // Kecepatan bicara (1 normal, 0.9 agak pelan agar jelas)
+        ucapan.pitch = 1; // Nada suara
+        
+        synth.speak(ucapan);
+    }
 
-        function hideInfo() {
-            document.body.classList.remove('detail-active');
-        }
+    // ... (Variable const solarSystem, planets, dll biarkan saja) ...
 
-        returnBtn.addEventListener('click', hideInfo);
-    </script>
+    // --- MODIFIKASI FUNGSI SHOWINFO ---
+    function showInfo(planetKey) {
+        const info = planets[planetKey];
+        if(!info) return;
+        
+        detailName.innerText = info.name;
+        detailDesc.innerText = info.desc;
+        detailFact.innerHTML = info.fact;
+        detailImage.src = info.image;
+        
+        document.body.classList.add('detail-active');
+
+        // >> TAMBAHAN: Panggil suara saat detail muncul
+        // Kita gabungkan Nama + Deskripsi agar dibaca sekaligus
+        const teksBacaan = `Planet ${info.name}. ${info.desc}. Tahukah kamu? ${info.fact}`;
+        bicara(teksBacaan);
+    }
+
+    function hideInfo() {
+        document.body.classList.remove('detail-active');
+        synth.cancel(); // Matikan suara saat tombol kembali ditekan
+    }
+
+    returnBtn.addEventListener('click', hideInfo);
+</script>
 </body>
 </html>

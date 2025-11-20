@@ -1683,6 +1683,60 @@
                 planetImage.classList.remove('initial-load');
             }, 2000);
         });
+
+        const synth = window.speechSynthesis;
+
+    function bicara(teks) {
+        if (synth.speaking) synth.cancel();
+        const ucapan = new SpeechSynthesisUtterance(teks);
+        ucapan.lang = 'id-ID';
+        ucapan.rate = 0.9;
+        synth.speak(ucapan);
+    }
+
+    planetBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // ... (kode logika class active yang sudah ada biarkan saja) ...
+            
+            // Cari baris ini: if (planetData[planet]) { ... }
+            if (planetData[planet]) {
+                // ... (kode animasi gambar dll biarkan saja) ...
+                
+                // >> TAMBAHAN: Baca judul singkat planet saat diklik
+                // Ambil teks deskripsi singkat dari data
+                const teksIntro = `Kamu memilih ${planetData[planet].cardTitle}. ${planetData[planet].description}`;
+                bicara(teksIntro);
+
+                // ... (sisa kode setTimeout dll) ...
+            }
+        });
+    });
+
+    function showDetailModal() {
+        updateDetailModal(currentPlanet);
+        detailModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        // >> TAMBAHAN: Baca detail lengkap saat tombol "Jelajahi Lebih Lanjut" diklik
+        const data = planetData[currentPlanet];
+        const teksDetail = `Detail lengkap tentang ${data.cardTitle}. ${data.detailAbout}`;
+        bicara(teksDetail);
+    }
+
+
+    function hideDetailModal() {
+        detailModal.classList.remove('active');
+        document.body.style.overflow = '';
+        synth.cancel(); // Stop bicara
+    }
+
+    function hideCard() {
+        hero.classList.remove('split-view');
+        infoCard.classList.remove('visible');
+        isCardVisible = false;
+        synth.cancel(); // Stop bicara
+    }
+    
     </script>
 </body>
 </html>
