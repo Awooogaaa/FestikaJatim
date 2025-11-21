@@ -23,18 +23,37 @@
 
         /* --- ANIMASI MASUK (Sama seperti Landing Page) --- */
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         /* --- NAVIGASI --- */
@@ -62,7 +81,7 @@
             display: flex;
             gap: 40px;
             list-style: none;
-            
+
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
@@ -101,8 +120,15 @@
         }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.8; }
+
+            0%,
+            100% {
+                opacity: 0.2;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
         }
 
         .page-title {
@@ -110,15 +136,15 @@
             font-size: 32px;
             font-weight: 500;
             color: #eee;
-            
+
             /* Animasi Masuk */
             opacity: 0;
             animation: fadeIn 1.2s ease-out 0.3s forwards;
         }
 
         .page-title p {
-            font-size: 16px;
-            font-weight: 300;
+            font-size: 30px;
+            font-weight: 500;
             color: #6b6b6b;
         }
 
@@ -140,15 +166,40 @@
             animation: float 20s infinite ease-in-out;
         }
 
-        .planet-1 { animation-delay: 0s; }
-        .planet-2 { top: 20%; right: 10%; animation-delay: 5s; }
-        .planet-3 { bottom: -5%; left: 10%; animation-delay: 7s; }
+        .planet-1 {
+            animation-delay: 0s;
+        }
+
+        .planet-2 {
+            top: 20%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+
+        .planet-3 {
+            bottom: -5%;
+            left: 10%;
+            animation-delay: 7s;
+        }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
-            25% { transform: translateY(-30px) translateX(20px) rotate(50deg); }
-            50% { transform: translateY(-60px) translateX(0) rotate(0deg); }
-            75% { transform: translateY(-30px) translateX(-20px) rotate(50deg); }
+
+            0%,
+            100% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+
+            25% {
+                transform: translateY(-30px) translateX(20px) rotate(50deg);
+            }
+
+            50% {
+                transform: translateY(-60px) translateX(0) rotate(0deg);
+            }
+
+            75% {
+                transform: translateY(-30px) translateX(-20px) rotate(50deg);
+            }
         }
 
         /* --- QUIZ CONTAINER --- */
@@ -165,7 +216,7 @@
             z-index: 10;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
             transition: all 0.4s ease;
-            
+
             /* Animasi Masuk - Diganti dengan fadeInUp */
             opacity: 0;
             animation: fadeInUp 1s ease-out 0.6s forwards;
@@ -267,14 +318,31 @@
         }
 
         @keyframes correctPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.03);
+            }
         }
 
         @keyframes wrongShake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
         }
 
         .option-btn:disabled {
@@ -303,8 +371,15 @@
         }
 
         @keyframes factSlideIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .fun-fact-reveal h3 {
@@ -390,31 +465,46 @@
         /* --- RESPONSIVE MOBILE/TABLET --- */
         @media (max-width: 768px) {
             nav {
-                padding: 15px 20px;
-                flex-direction: column; /* Logo atas, Menu bawah */
-                gap: 15px;
+                padding: 20px 24px;
+                flex-direction: row;
+                justify-content: center;
             }
 
-            .logo { 
-                font-size: 24px; 
+            .logo {
+                position: absolute;
+                left: 24px;
+                font-size: 20px;
+            }
+
+            .nav-center {
+                position: static;
+                transform: none;
             }
 
             .nav-links {
-                /* Reset posisi absolute agar menu tidak menumpuk di mobile */
-                position: static;
-                transform: none;
-                
                 display: flex;
                 gap: 20px;
-                justify-content: center;
-                width: 100%;
-                flex-wrap: wrap;
+            }
+
+            .nav-links a {
+                font-size: 14px;
+            }
+
+            .page-title {
+                font-size: 24px;
+                margin-top: 30px;
+            }
+
+            .page-title p {
+                font-size: 15px;
+                font-weight: 500;
+                color: #6b6b6b;
             }
 
             .quiz-wrapper {
                 padding: 25px;
                 /* Tambahkan margin top agar konten tidak tertutup navbar yang tinggi */
-                margin: 40px 20px 20px 20px; 
+                margin: 40px 20px 20px 20px;
             }
 
             #question-container {
@@ -422,7 +512,8 @@
             }
 
             .floating-planet {
-                display: none; /* Sembunyikan dekorasi berat di mobile */
+                display: none;
+                /* Sembunyikan dekorasi berat di mobile */
             }
         }
     </style>
@@ -446,13 +537,13 @@
     </div>
 
     <nav>
-        <a href="landing_page.html" class="logo">✕pace</a>
+        <a href="landing_page.html" class="logo">Galaxy</a>
         <ul class="nav-links">
             <li><a href="landing_page.html">Jelajahi</a></li>
             <li><a href="planet.html">Tatanan</a></li>
             <li><a href="quiz.html" class="active">Kuis</a></li>
         </ul>
-        </nav>
+    </nav>
 
     <div class="page-title">
         <h1>Kuis Angkasa</h1>
@@ -572,7 +663,7 @@
         // === LOGIKA SUARA & TOMBOL (UPDATED) ===
         const synth = window.speechSynthesis;
         const voiceBtn = document.getElementById('voiceToggleBtn');
-        
+
         // Cek status suara dari memori browser (default: true/hidup)
         let isVoiceOn = localStorage.getItem('voiceState') !== 'off';
 
@@ -616,7 +707,7 @@
             if (synth.speaking) {
                 synth.cancel();
             }
-            
+
             const ucapan = new SpeechSynthesisUtterance(teks);
             ucapan.lang = 'id-ID';
             ucapan.rate = 0.9;
@@ -642,8 +733,8 @@
             currentQuestionIndex = 0;
             score = 0;
             if (typeof allQuestions !== 'undefined' && allQuestions.length > 0) {
-                 quizData = shuffleArray(allQuestions).slice(0, 5);
-                 quizData = quizData.map(q => ({
+                quizData = shuffleArray(allQuestions).slice(0, 5);
+                quizData = quizData.map(q => ({
                     ...q,
                     options: shuffleArray(q.options)
                 }));
@@ -711,14 +802,14 @@
                 selectedButton.classList.add('correct');
                 score++;
                 updateScoreDisplay();
-                
+
                 const responBenar = `Jawaban kamu Benar! Fakta uniknya: ${funFact}`;
                 bicara(responBenar);
             } else {
                 feedbackEl.innerText = `❌ Salah. Jawaban yang benar adalah ${correctAnswer}.`;
                 feedbackEl.style.color = "#f03e3e";
                 selectedButton.classList.add('wrong');
-                
+
                 const responSalah = `Jawaban kamu Salah. Jawaban yang benar adalah ${correctAnswer}. Fakta uniknya: ${funFact}`;
                 bicara(responSalah);
             }
