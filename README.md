@@ -1,4 +1,4 @@
-# 🌌 GALAXY - Jelajahi Keindahan Tata Surya
+# 🌌 GALAXY - Website Edukasi Luar Angkasa
 
 ## 📋 Informasi Tim
 | Kategori | Keterangan |
