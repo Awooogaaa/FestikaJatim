@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jelajah Angkasa - Tata Surya</title>
-    
+
     <style>
         /* --- GAYA DASAR & BINTANG --- */
         * {
@@ -26,30 +27,57 @@
 
         /* --- ANIMASI MASUK (Sama seperti Landing Page) --- */
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         /* Animasi khusus untuk Tata Surya (karena ada translate -50%, -50%) */
         @keyframes solarScaleIn {
-            from { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
-            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.6);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
         }
 
         /* Navigasi Responsive */
         nav {
             display: flex;
-            justify-content: space-between; /* Logo tetap di kiri */
+            justify-content: space-between;
+            /* Logo tetap di kiri */
             align-items: center;
             padding: 20px 40px;
             position: absolute;
@@ -65,25 +93,25 @@
             opacity: 0;
             pointer-events: none;
         }
-        
+
         .logo {
             font-size: 22px;
             font-weight: 600;
             letter-spacing: -0.5px;
             text-decoration: none;
             color: #fff;
-            z-index: 101; 
+            z-index: 101;
         }
 
         .nav-links {
             display: flex;
             gap: 30px;
             list-style: none;
-            
+
             /* --- CENTER MENU ON DESKTOP --- */
-            position: absolute;      
-            left: 50%;               
-            transform: translateX(-50%); 
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .nav-links a {
@@ -119,8 +147,15 @@
         }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.8; }
+
+            0%,
+            100% {
+                opacity: 0.2;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
         }
 
         /* --- TAMPILAN UTAMA (TATA SURYA RESPONSIF) --- */
@@ -132,7 +167,7 @@
             z-index: 10;
             transition: all 0.8s ease;
             padding: 0 20px;
-            
+
             /* Animasi Masuk */
             opacity: 0;
             animation: fadeIn 1.2s ease-out 0.3s forwards;
@@ -143,10 +178,10 @@
             font-weight: 500;
             color: #eee;
         }
-        
+
         .page-title p {
             font-size: 16px;
-            font-weight: 300;
+            font-weight: 600;
             color: #6b6b6b;
             margin-top: 5px;
         }
@@ -154,9 +189,9 @@
         /* WADAH UTAMA TATA SURYA */
         .solar-system {
             position: absolute;
-            top: 60%; 
+            top: 60%;
             left: 50%;
-            width: 90vmin; 
+            width: 90vmin;
             height: 90vmin;
             max-width: 800px;
             max-height: 800px;
@@ -180,7 +215,7 @@
             opacity: 0;
             pointer-events: none;
         }
-        
+
         body.detail-active footer {
             opacity: 0;
         }
@@ -190,7 +225,7 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 10%; 
+            width: 10%;
             height: 10%;
             background: radial-gradient(circle, #ffcc00, #ff6600);
             border-radius: 50%;
@@ -214,13 +249,13 @@
         .solar-system.paused .orbit {
             animation-play-state: paused;
         }
-        
+
         /* Planet */
         .planet {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%); 
+            transform: translate(-50%, -50%);
             border-radius: 50%;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -244,123 +279,342 @@
             transition: opacity 0.3s ease;
             white-space: nowrap;
             pointer-events: none;
-            border: 1px solid rgba(255,255,255,0.2);
-            animation: counter-rotate linear infinite; 
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: counter-rotate linear infinite;
         }
 
-        .planet:hover .planet-name { opacity: 1; }
-        .solar-system.paused .planet-name { animation-play-state: paused; }
+        .planet:hover .planet-name {
+            opacity: 1;
+        }
+
+        .solar-system.paused .planet-name {
+            animation-play-state: paused;
+        }
 
         /* UKURAN & POSISI ORBIT */
-        
-        .orbit-mercury { width: 16%; height: 16%; animation-duration: 5s; } 
-        .mercury { width: 10px; height: 10px; background: #a9a9a9; top: 0; left: 50%; margin-top: -5px; }
-        .mercury .planet-name { animation-duration: 5s; }
 
-        .orbit-venus { width: 24%; height: 24%; animation-duration: 8s; }
-        .venus { width: 14px; height: 14px; background: #e6c288; top: 0; left: 50%; margin-top: -7px; }
-        .venus .planet-name { animation-duration: 8s; }
+        .orbit-mercury {
+            width: 16%;
+            height: 16%;
+            animation-duration: 5s;
+        }
 
-        .orbit-earth { width: 34%; height: 34%; animation-duration: 12s; }
-        .earth { width: 16px; height: 16px; background: #4a90e2; top: 0; left: 50%; margin-top: -8px; }
-        .earth .planet-name { animation-duration: 12s; }
+        .mercury {
+            width: 10px;
+            height: 10px;
+            background: #a9a9a9;
+            top: 0;
+            left: 50%;
+            margin-top: -5px;
+        }
 
-        .orbit-mars { width: 44%; height: 44%; animation-duration: 18s; }
-        .mars { width: 12px; height: 12px; background: #ff6b35; top: 0; left: 50%; margin-top: -6px; }
-        .mars .planet-name { animation-duration: 18s; }
+        .mercury .planet-name {
+            animation-duration: 5s;
+        }
 
-        .orbit-jupiter { width: 58%; height: 58%; animation-duration: 35s; }
-        .jupiter { width: 28px; height: 28px; background: #d4a574; top: 0; left: 50%; margin-top: -14px; }
-        .jupiter .planet-name { animation-duration: 35s; }
+        .orbit-venus {
+            width: 24%;
+            height: 24%;
+            animation-duration: 8s;
+        }
 
-        .orbit-saturn { width: 72%; height: 72%; animation-duration: 55s; }
-        .saturn { width: 24px; height: 24px; background: #e6cf8b; top: 0; left: 50%; margin-top: -12px; box-shadow: 0 0 0 4px rgba(230, 207, 139, 0.3); }
-        .saturn .planet-name { animation-duration: 55s; }
+        .venus {
+            width: 14px;
+            height: 14px;
+            background: #e6c288;
+            top: 0;
+            left: 50%;
+            margin-top: -7px;
+        }
 
-        .orbit-uranus { width: 84%; height: 84%; animation-duration: 70s; }
-        .uranus { width: 18px; height: 18px; background: #4fd1d9; top: 0; left: 50%; margin-top: -9px; }
-        .uranus .planet-name { animation-duration: 70s; }
+        .venus .planet-name {
+            animation-duration: 8s;
+        }
 
-        .orbit-neptune { width: 96%; height: 96%; animation-duration: 85s; }
-        .neptune { width: 18px; height: 18px; background: #4b70e8; top: 0; left: 50%; margin-top: -9px; }
-        .neptune .planet-name { animation-duration: 85s; }
+        .orbit-earth {
+            width: 34%;
+            height: 34%;
+            animation-duration: 12s;
+        }
+
+        .earth {
+            width: 16px;
+            height: 16px;
+            background: #4a90e2;
+            top: 0;
+            left: 50%;
+            margin-top: -8px;
+        }
+
+        .earth .planet-name {
+            animation-duration: 12s;
+        }
+
+        .orbit-mars {
+            width: 44%;
+            height: 44%;
+            animation-duration: 18s;
+        }
+
+        .mars {
+            width: 12px;
+            height: 12px;
+            background: #ff6b35;
+            top: 0;
+            left: 50%;
+            margin-top: -6px;
+        }
+
+        .mars .planet-name {
+            animation-duration: 18s;
+        }
+
+        .orbit-jupiter {
+            width: 58%;
+            height: 58%;
+            animation-duration: 35s;
+        }
+
+        .jupiter {
+            width: 28px;
+            height: 28px;
+            background: #d4a574;
+            top: 0;
+            left: 50%;
+            margin-top: -14px;
+        }
+
+        .jupiter .planet-name {
+            animation-duration: 35s;
+        }
+
+        .orbit-saturn {
+            width: 72%;
+            height: 72%;
+            animation-duration: 55s;
+        }
+
+        .saturn {
+            width: 24px;
+            height: 24px;
+            background: #e6cf8b;
+            top: 0;
+            left: 50%;
+            margin-top: -12px;
+            box-shadow: 0 0 0 4px rgba(230, 207, 139, 0.3);
+        }
+
+        .saturn .planet-name {
+            animation-duration: 55s;
+        }
+
+        .orbit-uranus {
+            width: 84%;
+            height: 84%;
+            animation-duration: 70s;
+        }
+
+        .uranus {
+            width: 18px;
+            height: 18px;
+            background: #4fd1d9;
+            top: 0;
+            left: 50%;
+            margin-top: -9px;
+        }
+
+        .uranus .planet-name {
+            animation-duration: 70s;
+        }
+
+        .orbit-neptune {
+            width: 96%;
+            height: 96%;
+            animation-duration: 85s;
+        }
+
+        .neptune {
+            width: 18px;
+            height: 18px;
+            background: #4b70e8;
+            top: 0;
+            left: 50%;
+            margin-top: -9px;
+        }
+
+        .neptune .planet-name {
+            animation-duration: 85s;
+        }
 
         @keyframes rotate {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to   { transform: translate(-50%, -50%) rotate(360deg); }
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
         }
 
         @keyframes counter-rotate {
-            from { transform: translateX(-50%) rotate(0deg); }
-            to   { transform: translateX(-50%) rotate(-360deg); }
+            from {
+                transform: translateX(-50%) rotate(0deg);
+            }
+
+            to {
+                transform: translateX(-50%) rotate(-360deg);
+            }
         }
 
         /* --- DETAIL VIEW --- */
         .planet-detail-view {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 150; opacity: 0; pointer-events: none;
-            transform: scale(0.9); transition: all 0.5s ease;
-            display: flex; align-items: center; justify-content: center; overflow-y: auto;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 150;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.9);
+            transition: all 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-y: auto;
         }
 
         .detail-background {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10, 10, 10, 0.95); z-index: -1;
-        }
-        
-        body.detail-active .planet-detail-view { opacity: 1; transform: scale(1); pointer-events: auto; }
-        
-        .detail-content-wrapper {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
-            width: 90%; max-width: 1100px; margin: 40px auto; position: relative;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            z-index: -1;
         }
 
-        .grid-planet-visual { display: flex; align-items: center; justify-content: center; }
-        
+        body.detail-active .planet-detail-view {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        .detail-content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+            position: relative;
+        }
+
+        .grid-planet-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         #detail-planet-image {
-            width: 100%; max-width: 450px; height: auto; object-fit: contain;
-            filter: drop-shadow(0 0 40px rgba(255,255,255,0.1));
+            width: 100%;
+            max-width: 450px;
+            height: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 0 40px rgba(255, 255, 255, 0.1));
             animation: floatPlanet 6s ease-in-out infinite;
         }
 
         @keyframes floatPlanet {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(2deg); }
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-15px) rotate(2deg);
+            }
         }
 
-        .grid-text-area { display: flex; flex-direction: column; justify-content: center; text-align: left; color: #fff; }
+        .grid-text-area {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: left;
+            color: #fff;
+        }
 
         #detail-planet-name {
-            font-size: 56px; font-weight: 800; margin-bottom: 15px; text-transform: uppercase;
-            background: linear-gradient(to right, #fff, #888); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        #detail-planet-desc { font-size: 16px; line-height: 1.6; color: #ccc; margin-bottom: 25px; text-align: justify; }
+        #detail-planet-desc {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #ccc;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
 
         .fact-box {
-            background: rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 12px;
-            border-left: 4px solid #4cc9f0; margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #4cc9f0;
+            margin-bottom: 30px;
         }
 
         .fact-label {
-            font-size: 11px; color: #4cc9f0; letter-spacing: 1px;
-            font-weight: 700; text-transform: uppercase; margin-bottom: 8px;
+            font-size: 11px;
+            color: #4cc9f0;
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 8px;
         }
 
-        #detail-planet-fact { font-size: 14px; color: #fff; line-height: 1.5; }
+        #detail-planet-fact {
+            font-size: 14px;
+            color: #fff;
+            line-height: 1.5;
+        }
 
         .detail-button {
-            align-self: flex-start; background: transparent; color: #fff;
-            border: 1px solid rgba(255,255,255,0.4); padding: 12px 30px; border-radius: 50px;
-            cursor: pointer; font-size: 14px; font-weight: 600; transition: all 0.3s ease;
-            text-transform: uppercase; letter-spacing: 1px;
+            align-self: flex-start;
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        
-        .detail-button:hover { background: #fff; color: #000; }
+
+        .detail-button:hover {
+            background: #fff;
+            color: #000;
+        }
 
         footer {
-            position: absolute; bottom: 10px; width: 100%; text-align: center;
-            color: #6b6b6b; font-size: 12px; z-index: 5; transition: opacity 0.5s;
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            color: #6b6b6b;
+            font-size: 12px;
+            z-index: 5;
+            transition: opacity 0.5s;
         }
 
         /* --- CSS TOMBOL SUARA --- */
@@ -396,57 +650,337 @@
 
         /* --- MEDIA QUERIES --- */
 
+        /* --- MEDIA QUERIES --- */
+
+        @media (max-width: 1200px) {
+            .detail-content-wrapper {
+                gap: 30px;
+                width: 92%;
+            }
+
+            #detail-planet-name {
+                font-size: 48px;
+            }
+
+            #detail-planet-desc {
+                font-size: 15px;
+            }
+        }
+
         @media (max-width: 1024px) {
-            nav { padding: 20px; }
-            .page-title h1 { font-size: 28px; }
-            .page-title { top: 80px; }
-            .solar-system { width: 85vmin; height: 85vmin; }
+            nav {
+                padding: 20px 30px;
+            }
+
+            .page-title {
+                top: 90px;
+            }
+
+            .page-title h1 {
+                font-size: 28px;
+            }
+
+            .page-title p {
+                font-size: 15px;
+            }
+
+            .solar-system {
+                width: 80vmin;
+                height: 80vmin;
+                top: 58%;
+            }
+
+            .detail-content-wrapper {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                margin: 80px auto 40px;
+            }
+
+            .grid-planet-visual {
+                order: 1;
+            }
+
+            .grid-text-area {
+                order: 2;
+                text-align: center;
+            }
+
+            #detail-planet-image {
+                max-width: 350px;
+            }
+
+            #detail-planet-desc {
+                text-align: justify;
+            }
+
+            .fact-box {
+                text-align: left;
+            }
         }
 
         @media (max-width: 768px) {
-            nav { 
-                padding: 15px 20px;
-                flex-direction: column;
-                gap: 10px;
-            }
-            .logo { font-size: 20px; }
-            
-            .nav-links { 
-                /* --- RESET UNTUK MOBILE AGAR TIDAK TUMPUK --- */
-                position: static;   /* Kembalikan ke aliran normal */
-                transform: none;    /* Hapus pergeseran tengah */
-                
-                display: flex; 
-                gap: 20px; 
+            nav {
+                padding: 20px 24px;
+                flex-direction: row;
                 justify-content: center;
-                width: 100%;
-                padding-bottom: 5px;
             }
-            
-            .nav-links a { font-size: 14px; }
-            .page-title { top: 100px; padding: 0 15px; }
-            .page-title h1 { font-size: 24px; }
-            .page-title p { display: none; }
-            
-            .solar-system { width: 95vmin; height: 95vmin; top: 55%; }
-            
-            .detail-content-wrapper { grid-template-columns: 1fr; margin: 60px auto 20px; padding-bottom: 40px; gap: 20px; }
-            .grid-planet-visual { order: 1; }
-            #detail-planet-image { max-width: 250px; }
-            .grid-text-area { order: 2; }
-            #detail-planet-name { font-size: 36px; text-align: center; }
-            #detail-planet-desc { font-size: 14px; text-align: center; }
-            .fact-box { text-align: left; }
-            .detail-button { align-self: center; width: 100%; text-align: center; margin-top: 10px; }
-        }
-        
-        @media (max-width: 360px) {
-            .page-title h1 { font-size: 20px; }
-            .solar-system { width: 98vmin; height: 98vmin; }
+
+            .logo {
+                position: absolute;
+                left: 24px;
+                font-size: 20px;
+            }
+
+            .nav-center {
+                position: static;
+                transform: none;
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 20px;
+            }
+
+            .nav-links a {
+                font-size: 14px;
+            }
+
+            .page-title {
+                top: 85px;
+                padding: 0 20px;
+            }
+
+            .page-title h1 {
+                font-size: 24px;
+            }
+
+            .page-title p {
+                font-size: 14px;
+                font-weight: 600;
+            }
+
+            .solar-system {
+                width: 85vmin;
+                height: 85vmin;
+                top: 53%;
+            }
+
+            /* Ukuran Planet di Mobile - Lebih Besar */
+            .mercury {
+                width: 12px;
+                height: 12px;
+                margin-top: -6px;
+            }
+
+            .venus {
+                width: 16px;
+                height: 16px;
+                margin-top: -8px;
+            }
+
+            .earth {
+                width: 18px;
+                height: 18px;
+                margin-top: -9px;
+            }
+
+            .mars {
+                width: 14px;
+                height: 14px;
+                margin-top: -7px;
+            }
+
+            .jupiter {
+                width: 32px;
+                height: 32px;
+                margin-top: -16px;
+            }
+
+            .saturn {
+                width: 28px;
+                height: 28px;
+                margin-top: -14px;
+            }
+
+            .uranus {
+                width: 20px;
+                height: 20px;
+                margin-top: -10px;
+            }
+
+            .neptune {
+                width: 20px;
+                height: 20px;
+                margin-top: -10px;
+            }
+
+            /* Detail View Mobile */
+            .planet-detail-view {
+                padding: 0 15px;
+            }
+
+            .detail-content-wrapper {
+                margin: 70px auto 30px;
+                gap: 25px;
+                width: 100%;
+            }
+
+            #detail-planet-image {
+                max-width: 280px;
+            }
+
+            #detail-planet-name {
+                font-size: 32px;
+            }
+
+            #detail-planet-desc {
+                font-size: 14px;
+                line-height: 1.7;
+            }
+
+            .fact-box {
+                padding: 16px;
+                margin-bottom: 20px;
+            }
+
+            .fact-label {
+                font-size: 10px;
+            }
+
+            #detail-planet-fact {
+                font-size: 13px;
+            }
+
+            .detail-button {
+                align-self: center;
+                width: 100%;
+                max-width: 300px;
+                padding: 14px 30px;
+            }
+
+            .voice-control-btn {
+                width: 48px;
+                height: 48px;
+                bottom: 15px;
+                right: 15px;
+                font-size: 22px;
+            }
+
+            footer {
+                font-size: 11px;
+                bottom: 15px;
+            }
         }
 
+        @media (max-width: 480px) {
+            nav {
+                padding: 14px 16px;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .page-title {
+                top: 75px;
+            }
+
+            .page-title h1 {
+                font-size: 22px;
+            }
+
+            .page-title p {
+                font-size: 13px;
+                margin-top: 3px;
+            }
+
+            .solar-system {
+                width: 90vmin;
+                height: 90vmin;
+                top: 52%;
+            }
+
+            #detail-planet-image {
+                max-width: 220px;
+            }
+
+            #detail-planet-name {
+                font-size: 28px;
+                margin-bottom: 12px;
+            }
+
+            #detail-planet-desc {
+                font-size: 13px;
+                margin-bottom: 20px;
+            }
+
+            .fact-box {
+                padding: 14px;
+            }
+
+            .detail-button {
+                padding: 12px 25px;
+                font-size: 13px;
+            }
+
+            .voice-control-btn {
+                width: 45px;
+                height: 45px;
+                bottom: 12px;
+                right: 12px;
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .page-title h1 {
+                font-size: 20px;
+            }
+
+            .page-title p {
+                font-size: 12px;
+            }
+
+            .solar-system {
+                width: 92vmin;
+                height: 92vmin;
+            }
+
+            .detail-content-wrapper {
+                margin: 60px auto 25px;
+            }
+
+            #detail-planet-image {
+                max-width: 200px;
+            }
+
+            #detail-planet-name {
+                font-size: 26px;
+            }
+
+            #detail-planet-desc {
+                font-size: 12px;
+            }
+
+            .fact-label {
+                font-size: 9px;
+            }
+
+            #detail-planet-fact {
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="stars" id="stars"></div>
 
@@ -466,37 +1000,37 @@
 
     <main class="solar-system" id="solarSystem">
         <div class="sun"></div>
-        
+
         <div class="orbit orbit-mercury">
             <div class="planet mercury" onclick="showInfo('mercury')">
                 <span class="planet-name">Merkurius</span>
             </div>
         </div>
-        
+
         <div class="orbit orbit-venus">
             <div class="planet venus" onclick="showInfo('venus')">
                 <span class="planet-name">Venus</span>
             </div>
         </div>
-        
+
         <div class="orbit orbit-earth">
             <div class="planet earth" onclick="showInfo('earth')">
                 <span class="planet-name">Bumi</span>
             </div>
         </div>
-        
+
         <div class="orbit orbit-mars">
             <div class="planet mars" onclick="showInfo('mars')">
                 <span class="planet-name">Mars</span>
             </div>
         </div>
-        
+
         <div class="orbit orbit-jupiter">
             <div class="planet jupiter" onclick="showInfo('jupiter')">
                 <span class="planet-name">Jupiter</span>
             </div>
         </div>
-        
+
         <div class="orbit orbit-saturn">
             <div class="planet saturn" onclick="showInfo('saturn')">
                 <span class="planet-name">Saturnus</span>
@@ -515,12 +1049,12 @@
             </div>
         </div>
     </main>
-    
+
     <div id="planet-detail-view" class="planet-detail-view">
         <div class="detail-background"></div>
-        
+
         <div class="detail-content-wrapper">
-            
+
             <div class="grid-planet-visual">
                 <img id="detail-planet-image" src="" alt="Planet Detail">
             </div>
@@ -528,12 +1062,12 @@
             <div class="grid-text-area">
                 <h1 id="detail-planet-name">PLANET</h1>
                 <p id="detail-planet-desc">Deskripsi planet...</p>
-                
+
                 <div class="fact-box">
                     <div class="fact-label">TAHUKAH KAMU?</div>
                     <p id="detail-planet-fact">Fakta unik...</p>
                 </div>
-                
+
                 <button id="return-btn" class="detail-button">
                     Kembali
                 </button>
@@ -632,7 +1166,7 @@
         // --- LOGIKA SUARA & TOMBOL ---
         const synth = window.speechSynthesis;
         const voiceBtn = document.getElementById('voiceToggleBtn');
-        
+
         let isVoiceOn = localStorage.getItem('voiceState') !== 'off';
 
         function updateVoiceUI() {
@@ -672,7 +1206,7 @@
             if (synth.speaking) {
                 synth.cancel();
             }
-            
+
             const ucapan = new SpeechSynthesisUtterance(teks);
             ucapan.lang = 'id-ID';
             ucapan.rate = 0.9;
@@ -683,7 +1217,7 @@
         function showInfo(planetKey) {
             currentPlanetKey = planetKey;
             const info = planets[planetKey];
-            if(!info) return;
+            if (!info) return;
             detailName.innerText = info.name;
             detailDesc.innerText = info.desc;
             detailFact.innerHTML = info.fact;
@@ -697,10 +1231,11 @@
         function hideInfo() {
             document.body.classList.remove('detail-active');
             currentPlanetKey = null;
-            synth.cancel(); 
+            synth.cancel();
         }
 
         returnBtn.addEventListener('click', hideInfo);
     </script>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +12,8 @@
             box-sizing: border-box;
         }
 
-        html, body {
+        html,
+        body {
             height: 100%;
             overflow: hidden;
         }
@@ -112,7 +114,7 @@
         .hero-title .highlight {
             font-weight: 500;
             transition: color 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), text-shadow 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            text-shadow: 
+            text-shadow:
                 0 0 20px currentColor,
                 0 0 40px currentColor,
                 0 0 60px currentColor,
@@ -474,8 +476,15 @@
         }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.8; }
+
+            0%,
+            100% {
+                opacity: 0.2;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
         }
 
         /* Loading Animations */
@@ -484,6 +493,7 @@
                 opacity: 0;
                 transform: translateY(-30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -495,6 +505,7 @@
                 opacity: 0;
                 transform: translateY(50px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -506,6 +517,7 @@
                 opacity: 0;
                 transform: translateX(-50%) scale(0.8);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(-50%) scale(1);
@@ -516,6 +528,7 @@
             from {
                 opacity: 0;
             }
+
             to {
                 opacity: 1;
             }
@@ -700,7 +713,7 @@
             color: #fff;
             font-size: 18px;
         }
-        
+
         /* --- CSS TOMBOL SUARA --- */
         .voice-control-btn {
             position: fixed;
@@ -789,6 +802,7 @@
             .nav-links a {
                 font-size: 14px;
             }
+
 
             .hero {
                 padding: 40px 20px 0;
@@ -993,22 +1007,33 @@
         }
 
         @media (max-width: 480px) {
-            .logo {
-                font-size: 18px;
-                left: 16px;
+            nav {
+                padding: 20px 24px;
+                flex-direction: row;
+                justify-content: center;
             }
 
-            nav {
-                padding: 16px;
+            .logo {
+                position: absolute;
+                left: 24px;
+                font-size: 20px;
+            }
+
+            .nav-center {
+                position: static;
+                transform: none;
             }
 
             .nav-links {
-                gap: 12px;
+                display: flex;
+                gap: 20px;
             }
 
             .nav-links a {
-                font-size: 13px;
+                font-size: 14px;
             }
+
+            
 
             .hero {
                 padding: 30px 16px 0;
@@ -1046,7 +1071,7 @@
 
             .mars-container {
                 width: 220%;
-                height: 45vh;
+                height: 35vh;
             }
 
             .hero.split-view .mars-container {
@@ -1135,17 +1160,18 @@
         }
     </style>
 </head>
+
 <body>
     <div class="stars" id="stars"></div>
-    
+
     <div class="container">
-        <nav>
+        <nav>   
             <div class="logo">Galaxy</div>
             <div class="nav-center">
                 <ul class="nav-links">
                     <li><a href="landing_page.html" class="active">Jelajahi</a></li>
-                    <li><a href="planet.html" class="active">Tatanan</a></li>
-                    <li><a href="quiz.html" class="active">Kuis</a></li>
+                    <li><a href="planet.html">Tatanan</a></li>
+                    <li><a href="quiz.html">Kuis</a></li>
                 </ul>
             </div>
         </nav>
@@ -1209,7 +1235,8 @@
             <h2 id="cardTitle">Bumi</h2>
             <div class="planet-type" id="cardType">Planet Terestrial</div>
             <p class="description" id="cardDescription">
-                Bumi adalah planet ketiga dari Matahari dan satu-satunya objek astronomi yang diketahui memiliki kehidupan.
+                Bumi adalah planet ketiga dari Matahari dan satu-satunya objek astronomi yang diketahui memiliki
+                kehidupan.
             </p>
             <div class="info-stats">
                 <div class="stat-item">
@@ -1235,7 +1262,7 @@
         <div class="detail-modal" id="detailModal">
             <div class="detail-content">
                 <button class="detail-close-btn" id="detailCloseBtn">×</button>
-                
+
                 <div class="detail-header">
                     <div class="detail-planet-icon" id="detailPlanetIcon"></div>
                     <div class="detail-title-section">
@@ -1561,7 +1588,7 @@
             const data = planetData[planet];
             const planetBtn = document.querySelector(`.planet-btn.${planet}`);
             const iconStyles = window.getComputedStyle(planetBtn.querySelector('.planet-icon'));
-            
+
             document.getElementById('detailTitle').textContent = data.cardTitle;
             document.getElementById('detailType').textContent = data.type;
             document.getElementById('detailAbout').textContent = data.detailAbout;
@@ -1574,12 +1601,12 @@
             document.getElementById('detailTemp').textContent = data.temp;
             document.getElementById('detailMoons').textContent = data.moons;
             document.getElementById('detailAtmosphere').textContent = data.atmosphere;
-            
+
             // Set planet icon style
             const detailIcon = document.getElementById('detailPlanetIcon');
             detailIcon.style.background = iconStyles.background;
             detailIcon.style.boxShadow = iconStyles.boxShadow;
-            
+
             // Update facts list
             const factsList = document.getElementById('detailFacts');
             factsList.innerHTML = '';
@@ -1595,7 +1622,7 @@
             updateDetailModal(currentPlanet);
             detailModal.classList.add('active');
             document.body.style.overflow = 'hidden';
-            
+
             // Voice: Read detail
             const data = planetData[currentPlanet];
             const teksDetail = `Detail lengkap tentang ${data.cardTitle}. ${data.detailAbout}`;
@@ -1642,25 +1669,25 @@
                 if (planetData[planet]) {
                     // Add transitioning class for fade out
                     planetImage.classList.add('transitioning');
-                    
+
                     // Voice: Read intro
                     const teksIntro = `Kamu memilih ${planetData[planet].cardTitle}. ${planetData[planet].description}`;
                     bicara(teksIntro);
-                    
+
                     // Wait for fade out animation
                     setTimeout(() => {
                         // Update content
                         heroTitle.innerHTML = planetData[planet].title;
                         planetImage.src = planetData[planet].image;
                         planetImage.style.filter = `drop-shadow(0 -50px 70px ${planetData[planet].glowColor})`;
-                        
+
                         const newPlanetName = document.getElementById('planetName');
                         if (newPlanetName) {
                             newPlanetName.style.color = planetData[planet].highlightColor;
                         }
 
                         updateInfoCard(planet);
-                        
+
                         // Remove transitioning class for fade in
                         setTimeout(() => {
                             planetImage.classList.remove('transitioning');
@@ -1714,7 +1741,7 @@
                     break;
                 }
             }
-            
+
             if (planetData[planet] && planetName) {
                 planetName.style.color = planetData[planet].highlightColor;
                 planetImage.style.filter = `drop-shadow(0 -50px 70px ${planetData[planet].glowColor})`;
@@ -1730,7 +1757,7 @@
         // --- LOGIKA SUARA & TOMBOL (UPDATED) ---
         const synth = window.speechSynthesis;
         const voiceBtn = document.getElementById('voiceToggleBtn');
-        
+
         // Cek status suara dari memori browser (default: true/hidup)
         let isVoiceOn = localStorage.getItem('voiceState') !== 'off';
 
@@ -1778,7 +1805,7 @@
             if (synth.speaking) {
                 synth.cancel();
             }
-            
+
             const ucapan = new SpeechSynthesisUtterance(teks);
             ucapan.lang = 'id-ID';
             ucapan.rate = 0.9;
@@ -1786,4 +1813,5 @@
         }
     </script>
 </body>
+
 </html>
