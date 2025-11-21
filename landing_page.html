@@ -282,9 +282,11 @@
         /* Planet Selector */
         .planet-selector {
             display: flex;
-            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             background: rgba(20, 20, 20, 0.9);
-            padding: 20px 30px;
+            padding: 14px 20px;
             border-radius: 60px;
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -304,23 +306,23 @@
         .planet-btn {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            padding: 0;
-            padding-left: 5px;
+            justify-content: center;
+            padding: 4px;
             border: none;
             background: transparent;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             font-family: inherit;
-            height: 50px;
+            width: 56px;
+            height: 56px;
             position: relative;
-            border-radius: 30px;
-            overflow: hidden;
-            width: 50px;
+            border-radius: 50%;
+            flex-shrink: 0;
         }
 
         .planet-btn:hover .planet-icon {
-            transform: scale(1.15);
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 12px currentColor) brightness(1.2);
         }
 
         .planet-btn:hover .planet-tooltip {
@@ -328,67 +330,91 @@
             transform: translateX(-50%) translateY(0);
         }
 
+        /* Active state - tambah lebar untuk label */
         .planet-btn.active {
-            background: rgba(255, 255, 255, 0.05);
             width: auto;
-            padding-right: 20px;
+            min-width: 56px;
+            padding: 4px 16px 4px 4px;
+            border-radius: 30px;
         }
 
         .planet-btn.active .planet-icon {
-            transform: scale(1.2);
-            box-shadow: 0 0 20px currentColor;
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 15px currentColor) drop-shadow(0 0 25px currentColor) brightness(1.3);
         }
 
         .planet-btn.active .planet-tooltip {
             display: none;
         }
 
+        /* Icon container - FIXED SIZE */
         .planet-icon {
-            width: 40px;
-            height: 40px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
             flex-shrink: 0;
-            margin-left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            /* PENTING: potong gambar yang keluar */
+            background: transparent !important;
+        }
+
+        /* Gambar planet - semua sama rata */
+        .planet-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Cover agar semua ukuran sama */
+            display: block;
+        }
+
+        /* KHUSUS SATURNUS - karena ada cincin, pakai contain */
+        .planet-btn.saturn .planet-icon img {
+            object-fit: contain;
+            transform: scale(1.3);
+            /* Perbesar sedikit agar terlihat jelas */
         }
 
         /* Planet Name Label */
         .planet-name-label {
-            margin-left: 12px;
+            margin-left: 8px;
             color: #fff;
             font-size: 14px;
             font-weight: 500;
             white-space: nowrap;
             opacity: 0;
+            width: 0;
+            overflow: hidden;
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            pointer-events: none;
         }
 
         .planet-btn.active .planet-name-label {
             opacity: 1;
+            width: auto;
         }
 
         /* Planet Tooltip */
         .planet-tooltip {
             position: absolute;
-            bottom: 100%;
+            bottom: calc(100% + 12px);
             left: 50%;
-            transform: translateX(-50%) translateY(-8px);
+            transform: translateX(-50%) translateY(5px);
             background: rgba(20, 20, 20, 0.95);
             color: #fff;
-            padding: 8px 16px;
+            padding: 8px 14px;
             border-radius: 8px;
             font-size: 13px;
             font-weight: 500;
             white-space: nowrap;
             opacity: 0;
             pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 8px;
-            z-index: 10;
+            z-index: 100;
         }
 
         .planet-tooltip::after {
@@ -401,57 +427,37 @@
             border-top-color: rgba(20, 20, 20, 0.95);
         }
 
-        /* Planet Icons */
+        /* Warna Glow untuk setiap planet */
         .planet-btn.earth .planet-icon {
-            background: linear-gradient(135deg, #4a90e2 0%, #63b8ff 100%);
-            box-shadow: 0 0 15px rgba(74, 144, 226, 0.4);
+            color: rgba(74, 144, 226, 0.8);
         }
 
         .planet-btn.mars .planet-icon {
-            background: linear-gradient(135deg, #ff6b35 0%, #ff8c61 100%);
-            box-shadow: 0 0 15px rgba(255, 107, 53, 0.4);
+            color: rgba(255, 107, 53, 0.8);
         }
 
         .planet-btn.jupiter .planet-icon {
-            background: linear-gradient(135deg, #d4a574 0%, #e8c9a0 100%);
-            box-shadow: 0 0 15px rgba(212, 165, 116, 0.4);
+            color: rgba(212, 165, 116, 0.8);
         }
 
         .planet-btn.mercury .planet-icon {
-            background: linear-gradient(135deg, #8c8c8c 0%, #b8b8b8 100%);
-            box-shadow: 0 0 15px rgba(140, 140, 140, 0.4);
+            color: rgba(140, 140, 140, 0.8);
         }
 
         .planet-btn.venus .planet-icon {
-            background: linear-gradient(135deg, #e8b84b 0%, #f5d97a 100%);
-            box-shadow: 0 0 15px rgba(232, 184, 75, 0.4);
+            color: rgba(232, 184, 75, 0.8);
         }
 
         .planet-btn.saturn .planet-icon {
-            background: linear-gradient(135deg, #e6cf8b 0%, #f5e6b8 100%);
-            box-shadow: 0 0 15px rgba(230, 207, 139, 0.4);
-            position: relative;
-        }
-
-        .planet-btn.saturn .planet-icon::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: -5px;
-            right: -5px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(230, 207, 139, 0.8), transparent);
-            transform: translateY(-50%) rotate(-15deg);
+            color: rgba(230, 207, 139, 0.8);
         }
 
         .planet-btn.uranus .planet-icon {
-            background: linear-gradient(135deg, #4fd1d9 0%, #7de3e8 100%);
-            box-shadow: 0 0 15px rgba(79, 209, 217, 0.4);
+            color: rgba(79, 209, 217, 0.8);
         }
 
         .planet-btn.neptune .planet-icon {
-            background: linear-gradient(135deg, #4b70e8 0%, #7a94f5 100%);
-            box-shadow: 0 0 15px rgba(75, 112, 232, 0.4);
+            color: rgba(75, 112, 232, 0.8);
         }
 
         /* Background Stars */
@@ -774,6 +780,35 @@
             .detail-stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .planet-selector {
+                gap: 6px;
+                padding: 12px 16px;
+                margin-bottom: 50px;
+            }
+
+            .planet-btn {
+                width: 50px;
+                height: 50px;
+            }
+
+            .planet-btn.active {
+                min-width: 50px;
+                padding: 4px 14px 4px 4px;
+            }
+
+            .planet-icon {
+                width: 42px;
+                height: 42px;
+            }
+
+            .planet-name-label {
+                font-size: 13px;
+            }
+
+            .planet-tooltip {
+                display: none;
+            }
         }
 
         @media (max-width: 768px) {
@@ -826,44 +861,28 @@
             }
 
             .planet-selector {
-                flex-wrap: nowrap;
-                width: calc(100% - 40px);
-                padding: 15px 20px;
-                gap: 10px;
+                gap: 4px;
+                padding: 10px 14px;
+                border-radius: 45px;
                 margin-bottom: 40px;
-                overflow-x: auto;
-                justify-content: flex-start;
-            }
-
-            .planet-selector::-webkit-scrollbar {
-                height: 4px;
-            }
-
-            .planet-selector::-webkit-scrollbar-track {
-                background: rgba(255, 255, 255, 0.05);
-            }
-
-            .planet-selector::-webkit-scrollbar-thumb {
-                background: rgba(255, 255, 255, 0.2);
-                border-radius: 2px;
             }
 
             .planet-btn {
-                width: 45px;
-                height: 45px;
-                padding: 0;
-                flex-shrink: 0;
+                width: 46px;
+                height: 46px;
+                padding: 3px;
             }
 
             .planet-btn.active {
-                padding-right: 0;
-                width: 45px;
+                width: 46px;
+                min-width: 46px;
+                padding: 3px;
+                border-radius: 50%;
             }
 
             .planet-icon {
-                width: 35px;
-                height: 35px;
-                margin: auto;
+                width: 40px;
+                height: 40px;
             }
 
             .planet-name-label {
@@ -1033,7 +1052,7 @@
                 font-size: 14px;
             }
 
-            
+
 
             .hero {
                 padding: 30px 16px 0;
@@ -1049,24 +1068,32 @@
             }
 
             .planet-selector {
-                width: calc(100% - 32px);
-                padding: 12px 16px;
-                gap: 8px;
+                gap: 3px;
+                padding: 8px 12px;
+                border-radius: 40px;
                 margin-bottom: 30px;
             }
 
             .planet-btn {
                 width: 40px;
                 height: 40px;
+                padding: 2px;
             }
 
             .planet-btn.active {
                 width: 40px;
+                min-width: 40px;
+                padding: 2px;
             }
 
             .planet-icon {
-                width: 30px;
-                height: 30px;
+                width: 36px;
+                height: 36px;
+            }
+
+            .planet-icon img {
+                max-width: 28px;
+                max-height: 28px;
             }
 
             .mars-container {
@@ -1165,7 +1192,7 @@
     <div class="stars" id="stars"></div>
 
     <div class="container">
-        <nav>   
+        <nav>
             <div class="logo">Galaxy</div>
             <div class="nav-center">
                 <ul class="nav-links">
@@ -1184,42 +1211,58 @@
 
             <div class="planet-selector">
                 <button class="planet-btn mercury">
-                    <span class="planet-icon"></span>
+                    <span class="planet-icon">
+                        <img src="images/icon/merkuri0.png" alt="Merkuri" class="planet-icon-img">
+                    </span>
                     <span class="planet-name-label">Merkurius</span>
                     <span class="planet-tooltip">Merkurius</span>
                 </button>
                 <button class="planet-btn venus">
-                    <span class="planet-icon"></span>
+                    <span class="planet-icon">
+                        <img src="images/icon/venus0.png" alt="Venus" class="planet-icon-img">
+                    </span>
                     <span class="planet-name-label">Venus</span>
                     <span class="planet-tooltip">Venus</span>
                 </button>
                 <button class="planet-btn earth active">
-                    <span class="planet-icon"></span>
+                    <span class="planet-icon">
+                        <img src="images/icon/bumi0.png" alt="Earth" class="planet-icon-img">
+                    </span>
                     <span class="planet-name-label">Bumi</span>
                     <span class="planet-tooltip">Bumi</span>
                 </button>
                 <button class="planet-btn mars">
-                    <span class="planet-icon"></span>
+                    <span class="planet-icon">
+                        <img src="images/icon/mars0.png" alt="Mars" class="planet-icon-img">
+                    </span>
                     <span class="planet-name-label">Mars</span>
                     <span class="planet-tooltip">Mars</span>
                 </button>
                 <button class="planet-btn jupiter">
-                    <span class="planet-icon"></span>
+                    <span class="planet-icon">
+                        <img src="images/icon/jupiter2.png" alt="Jupiter" class="planet-icon-img">
+                    </span>
                     <span class="planet-name-label">Jupiter</span>
                     <span class="planet-tooltip">Jupiter</span>
                 </button>
                 <button class="planet-btn saturn">
-                    <span class="planet-icon"></span>
+                    <span class="planet-icon">
+                        <img src="images/icon/saturn0.png" alt="Saturn" class="planet-icon-img">
+                    </span>
                     <span class="planet-name-label">Saturnus</span>
                     <span class="planet-tooltip">Saturnus</span>
                 </button>
                 <button class="planet-btn uranus">
-                    <span class="planet-icon"></span>
+                    <span class="planet-icon">
+                        <img src="images/icon/uranus0.png" alt="Uranus" class="planet-icon-img">
+                    </span>
                     <span class="planet-name-label">Uranus</span>
                     <span class="planet-tooltip">Uranus</span>
                 </button>
                 <button class="planet-btn neptune">
-                    <span class="planet-icon"></span>
+                    <span class="planet-icon">
+                        <img src="images/icon/neptun0.png" alt="Neptun" class="planet-icon-img">
+                    </span>
                     <span class="planet-name-label">Neptunus</span>
                     <span class="planet-tooltip">Neptunus</span>
                 </button>
