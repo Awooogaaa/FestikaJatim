@@ -751,6 +751,23 @@
             color: #ccc;
         }
 
+        .detail-planet-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .detail-planet-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .hero-title {
@@ -816,6 +833,13 @@
                 padding: 20px 24px;
                 flex-direction: row;
                 justify-content: center;
+            }
+
+            .voice-control-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+                bottom: 15%;
             }
 
             .logo {
@@ -1307,7 +1331,9 @@
                 <button class="detail-close-btn" id="detailCloseBtn">×</button>
 
                 <div class="detail-header">
-                    <div class="detail-planet-icon" id="detailPlanetIcon"></div>
+                    <div class="detail-planet-icon" id="detailPlanetIcon">
+                        <img src="" alt="Planet Icon" id="detailPlanetImg">
+                    </div>
                     <div class="detail-title-section">
                         <h2 id="detailTitle">Bumi</h2>
                         <div class="planet-type" id="detailType">Planet Terestrial</div>
@@ -1392,6 +1418,7 @@
             mercury: {
                 title: 'Temukan misteri planet terdekat<br>dengan matahari, <span class="highlight" id="planetName">Merkurius</span>.',
                 image: 'images/merkurius.png',
+                icon: 'images/icon/merkuri0.png',
                 glowColor: 'rgba(140, 140, 140, 0.5)',
                 highlightColor: '#8c8c8c',
                 cardTitle: 'Merkurius',
@@ -1418,6 +1445,7 @@
             venus: {
                 title: 'Jelajahi planet kembar Bumi<br>yang misterius, <span class="highlight" id="planetName">Venus</span>.',
                 image: 'images/venus.png',
+                icon: 'images/icon/venus0.png',
                 glowColor: 'rgba(232, 184, 75, 0.5)',
                 highlightColor: '#e8b84b',
                 cardTitle: 'Venus',
@@ -1444,6 +1472,7 @@
             earth: {
                 title: 'Ini adalah awal dari sebuah cerita<br>antara kamu dan <span class="highlight" id="planetName">Bumi</span>.',
                 image: 'images/bumi.png',
+                icon: 'images/icon/bumi0.png',
                 glowColor: 'rgba(74, 144, 226, 0.5)',
                 highlightColor: '#4a90e2',
                 cardTitle: 'Bumi',
@@ -1470,6 +1499,7 @@
             mars: {
                 title: 'Rasakan petualangan di planet merah,<br>masa depan umat manusia, <span class="highlight" id="planetName">Mars</span>.',
                 image: 'images/mars.png',
+                icon: 'images/icon/mars0.png',
                 glowColor: 'rgba(255, 107, 53, 0.5)',
                 highlightColor: '#ff6b35',
                 cardTitle: 'Mars',
@@ -1496,6 +1526,7 @@
             jupiter: {
                 title: 'Saksikan keagungan raksasa gas terbesar,<br>sang penguasa, <span class="highlight" id="planetName">Jupiter</span>.',
                 image: 'images/jupiter.png',
+                icon: 'images/icon/jupiter2.png',
                 glowColor: 'rgba(212, 165, 116, 0.5)',
                 highlightColor: '#d4a574',
                 cardTitle: 'Jupiter',
@@ -1522,6 +1553,7 @@
             saturn: {
                 title: 'Terpesona dengan keindahan cincin<br>sang permata langit, <span class="highlight" id="planetName">Saturnus</span>.',
                 image: 'images/saturnus1.png',
+                icon: 'images/icon/saturn0.png',
                 glowColor: 'rgba(230, 207, 139, 0.5)',
                 highlightColor: '#e6cf8b',
                 cardTitle: 'Saturnus',
@@ -1548,6 +1580,7 @@
             uranus: {
                 title: 'Temui planet es yang unik,<br>sang planet miring, <span class="highlight" id="planetName">Uranus</span>.',
                 image: 'images/uranus.png',
+                icon: 'images/icon/uranus0.png',
                 glowColor: 'rgba(79, 209, 217, 0.5)',
                 highlightColor: '#4fd1d9',
                 cardTitle: 'Uranus',
@@ -1574,6 +1607,7 @@
             neptune: {
                 title: 'Selami kedalaman planet terjauh,<br>sang dewa laut, <span class="highlight" id="planetName">Neptunus</span>.',
                 image: 'images/neptunus.png',
+                icon: 'images/icon/neptun0.png',
                 glowColor: 'rgba(75, 112, 232, 0.5)',
                 highlightColor: '#4b70e8',
                 cardTitle: 'Neptunus',
@@ -1644,6 +1678,8 @@
             document.getElementById('detailTemp').textContent = data.temp;
             document.getElementById('detailMoons').textContent = data.moons;
             document.getElementById('detailAtmosphere').textContent = data.atmosphere;
+            // Set planet icon image
+            document.getElementById('detailPlanetImg').src = data.icon;
 
             // Set planet icon style
             const detailIcon = document.getElementById('detailPlanetIcon');
